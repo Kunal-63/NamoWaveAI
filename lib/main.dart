@@ -17,9 +17,72 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => LandingScreen(),
+        '/': (context) => AnimatedSplash(),
         '/login': (context) => ProfileScreen(),
       },
+    );
+  }
+}
+
+class AnimatedSplash extends StatefulWidget {
+  @override
+  _AnimatedSplashState createState() => _AnimatedSplashState();
+}
+
+class _AnimatedSplashState extends State<AnimatedSplash> {
+  final String splashText = 'TheOG';
+
+  String _currentText = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animateText();
+  }
+
+  Future<void> _animateText() async {
+    for (int i = 0; i <= splashText.length; i++) {
+      setState(() {
+        _currentText = splashText.substring(0, i);
+      });
+      await Future.delayed(
+          Duration(milliseconds: 300)); // Adjust the delay as needed
+    }
+
+    // Navigate to the main screen when text animation completes
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => LandingScreen(), // Your main screen
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white, // Set the background color
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo.png',
+              height: 200.0,
+              width: 200.0,
+            ),
+            const SizedBox(height: 20.0),
+            Text(
+              _currentText,
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 50.0,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
