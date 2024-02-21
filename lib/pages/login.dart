@@ -14,11 +14,34 @@ class _LoginScreenState extends State<LoginScreen> {
     'assets/login3.png',
   ];
 
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  void _showInvalidNumberPopup() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Invalid Number'),
+          content: Text('Please enter a valid 10-digit phone number.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.grey[900],
       body: Stack(
         children: [
           Expanded(
@@ -45,90 +68,109 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Positioned(
-              top: 20,
-              right: 10,
-              child: TextButton(
-                child: Text(
-                  'Skip Login >',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      decoration: TextDecoration.underline),
+            top: 20,
+            right: 10,
+            child: TextButton(
+              child: Text(
+                'Skip Login >',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 14,
+                  decoration: TextDecoration.underline,
                 ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home');
-                },
-              )),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+            ),
+          ),
           Positioned(
-              bottom: MediaQuery.of(context).size.height / 3.5,
-              left: 20.0,
-              right: 20.0,
+            bottom: MediaQuery.of(context).size.height / 3.5,
+            left: 20.0,
+            right: 20.0,
+            child: Form(
+              key: _formKey,
               child: Container(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Log in or sign up to continue',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Log in or sign up to continue',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: 10.0),
-                      Container(
-                        child: TextField(
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                            fillColor: Color.fromRGBO(100, 100, 100, 0.5),
-                            filled: true,
-                            // prefix: Icon(Icons.phone),
-                            prefixIcon: Icon(
-                              Icons.phone,
-                              color: Colors.white,
-                            ),
-                            hintText: 'Enter phone number without +91',
-                            hintStyle: TextStyle(
-                              color: Colors.grey[300],
-                            ),
-                            labelText: 'Phone',
-                            labelStyle: TextStyle(
-                              color: Colors.white,
-                            ),
-                            helperText:
-                                "we'll send you an OTP by SMS to confirm your number",
-                            helperStyle: TextStyle(color: Colors.white),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/otp');
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        controller: _phoneNumberController,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length != 10) {
+                            return 'Please enter a valid 10-digit phone number.';
+                          }
+                          return null;
                         },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0),
+                        decoration: InputDecoration(
+                          fillColor: Color.fromRGBO(100, 100, 100, 0.5),
+                          filled: true,
+                          prefixIcon: Icon(
+                            Icons.phone,
+                            color: Colors.white,
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            'Get OTP',
-                            style:
-                                TextStyle(fontSize: 18.0, color: Colors.black),
+                          hintText: 'Enter phone number without +91',
+                          hintStyle: TextStyle(
+                            color: Colors.grey[300],
+                          ),
+                          labelText: 'Phone',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          helperText:
+                              "we'll send you an OTP by SMS to confirm your number",
+                          helperStyle: TextStyle(color: Colors.white),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
                           ),
                         ),
                       ),
-                    ]),
-              )),
+                    ),
+                    SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.pushNamed(context, '/otp');
+                        } else {
+                          _showInvalidNumberPopup();
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          'Get OTP',
+                          style: TextStyle(fontSize: 18.0, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
