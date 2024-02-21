@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:theog/pages/landing_screen.dart';
+// import 'package:theog/pages/landing_screen.dart';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/profile.dart';
 import 'package:theog/pages/register_screen.dart';
@@ -57,35 +57,34 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
     // Navigate to the main screen when text animation completes
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => LandingScreen(), // Your main screen
+        builder: (context) => LoginScreen(), // Your main screen
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.orange, // Set the background color
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/logo.png',
-              height: 200.0,
-              width: 200.0,
-            ),
-            const SizedBox(height: 20.0),
-            Text(
-              _currentText,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/splash.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent, // Set the background color
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/logo.png',
+                height: 200.0,
+                width: 200.0,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
