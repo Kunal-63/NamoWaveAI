@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:theog/pages/home_screen.dart';
+import 'package:theog/pages/landing_screen.dart';
 // import 'package:theog/pages/landing_screen.dart';
 import 'package:theog/pages/login.dart';
+import 'package:theog/pages/otp.dart';
 import 'package:theog/pages/profile.dart';
 import 'package:theog/pages/register_screen.dart';
 // import 'package:tesing/pages/landing_screen.dart';
@@ -23,6 +26,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
         '/profile': (context) => ProfileScreen(),
+        '/otp': (context) => OtpScreen(),
+        '/home': (context) => HomeScreen(),
       },
     );
   }
@@ -57,7 +62,7 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
     // Navigate to the main screen when text animation completes
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => LoginScreen(), // Your main screen
+        builder: (context) => LandingScreen(), // Your main screen
       ),
     );
   }

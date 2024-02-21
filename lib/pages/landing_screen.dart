@@ -9,42 +9,15 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   int _currentIndex = 0;
   final List<String> images = [
-    'assets/landing_screen1.png',
-    'assets/landing_screen2.png',
-    'assets/landing_screen3.png',
+    'assets/landing1.png',
+    'assets/landing2.png',
+    'assets/landing3.png',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(235, 241, 115, 57),
-        leading: Container(
-          child: Image.asset('assets/logo.png'),
-        ),
-        elevation: 0.0,
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              'Explore',
-              style: TextStyle(
-                  color: Colors.white, fontSize: 24.0, fontFamily: 'Teko'),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/login');
-            },
-            child: Text(
-              'Login',
-              style: TextStyle(
-                  color: Colors.white, fontSize: 24.0, fontFamily: 'Teko'),
-            ),
-          ),
-        ],
-      ),
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           Expanded(
@@ -100,11 +73,11 @@ class _LandingScreenState extends State<LandingScreen> {
             right: 20.0,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                Navigator.pushNamed(context, '/login');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(
-                    222, 245, 220, 1), // Change the color to your preference
+                    208, 226, 240, 1), // Change the color to your preference
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),

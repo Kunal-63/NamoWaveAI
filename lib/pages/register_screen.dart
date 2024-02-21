@@ -12,6 +12,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   File? _userPhoto;
+  String? _selectedParty;
 
   Future<void> _pickPhoto() async {
     final picker = ImagePicker();
@@ -30,6 +31,45 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
+  void _showPoliticalPartiesDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ListTile(
+                leading: Icon(LineAwesomeIcons.flag),
+                title: Text('Party 1'),
+                onTap: () {
+                  _setSelectedParty('Party 1');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(LineAwesomeIcons.flag),
+                title: Text('Party 2'),
+                onTap: () {
+                  _setSelectedParty('Party 2');
+                  Navigator.pop(context);
+                },
+              ),
+              // Add more parties as needed
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _setSelectedParty(String party) {
+    setState(() {
+      _selectedParty = party;
+      print('Selected party: $_selectedParty');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
       child: Scaffold(
+        // resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           elevation: 0.0,
@@ -53,257 +94,298 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Navigator.pop(context);
             },
           ),
-        ),
-        // body: Stack(
-        //   alignment: Alignment.center,
-        //   children: [
-        //     Container(
-        //       color: Colors.grey,
-        //       child: Image.asset(
-        //         'assets/landing_screen2.png',
-        //         width: double.infinity,
-        //         height: 280,
-        //         fit: BoxFit.cover,
-        //       ),
-        //     ),
-
-        //   ],
-        // ),
-        body: Center(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(90.0),
-                      child: _userPhoto != null
-                          ? Stack(
-                              fit: StackFit.expand,
-                              children: [
-                                Image.file(
-                                  _userPhoto!,
-                                  fit: BoxFit.cover,
-                                ),
-                                Positioned(
-                                  top: 5.0,
-                                  right: 5.0,
-                                  child: IconButton(
-                                    icon: Icon(LineAwesomeIcons.trash,
-                                        size: 20.0),
-                                    onPressed: _clearPhoto,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            )
-                          : CircleAvatar(
-                              backgroundColor: Colors.grey[200],
-                              child: InkWell(
-                                onTap: _pickPhoto,
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  size: 30.0,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ),
-                    ),
-                  )
-                ],
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                surfaceTintColor: Colors.transparent,
+                foregroundColor: Colors.transparent,
+                disabledBackgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(45.0),
+                ),
               ),
-              SizedBox(height: 20.0),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+              child: Container(
+                child: Row(
                   children: [
-                    Container(
-                      height: 50,
-                      child: TextFormField(
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.black,
-                          ),
-                          labelText: 'Full Name',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
+                    Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
                       ),
                     ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 50,
-                      child: TextFormField(
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.bubble_chart,
-                            color: Colors.black,
-                          ),
-                          labelText: 'Political Party',
-                          hintText: 'Enter your political party',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 50,
-                      child: TextFormField(
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            LineAwesomeIcons.briefcase,
-                            color: Colors.black,
-                          ),
-                          labelText: 'Position',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 50,
-                      child: TextFormField(
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: Colors.black,
-                          ),
-                          labelText: 'Email',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 50,
-                      child: TextFormField(
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.password,
-                            color: Colors.black,
-                          ),
-                          suffix: Icon(LineAwesomeIcons.eye),
-                          labelText: 'Password',
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 50,
-                      child: TextFormField(
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.password,
-                            color: Colors.black,
-                          ),
-                          hintText: 'Re-enter your password',
-                          labelText: 'Confirm Password',
-                          suffix: Icon(LineAwesomeIcons.eye),
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/profile');
-                      },
-                      child: Text('Register'),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 100.0,
-                          vertical: 20.0,
-                        ),
-                      ),
+                    SizedBox(width: 5.0),
+                    Icon(
+                      LineAwesomeIcons.fast_forward,
+                      color: Colors.black,
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(45.0),
+                        child: _userPhoto != null
+                            ? Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.file(
+                                    _userPhoto!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Positioned(
+                                    top: 5.0,
+                                    right: 5.0,
+                                    child: IconButton(
+                                      icon: Icon(LineAwesomeIcons.trash,
+                                          size: 20.0),
+                                      onPressed: _clearPhoto,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.grey[200],
+                                child: InkWell(
+                                  onTap: _pickPhoto,
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                    size: 30.0,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 20.0),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 70,
+                        child: TextFormField(
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.person,
+                              color: Colors.black,
+                            ),
+                            labelText: 'Full Name',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 70,
+                        child: TextFormField(
+                          controller: TextEditingController(
+                            text: _selectedParty ?? '',
+                          ),
+                          maxLines: 1,
+                          onTap: () {
+                            // Show political parties dialog
+                            _showPoliticalPartiesDialog(context);
+                          },
+                          // initialValue: _selectedParty,
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.bubble_chart,
+                              color: Colors.black,
+                            ),
+                            labelText: 'Political Party',
+                            hintText: 'Select your political party',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 70,
+                        child: TextFormField(
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              LineAwesomeIcons.briefcase,
+                              color: Colors.black,
+                            ),
+                            labelText: 'Position',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 70,
+                        child: TextFormField(
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.location_city,
+                              color: Colors.black,
+                            ),
+                            labelText: 'Lokhsabha Constituency',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width * 0.8,
+                      //   height: 70,
+                      //   child: TextFormField(
+                      //     maxLines: 1,
+                      //     decoration: InputDecoration(
+                      //       prefixIcon: Icon(
+                      //         Icons.password,
+                      //         color: Colors.black,
+                      //       ),
+                      //       suffix: Icon(LineAwesomeIcons.eye),
+                      //       labelText: 'Password',
+                      //       labelStyle: TextStyle(
+                      //         color: Colors.black,
+                      //       ),
+                      //       border: OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //       focusedBorder: OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(height: 10.0),
+                      // Container(
+                      //   width: MediaQuery.of(context).size.width * 0.8,
+                      //   height: 70,
+                      //   child: TextFormField(
+                      //     maxLines: 1,
+                      //     decoration: InputDecoration(
+                      //       prefixIcon: Icon(
+                      //         Icons.password,
+                      //         color: Colors.black,
+                      //       ),
+                      //       hintText: 'Re-enter your password',
+                      //       labelText: 'Confirm Password',
+                      //       suffix: Icon(LineAwesomeIcons.eye),
+                      //       labelStyle: TextStyle(
+                      //         color: Colors.black,
+                      //       ),
+                      //       border: OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //       focusedBorder: OutlineInputBorder(
+                      //         borderSide: BorderSide(
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(height: 20.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
+                          child: Text('Register'),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.all(20),
+                            primary: Colors.blue,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
