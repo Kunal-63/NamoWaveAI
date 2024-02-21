@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:theog/pages/landing_screen.dart';
+import 'package:theog/pages/login.dart';
 import 'package:theog/pages/profile.dart';
+import 'package:theog/pages/register_screen.dart';
 // import 'package:tesing/pages/landing_screen.dart';
 //
 // import 'package:ssip/pages/first.dart';
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => AnimatedSplash(),
-        '/login': (context) => ProfileScreen(),
+        '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
+        '/profile': (context) => ProfileScreen(),
       },
     );
   }
@@ -30,7 +34,7 @@ class AnimatedSplash extends StatefulWidget {
 }
 
 class _AnimatedSplashState extends State<AnimatedSplash> {
-  final String splashText = 'TheOG';
+  final String splashText = 'MobileOrlovAI';
 
   String _currentText = '';
 
@@ -47,7 +51,7 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
         _currentText = splashText.substring(0, i);
       });
       await Future.delayed(
-          Duration(milliseconds: 300)); // Adjust the delay as needed
+          Duration(milliseconds: 100)); // Adjust the delay as needed
     }
 
     // Navigate to the main screen when text animation completes
@@ -61,7 +65,7 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Set the background color
+      backgroundColor: Colors.orange, // Set the background color
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -76,8 +80,9 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
             Text(
               _currentText,
               style: TextStyle(
-                color: Colors.orange,
-                fontSize: 50.0,
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],

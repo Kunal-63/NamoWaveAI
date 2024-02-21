@@ -17,10 +17,12 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(197, 106, 31, 1),
+      backgroundColor: Colors.orange,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Icon(Icons.logo_dev, color: Colors.black),
+        backgroundColor: Color.fromARGB(235, 241, 115, 57),
+        leading: Container(
+          child: Image.asset('assets/logo.png'),
+        ),
         elevation: 0.0,
         actions: [
           TextButton(
@@ -28,19 +30,17 @@ class _LandingScreenState extends State<LandingScreen> {
             child: Text(
               'Explore',
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 18.0,
-              ),
+                  color: Colors.white, fontSize: 24.0, fontFamily: 'Teko'),
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/login');
+            },
             child: Text(
               'Login',
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 18.0,
-              ),
+                  color: Colors.white, fontSize: 24.0, fontFamily: 'Teko'),
             ),
           ),
         ],
@@ -100,11 +100,11 @@ class _LandingScreenState extends State<LandingScreen> {
             right: 20.0,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/register');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(
-                    245, 245, 220, 1.0), // Change the color to your preference
+                    222, 245, 220, 1), // Change the color to your preference
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
@@ -112,7 +112,7 @@ class _LandingScreenState extends State<LandingScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'Get Started',
+                  'Get Started!',
                   style: TextStyle(fontSize: 18.0, color: Colors.black),
                 ),
               ),
