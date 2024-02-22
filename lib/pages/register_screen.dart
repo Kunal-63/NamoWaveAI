@@ -14,9 +14,79 @@ class _RegisterScreenState extends State<RegisterScreen> {
   File? _userPhoto;
   String? _selectedParty;
 
-  Future<void> _pickPhoto() async {
+  Future<void> _pickPhoto(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Add a Photo'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                child: Text('Sample Photograph'),
+              ),
+              Container(
+                child: Text('(170 x 200 px)'),
+              ),
+              SizedBox(height: 10.0),
+              Container(
+                  child: Image.asset(
+                'assets/sample_photo.png',
+                fit: BoxFit.cover,
+              )),
+              SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                shape: OutlineInputBorder(
+                    borderSide: BorderSide(
+                  color: Colors.blue,
+                )),
+                leading: Icon(
+                  Icons.camera,
+                  color: Colors.blue,
+                ),
+                title: Text(
+                  'Take a Photo',
+                  style: TextStyle(color: Colors.blue, fontSize: 14),
+                ),
+                onTap: () {
+                  _getImage(ImageSource.camera);
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                shape: OutlineInputBorder(
+                    borderSide: BorderSide(
+                  color: Colors.blue,
+                )),
+                leading: Icon(
+                  Icons.photo,
+                  color: Colors.blue,
+                ),
+                title: Text(
+                  'Choose from Gallery',
+                  style: TextStyle(color: Colors.blue, fontSize: 14),
+                ),
+                onTap: () {
+                  _getImage(ImageSource.gallery);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _getImage(ImageSource source) async {
     final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    final pickedImage = await picker.pickImage(source: source);
 
     if (pickedImage != null) {
       setState(() {
@@ -24,6 +94,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
   }
+
+  // Future<void> _pickPhoto() async {
+  //   final picker = ImagePicker();
+  //   final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+
+  //   if (pickedImage != null) {
+  //     setState(() {
+  //       _userPhoto = File(pickedImage.path);
+  //     });
+  //   }
+  // }
 
   void _clearPhoto() {
     setState(() {
@@ -167,7 +248,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             : CircleAvatar(
                                 backgroundColor: Colors.grey[200],
                                 child: InkWell(
-                                  onTap: _pickPhoto,
+                                  onTap: () {
+                                    _pickPhoto(context);
+                                  },
                                   child: Icon(
                                     Icons.add_a_photo,
                                     size: 30.0,

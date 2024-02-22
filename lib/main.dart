@@ -4,7 +4,7 @@ import 'package:theog/pages/home_screen.dart';
 // import 'package:theog/pages/landing_screen.dart';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
-import 'package:theog/pages/profile.dart';
+import 'package:theog/pages/profile_screen.dart';
 import 'package:theog/pages/register_screen.dart';
 // import 'package:tesing/pages/landing_screen.dart';
 //

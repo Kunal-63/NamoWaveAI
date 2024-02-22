@@ -35,6 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
           tabBackgroundColor: Colors.blue[100]!,
           tabMargin: EdgeInsets.all(5),
           gap: 8,
+          onTabChange: (value) {
+            if (value == 2) {
+              Navigator.pushNamed(context, '/profile');
+            }
+          },
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
           iconSize: 24,
           tabs: [
