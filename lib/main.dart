@@ -6,6 +6,7 @@ import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
 import 'package:theog/pages/profile_screen.dart';
 import 'package:theog/pages/register_screen.dart';
+import 'package:theog/pages/search.dart';
 // import 'package:tesing/pages/landing_screen.dart';
 //
 // import 'package:ssip/pages/first.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => ProfileScreen(),
         '/otp': (context) => OtpScreen(),
         '/home': (context) => HomeScreen(),
+        '/search': (context) => SearchScreen(),
       },
     );
   }
