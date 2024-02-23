@@ -79,7 +79,8 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent, // Set the background color
+        backgroundColor:
+            Color.fromRGBO(18, 18, 18, 1), // Set the background color
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
