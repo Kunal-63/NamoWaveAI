@@ -13,25 +13,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/login_background.png'),
-          fit: BoxFit.cover,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/login_background.png'),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          // appBar: AppBar(
-          //   backgroundColor: Colors.blue[300]!,
-          //   elevation: 0.0,
-          //   title: const Text('Profile'),
-          //   actions: [
-          //     IconButton(
-          //       onPressed: () {},
-          //       icon: const Icon(Icons.menu),
-          //     ),
-          //   ],
-          // ),
+        child: Scaffold(
+          backgroundColor: Color.fromRGBO(18, 18, 18, 1),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -51,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 85,
                           width: 100,
                           child: CircleAvatar(
-                            backgroundColor: Colors.grey.shade800,
+                            backgroundColor: Colors.white,
                             backgroundImage: AssetImage(
                               'assets/sample_photo.png',
                             ),
@@ -67,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(
@@ -77,32 +67,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ListTile(
-                  title: const Text('Email'),
-                  subtitle: const Text('kunaladwani1456@gmail.com'),
-                  leading: const Icon(Icons.email),
+                  title: const Text(
+                    'Email',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  subtitle: const Text('kunaladwani1456@gmail.com',
+                      style: TextStyle(color: Colors.white)),
+                  leading: const Icon(Icons.email, color: Colors.white),
                 ),
                 ListTile(
-                  title: const Text('Phone'),
-                  subtitle: const Text('1234567890'),
-                  leading: const Icon(Icons.phone),
+                  title: const Text('Phone',
+                      style: TextStyle(color: Colors.white)),
+                  subtitle: const Text('1234567890',
+                      style: TextStyle(color: Colors.white)),
+                  leading: const Icon(Icons.phone, color: Colors.white),
                 ),
                 ListTile(
-                  title: const Text('Lokhsabha'),
-                  subtitle: const Text('Ahmedabad'),
-                  leading: const Icon(Icons.location_city),
+                  title: const Text('Lokhsabha',
+                      style: TextStyle(color: Colors.white)),
+                  subtitle: const Text('Ahmedabad',
+                      style: TextStyle(color: Colors.white)),
+                  leading: const Icon(
+                    Icons.location_city,
+                    color: Colors.white,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.grey[800],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
@@ -119,42 +121,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          bottomNavigationBar: GNav(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            backgroundColor: Colors.blue[300]!,
-            activeColor: Colors.black,
-            color: Colors.white,
-            tabBackgroundColor: Colors.blue[100]!,
-            tabMargin: EdgeInsets.all(5),
-            gap: 8,
-            onTabChange: (value) {
-              if (value == 0) {
-                Navigator.pushNamed(context, '/home');
-              }
-              if (value == 1) {
-                Navigator.pushNamed(context, '/search');
-              }
-              if (value == 2) {
-                Navigator.pushNamed(context, '/profile');
-              }
-            },
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
-            iconSize: 24,
-            tabs: [
-              GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
-              GButton(
-                icon: Icons.search,
-                text: 'Search',
-              ),
-              GButton(
-                icon: Icons.person,
-                text: 'Profile',
-              ),
-            ],
-          )),
-    );
+        ));
   }
 }
