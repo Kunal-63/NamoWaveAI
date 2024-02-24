@@ -44,28 +44,30 @@ class OtpScreen extends StatelessWidget {
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Container(
-            margin: const EdgeInsets.only(top: 40),
+            margin: const EdgeInsets.only(top: 20),
             width: double.infinity,
             child: Column(
               children: [
-                const Text(
-                  "Verification",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 40),
-                  child: const Text(
-                    "Enter the code sent to your number",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
+                // const Text(
+                //   "Verification",
+                //   style: TextStyle(
+                //     color: Colors.white,
+                //     fontSize: 28,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
+
+                Image.asset(height: 200, width: 200, 'assets/otp.gif'),
+                // Container(
+                //   margin: const EdgeInsets.symmetric(vertical: 40),
+                //   child: const Text(
+                //     "Enter the code sent to your number",
+                //     style: TextStyle(
+                //       color: Colors.white,
+                //       fontSize: 18,
+                //     ),
+                //   ),
+                // ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 40),
                   child: const Text(

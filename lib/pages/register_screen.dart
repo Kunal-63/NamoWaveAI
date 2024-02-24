@@ -20,16 +20,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Color.fromRGBO(12, 12, 12, 0.8),
-          title: Text('Add a Photo'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                child: Text('Sample Photograph'),
-              ),
-              Container(
-                child: Text('(170 x 200 px)'),
-              ),
               SizedBox(height: 10.0),
               Container(
                   child: Image.asset(

@@ -53,8 +53,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     right: 0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: images.map((url) {
-                        int index = images.indexOf(url);
+                      children: images.map((images) {
+                        int index = images.indexOf(images);
                         return Container(
                           width: 8.0,
                           height: 8.0,

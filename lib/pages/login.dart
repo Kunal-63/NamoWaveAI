@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
       body: Stack(
         children: [
           Expanded(
@@ -70,18 +71,39 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned(
             top: 20,
             right: 10,
-            child: TextButton(
-              child: Text(
-                'Skip Login >',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  decoration: TextDecoration.underline,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                surfaceTintColor: Colors.transparent,
+                foregroundColor: Colors.transparent,
+                disabledBackgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(45.0),
                 ),
               ),
               onPressed: () {
                 Navigator.pushNamed(context, '/home');
               },
+              child: Container(
+                child: Row(
+                  children: [
+                    Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    SizedBox(width: 5.0),
+                    Icon(
+                      LineAwesomeIcons.fast_forward,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           Positioned(

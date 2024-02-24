@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "537029510876",
+    "project_id": "theog-401ad",
+    "storage_bucket": "theog-401ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537029510876:android:310329c56e18edc7699619",
+        "android_client_info": {
+          "package_name": "com.example.theog"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP_jizFSdeypduxOu6mzKzymGDcbw60rg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

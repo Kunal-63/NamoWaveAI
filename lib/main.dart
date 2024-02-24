@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:theog/pages/ProfilePicture.dart';
 import 'package:theog/pages/home_screen.dart';
 // import 'package:theog/pages/landing_screen.dart';
 // import 'package:theog/pages/landing_screen.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/otp': (context) => OtpScreen(),
         '/home': (context) => HomeScreen(),
         '/search': (context) => SearchScreen(),
+        'profile-picture': (context) => ProfilePictureScreen(),
       },
     );
   }
