@@ -19,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Color.fromRGBO(12, 12, 12, 0.8),
           title: Text('Add a Photo'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -32,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               SizedBox(height: 10.0),
               Container(
                   child: Image.asset(
-                'assets/sample_photo.png',
+                'assets/sample.gif',
                 fit: BoxFit.cover,
               )),
               SizedBox(
@@ -162,14 +163,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromRGBO(12, 12, 12, 1),
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -197,14 +198,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Text(
                       'Skip',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                         fontSize: 16.0,
                       ),
                     ),
                     SizedBox(width: 5.0),
                     Icon(
                       LineAwesomeIcons.fast_forward,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   ],
                 ),
@@ -275,20 +276,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             labelText: 'Full Name',
                             labelStyle: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -312,21 +313,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.bubble_chart,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             labelText: 'Political Party',
                             hintText: 'Select your political party',
                             labelStyle: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -341,20 +342,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               LineAwesomeIcons.briefcase,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             labelText: 'Position',
                             labelStyle: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -369,20 +370,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             labelText: 'Lokhsabha Constituency',
                             labelStyle: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             border: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Colors.black,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -457,7 +458,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Text('Register'),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.all(20),
-                            primary: Colors.blue,
+                            backgroundColor: Colors.grey[800],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),

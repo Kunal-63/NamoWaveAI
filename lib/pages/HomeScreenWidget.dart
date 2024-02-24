@@ -65,7 +65,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: _currentIndex == index
-                                ? Colors.blue
+                                ? Colors.grey[800]
                                 : Colors.grey[300],
                           ),
                         );
@@ -96,6 +96,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -198,6 +199,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -300,6 +302,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -402,6 +405,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -504,6 +508,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -606,6 +611,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -735,6 +741,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -837,6 +844,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -939,6 +947,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ),

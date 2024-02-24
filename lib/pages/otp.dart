@@ -14,7 +14,7 @@ class OtpScreen extends StatelessWidget {
         color: Colors.black,
       ),
       decoration: BoxDecoration(
-        color: Colors.blue.shade100,
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.transparent),
       ),
@@ -27,14 +27,14 @@ class OtpScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromRGBO(12, 12, 12, 1),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -51,7 +51,7 @@ class OtpScreen extends StatelessWidget {
                 const Text(
                   "Verification",
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                   ),
@@ -61,7 +61,7 @@ class OtpScreen extends StatelessWidget {
                   child: const Text(
                     "Enter the code sent to your number",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
@@ -71,7 +71,7 @@ class OtpScreen extends StatelessWidget {
                   child: const Text(
                     "+93 744 795 640",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
@@ -81,7 +81,7 @@ class OtpScreen extends StatelessWidget {
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: defaultPinTheme.decoration!.copyWith(
-                      border: Border.all(color: Colors.green),
+                      border: Border.all(color: Colors.grey),
                     ),
                   ),
                   onCompleted: (pin) => debugPrint(pin),
@@ -92,7 +92,7 @@ class OtpScreen extends StatelessWidget {
                   child: const Text(
                     "Resend OTP",
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.grey,
                       fontSize: 18,
                     ),
                   ),
@@ -107,6 +107,7 @@ class OtpScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 20),
                   ),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[800],
                     padding: const EdgeInsets.all(20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
