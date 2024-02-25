@@ -8,11 +8,14 @@ import 'package:theog/pages/otp.dart';
 import 'package:theog/pages/ProfileScreenWidget.dart';
 import 'package:theog/pages/register_screen.dart';
 import 'package:theog/pages/SearchScreenWidget.dart';
+import 'package:firebase_core/firebase_core.dart';
 // import 'package:tesing/pages/landing_screen.dart';
 //
 // import 'package:ssip/pages/first.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(const MyApp());
 }
 
