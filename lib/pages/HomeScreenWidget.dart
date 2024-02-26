@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:theog/pages/LokhsabhaScreen.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   const HomeScreenWidget({super.key});
@@ -11,12 +12,45 @@ class HomeScreenWidget extends StatefulWidget {
 class _HomeScreenWidgetState extends State<HomeScreenWidget> {
   @override
   Widget build(BuildContext context) {
+    List LokhSabhaList = [
+      'Ahmedabad',
+      'Amreli',
+      'Anand',
+      'Banaskantha',
+      'Bharuch',
+      'Bhavnagar',
+      'Dahod',
+      'Dang',
+      'Gandhinagar',
+      'Jamnagar',
+      'Junagadh',
+      'Kheda',
+      'Kutch',
+      'Mehsana',
+      'Narmada',
+      'Navsari',
+      'Panchmahal',
+      'Patan',
+      'Porbandar',
+      'Rajkot',
+      'Sabarkantha',
+      'Surat',
+      'Surendranagar',
+      'Tapi',
+      'Vadodara',
+      'Valsad'
+    ];
+
     final List<String> images = [
       'assets/landing1.png',
       'assets/landing2.png',
       'assets/landing3.png',
     ];
     int _currentIndex = 0;
+
+    // Shuffle the Lokh Sabha List to ensure randomness
+    LokhSabhaList.shuffle();
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -44,59 +78,86 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   );
                 },
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text('Lokhsabha',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              ]),
               Column(
-                children: List.generate(26, (index) {
-                  int containerNumber = index + 1;
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Lokh Sabha $containerNumber',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                children: List.generate(
+                  LokhSabhaList.length ~/
+                      2, // Adjust this to display half the Lokh Sabhas
+                  (index) {
+                    int containerNumber = index * 2;
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Navigate to the new screen with the corresponding Lokh Sabha number
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LokhSabhaScreen(
+                                  lokhSabhaName: LokhSabhaList[containerNumber],
                                 ),
                               ),
-                            ),
-                          ),
-                          Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Lokh Sabha ${containerNumber + 1}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 150,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${LokhSabhaList[containerNumber]}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              Container(
+                                width: 150,
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '${LokhSabhaList[containerNumber + 1]}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  );
-                }),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ],
           ),
