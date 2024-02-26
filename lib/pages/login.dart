@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -39,15 +40,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<Map<String, dynamic>> sendOtpAPI(String phoneNumber) async {
-    final response = await http.post(
-      Uri.parse('http://192.168.1.13:8000/send_otp'),
-      body: {'phone_number': phoneNumber},
-    );
+  sendOtp(String phoneNumber) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.13:8000/send_otp'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({'phone_number': phoneNumber}),
+      );
 
-    return response.statusCode == 200
-        ? {'message': 'OTP sent successfully'}
-        : {'message': 'Unable to send OTP', 'error': 'INVALID_NUMBER'};
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+
+        // Check if 'error' is not null before accessing its properties
+        if (responseData['error'] != null) {
+          _showInvalidNumberPopup(
+              responseData['message'], responseData['error']);
+        } else {
+          Navigator.pushNamed(context, '/otp');
+        }
+      } else {
+        print('Failed to send OTP. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error sending OTP: $e');
+      _showInvalidNumberPopup(
+        'Failed to send OTP. Please try again later.',
+        'SERVER_ERROR',
+      );
+    }
   }
 
   @override
@@ -182,19 +205,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          final response =
-                              await sendOtpAPI(_phoneNumberController.text);
-
-                          if (response['error'] == 'INVALID_NUMBER') {
-                            _showInvalidNumberPopup(
-                                response['message'], response['error']);
-                          } else {
-                            Navigator.pushNamed(context, '/otp');
-                          }
+                          sendOtp(_phoneNumberController.text);
                         } else {
                           _showInvalidNumberPopup(
-                              'Please enter a valid 10-digit phone number.',
-                              'INVALID_NUMBER');
+                            'Please enter a valid 10-digit phone number.',
+                            'INVALID_NUMBER',
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:theog/pages/ProfilePicture.dart';
 import 'package:theog/pages/home_screen.dart';
-
+import 'dart:io';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
 import 'package:theog/pages/ProfileScreenWidget.dart';
@@ -33,6 +33,15 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
 
 class AnimatedSplash extends StatefulWidget {
   @override
