@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,13 +19,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _showInvalidNumberPopup() {
+  void _showInvalidNumberPopup(String message, String error) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Invalid Number'),
-          content: Text('Please enter a valid 10-digit phone number.'),
+          title: Text('Error'),
+          content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
@@ -36,6 +37,17 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       },
     );
+  }
+
+  Future<Map<String, dynamic>> sendOtpAPI(String phoneNumber) async {
+    final response = await http.post(
+      Uri.parse('http://192.168.1.13:8000/send_otp'),
+      body: {'phone_number': phoneNumber},
+    );
+
+    return response.statusCode == 200
+        ? {'message': 'OTP sent successfully'}
+        : {'message': 'Unable to send OTP', 'error': 'INVALID_NUMBER'};
   }
 
   @override
@@ -136,6 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               value.length != 10) {
                             return 'Please enter a valid 10-digit phone number.';
                           }
+
                           return null;
                         },
                         decoration: InputDecoration(
@@ -167,15 +180,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 20.0),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.pushNamed(context, '/otp');
+                          final response =
+                              await sendOtpAPI(_phoneNumberController.text);
+
+                          if (response['error'] == 'INVALID_NUMBER') {
+                            _showInvalidNumberPopup(
+                                response['message'], response['error']);
+                          } else {
+                            Navigator.pushNamed(context, '/otp');
+                          }
                         } else {
-                          _showInvalidNumberPopup();
+                          _showInvalidNumberPopup(
+                              'Please enter a valid 10-digit phone number.',
+                              'INVALID_NUMBER');
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({Key? key}) : super(key: key);
@@ -102,7 +103,7 @@ class OtpScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/register');
+                    // Navigator.pushNamed(context, '/register');
                   },
                   child: const Text(
                     "Verify",
