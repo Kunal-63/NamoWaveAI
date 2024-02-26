@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:theog/data_provider.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 class OtpScreen extends StatelessWidget {
@@ -7,6 +8,8 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String phoneNumber =
+        ModalRoute.of(context)!.settings.arguments as String;
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 60,
@@ -71,8 +74,8 @@ class OtpScreen extends StatelessWidget {
                 // ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 40),
-                  child: const Text(
-                    "+93 744 795 640",
+                  child: Text(
+                    "+91 ${phoneNumber}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+// import 'package:provider/provider.dart';
+// import 'package:theog/data_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -58,7 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
           _showInvalidNumberPopup(
               responseData['message'], responseData['error']);
         } else {
-          Navigator.pushNamed(context, '/otp');
+          // Provider.of<PhoneNumberProvider>(context, listen: false).phoneNumber =
+          //     phoneNumber;
+          Navigator.pushNamed(context, '/otp', arguments: phoneNumber);
         }
       } else {
         print('Failed to send OTP. Status code: ${response.statusCode}');
