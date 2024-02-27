@@ -99,22 +99,22 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                         SizedBox(
                           height: 10,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            // Navigate to the new screen with the corresponding Lokh Sabha number
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LokhSabhaScreen(
-                                  lokhSabhaName: LokhSabhaList[containerNumber],
-                                ),
-                              ),
-                            );
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LokhSabhaScreen(
+                                      lokhSabhaName:
+                                          LokhSabhaList[containerNumber],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
                                 width: 150,
                                 height: 150,
                                 decoration: BoxDecoration(
@@ -131,7 +131,20 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                   ),
                                 ),
                               ),
-                              Container(
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LokhSabhaScreen(
+                                      lokhSabhaName:
+                                          LokhSabhaList[containerNumber + 1],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
                                 width: 150,
                                 height: 150,
                                 decoration: BoxDecoration(
@@ -148,8 +161,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 10,

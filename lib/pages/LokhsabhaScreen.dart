@@ -91,10 +91,15 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Image.asset(
-                      'assets/treding1.jpg',
-                      width: 150,
-                      height: 150,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/imageEditor');
+                      },
+                      child: Image.asset(
+                        'assets/treding1.jpg',
+                        width: 150,
+                        height: 150,
+                      ),
                     ),
                     Image.asset(
                       'assets/trending2.jpg',
