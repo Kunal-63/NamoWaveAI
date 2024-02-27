@@ -46,15 +46,60 @@ class _ImageEditorState extends State<ImageEditor> {
             children: [
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Crop'),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                  ),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey[800]!),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.crop),
+                  ],
+                ),
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Filter'),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Icon(Icons.filter),
+                ]),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                  ),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey[800]!),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text('Rotate'),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Icon(Icons.rotate_right),
+                ]),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                  ),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.grey[800]!),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -65,9 +110,10 @@ class _ImageEditorState extends State<ImageEditor> {
             child: Text(
               'More Templates',
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold),
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           SizedBox(
@@ -157,20 +203,33 @@ class _ImageEditorState extends State<ImageEditor> {
             height: 20,
           ),
           ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                (Set<MaterialState> states) {
-                  if (states.contains(MaterialState.pressed)) {
-                    return Colors.grey[800];
-                  }
-                  return Colors.grey[800]; // Return null for default state
-                },
-              ),
-            ),
             onPressed: () {},
-            child: Text(
-              'Download',
-              style: TextStyle(fontSize: 24),
+            child: Padding(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.download),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text('Save'),
+                  ],
+                )),
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              ),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.grey[800]!),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              shadowColor: MaterialStateProperty.all<Color>(Colors.grey[800]!),
+              elevation:
+                  MaterialStateProperty.resolveWith<double?>((states) => 15.0),
             ),
           ),
         ],
