@@ -1,15 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:theog/data_provider.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
+  // Function to handle OTP verification
+  void verifyOtp(String enteredOtp, String receivedOtp, BuildContext context) {
+    if (receivedOtp == enteredOtp) {
+      Navigator.pushReplacementNamed(context, '/register');
+    } else {
+      showInvalidOtpSnackBar(context);
+    }
+  }
+
+  // Function to show SnackBar for invalid OTP
+  void showInvalidOtpSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Invalid OTP"),
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        backgroundColor: Colors.grey[700],
+        elevation: 6,
+      ),
+    );
+  }
+
+  // Function to resend OTP
+  Future<void> resendOtp(String phoneNumber, BuildContext context) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.5:8000/resend_otp'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({'phone_number': phoneNumber}),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        Navigator.pushReplacementNamed(
+          context,
+          '/otp',
+          arguments: {
+            'phoneNumber': phoneNumber,
+            'receivedOtp': responseData['otp'],
+          },
+        );
+      } else {
+        print('Failed to resend OTP. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error resending OTP: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String phoneNumber =
-        ModalRoute.of(context)!.settings.arguments as String;
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String phoneNumber = arguments['phoneNumber'];
+    final String receivedOtp = arguments['receivedOtp'];
+    final String enteredOtp = '';
+
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 60,
@@ -23,6 +80,7 @@ class OtpScreen extends StatelessWidget {
         border: Border.all(color: Colors.transparent),
       ),
     );
+
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -52,30 +110,11 @@ class OtpScreen extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                // const Text(
-                //   "Verification",
-                //   style: TextStyle(
-                //     color: Colors.white,
-                //     fontSize: 28,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-
-                Image.asset(height: 200, width: 200, 'assets/otp.gif'),
-                // Container(
-                //   margin: const EdgeInsets.symmetric(vertical: 40),
-                //   child: const Text(
-                //     "Enter the code sent to your number",
-                //     style: TextStyle(
-                //       color: Colors.white,
-                //       fontSize: 18,
-                //     ),
-                //   ),
-                // ),
+                Image.asset('assets/otp.gif', height: 200, width: 200),
                 Container(
                   margin: const EdgeInsets.only(bottom: 40),
                   child: Text(
-                    "+91 ${phoneNumber}",
+                    "+91 $phoneNumber",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -84,17 +123,22 @@ class OtpScreen extends StatelessWidget {
                 ),
                 Pinput(
                   length: 6,
+                  controller: TextEditingController(
+                    text: enteredOtp,
+                  ),
                   defaultPinTheme: defaultPinTheme,
                   focusedPinTheme: defaultPinTheme.copyWith(
                     decoration: defaultPinTheme.decoration!.copyWith(
                       border: Border.all(color: Colors.grey),
                     ),
                   ),
-                  onCompleted: (pin) => debugPrint(pin),
+                  onCompleted: (pin) => verifyOtp(pin, receivedOtp, context),
                 ),
                 const SizedBox(height: 20),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await resendOtp(phoneNumber, context);
+                  },
                   child: const Text(
                     "Resend OTP",
                     style: TextStyle(
@@ -106,7 +150,7 @@ class OtpScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Navigator.pushNamed(context, '/register');
+                    verifyOtp(enteredOtp, receivedOtp, context);
                   },
                   child: const Text(
                     "Verify",

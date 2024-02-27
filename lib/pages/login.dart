@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   sendOtp(String phoneNumber) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.13:8000/send_otp'),
+        Uri.parse('http://192.168.1.5:8000/send_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -62,7 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           // Provider.of<PhoneNumberProvider>(context, listen: false).phoneNumber =
           //     phoneNumber;
-          Navigator.pushNamed(context, '/otp', arguments: phoneNumber);
+          Navigator.pushNamed(
+            context,
+            '/otp',
+            arguments: {
+              'phoneNumber': phoneNumber,
+              'receivedOtp': responseData['otp'],
+            },
+          );
         }
       } else {
         print('Failed to send OTP. Status code: ${response.statusCode}');
