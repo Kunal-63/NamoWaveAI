@@ -1,239 +1,114 @@
 import 'package:flutter/material.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'dart:typed_data';
 
 class ImageEditor extends StatefulWidget {
-  const ImageEditor({super.key});
+  const ImageEditor({Key? key}) : super(key: key);
 
   @override
   State<ImageEditor> createState() => _ImageEditorState();
 }
 
 class _ImageEditorState extends State<ImageEditor> {
+  ScreenshotController screenshotController = ScreenshotController();
+
   @override
   Widget build(BuildContext context) {
-    double Imageheight = MediaQuery.of(context).size.height * 0.45;
-    double Imagewidth = MediaQuery.of(context).size.width * 0.8;
-
     return Scaffold(
       backgroundColor: Color.fromRGBO(12, 12, 12, 1),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: Container(
-              height: Imageheight,
-              width: Imagewidth,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage('assets/treding1.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Center(
+        child: Screenshot(
+          controller: screenshotController,
+          child: Stack(
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.grey[800]!),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.crop),
-                  ],
-                ),
+              Image.asset(
+                'assets/trending2.jpg',
+                fit: BoxFit.cover,
+                width: 400,
+                height: 400,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Icon(Icons.filter),
-                ]),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.grey[800]!),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+              Positioned(
+                right: 25,
+                bottom: 0,
+                child: ClipPath(
+                  clipper: BorderClipper(),
+                  child: Container(
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Color(
+                              0xFF3B5998), // Replace with the color of the clothes
+                          width: 18.0,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Icon(Icons.rotate_right),
-                ]),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 25),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.grey[800]!),
-                  shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  child: Image.asset(
+                    'assets/sample_photo.png',
+                    width: 150,
+                    height: 150,
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            child: Text(
-              'More Templates',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('assets/treding1.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('assets/trending2.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('assets/trending3.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('assets/trending4.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('assets/trending5.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.download),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text('Save'),
-                  ],
-                )),
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all<EdgeInsets>(
-                EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              ),
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.grey[800]!),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-              ),
-              shadowColor: MaterialStateProperty.all<Color>(Colors.grey[800]!),
-              elevation:
-                  MaterialStateProperty.resolveWith<double?>((states) => 15.0),
-            ),
-          ),
-        ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _saveImage(),
+        tooltip: 'Save Image',
+        child: Icon(Icons.download),
       ),
     );
+  }
+
+  Future<void> _saveImage() async {
+    try {
+      final imageBytes = await screenshotController.capture();
+      await ImageGallerySaver.saveImage(Uint8List.fromList(imageBytes!));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Image saved to gallery'),
+      ));
+    } catch (e) {
+      print('Error saving image: $e');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error saving image'),
+      ));
+    }
+  }
+}
+
+class BorderClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.moveTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, size.height - 18); // Adjust the curvature here
+    path.quadraticBezierTo(
+        size.width, size.height, size.width - 18, size.height);
+    path.lineTo(0, size.height);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

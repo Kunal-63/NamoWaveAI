@@ -42,6 +42,9 @@ dependencies:
   dotted_border: ^2.1.0
   http: ^1.1.0
   provider: ^6.1.1
+  image_gallery_saver: ^2.0.3
+  screenshot: ^2.1.0
+  image: ^3.3.0
 
 
 dev_dependencies:
