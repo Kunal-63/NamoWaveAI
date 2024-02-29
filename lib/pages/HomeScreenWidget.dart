@@ -48,9 +48,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     ];
     int _currentIndex = 0;
 
-    // Shuffle the Lokh Sabha List to ensure randomness
-    LokhSabhaList.shuffle();
-
     return SingleChildScrollView(
       child: Column(
         children: [

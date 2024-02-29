@@ -33,7 +33,7 @@ class OtpScreen extends StatelessWidget {
   Future<void> resendOtp(String phoneNumber, BuildContext context) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.5:8000/resend_otp'),
+        Uri.parse('http://192.168.29.141:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
