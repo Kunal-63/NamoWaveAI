@@ -14,16 +14,14 @@ class LoginRequest(BaseModel):
 
 @app.post("/send_otp")
 async def send_otp(request: Request, login_request: LoginRequest):
-    # print(f"Received request: {request.url}, {request.headers}, {await request.json()}")
     phone_number = login_request.phone_number
     
-    # Validate phone number (add more robust validation as needed)
     if not phone_number.isdigit() or len(phone_number) != 10:
         raise HTTPException(status_code=400, detail="Invalid phone number")
     global otp
     otp = str(random.randint(100000, 999999))
     print(f"OTP: {otp}")
-    # return {"message": "OTP sent successfully", "error": None}
+
     return {"otp": otp, "error": None}
 
 @app.post("/resend_otp")
