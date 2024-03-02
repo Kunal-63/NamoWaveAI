@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:theog/pages/ImageEditor.dart';
 import 'package:theog/pages/ProfilePicture.dart';
-import 'package:theog/pages/crop.dart';
+// import 'package:theog/pages/crop.dart';
 import 'package:theog/pages/home_screen.dart';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/search': (context) => SearchScreen(),
         '/profile-picture': (context) => ProfilePictureScreen(),
         '/imageEditor': (context) => ImageEditor(),
-        '/crop': (context) => CropPage(title: '')
+        // '/crop': (context) => CropPage(title: '')
       },
     );
   }

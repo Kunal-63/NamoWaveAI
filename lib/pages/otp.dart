@@ -33,7 +33,7 @@ class OtpScreen extends StatelessWidget {
   Future<void> resendOtp(String phoneNumber, BuildContext context) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.202.99:8000/resend_otp'),
+        Uri.parse('http://192.168.0.38:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -84,12 +84,12 @@ class OtpScreen extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/otp_background.png'),
+          image: AssetImage('assets/otp/background.jpg'),
           fit: BoxFit.cover,
         ),
       ),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(12, 12, 12, 1),
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -154,10 +154,10 @@ class OtpScreen extends StatelessWidget {
                   },
                   child: const Text(
                     "Verify",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[800],
+                    backgroundColor: Colors.white,
                     padding: const EdgeInsets.all(20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

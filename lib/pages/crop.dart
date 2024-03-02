@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +7,18 @@ import 'package:image_picker/image_picker.dart';
 
 class CropPage extends StatefulWidget {
   final String title;
+  final String fullname;
+  final String party;
+  final String position;
+  final String lokhsabha;
 
   const CropPage({
     Key? key,
     required this.title,
+    required this.fullname,
+    required this.party,
+    required this.lokhsabha,
+    required this.position,
   }) : super(key: key);
 
   @override
@@ -24,31 +31,39 @@ class _CropPageState extends State<CropPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
-      appBar: !kIsWeb
-          ? AppBar(
-              title: Text(widget.title),
-              backgroundColor: Colors.transparent,
-            )
-          : null,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (kIsWeb)
-            Padding(
-              padding: const EdgeInsets.all(kIsWeb ? 24.0 : 16.0),
-              child: Text(
-                widget.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .displayMedium!
-                    .copyWith(color: Theme.of(context).highlightColor),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/registration/background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
+        appBar: !kIsWeb
+            ? AppBar(
+                title: Text(widget.title),
+                backgroundColor: Colors.transparent,
+              )
+            : null,
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (kIsWeb)
+              Padding(
+                padding: const EdgeInsets.all(kIsWeb ? 24.0 : 16.0),
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displayMedium!
+                      .copyWith(color: Theme.of(context).highlightColor),
+                ),
               ),
-            ),
-          Expanded(child: _body()),
-        ],
+            Expanded(child: _body()),
+          ],
+        ),
       ),
     );
   }

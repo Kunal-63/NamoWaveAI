@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
   final List<String> images = [
     'assets/landing/image1.jpg',
     'assets/landing/image2.jpg',
@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   sendOtp(String phoneNumber) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.202.99:8000/send_otp'),
+        Uri.parse('http://192.168.0.38:8000/send_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
