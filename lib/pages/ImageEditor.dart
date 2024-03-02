@@ -15,65 +15,66 @@ class _ImageEditorState extends State<ImageEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+    return Container(
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(12, 12, 12, 1),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
-      ),
-      body: Center(
-        child: Screenshot(
-          controller: screenshotController,
-          child: Stack(
-            children: [
-              Image.asset(
-                'assets/trending2.jpg',
-                fit: BoxFit.cover,
-                width: 400,
-                height: 400,
-              ),
-              Positioned(
-                right: 25,
-                bottom: 0,
-                child: ClipPath(
-                  clipper: BorderClipper(),
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Color(
-                              0xFF3B5998), // Replace with the color of the clothes
-                          width: 18.0,
+        body: Center(
+          child: Screenshot(
+            controller: screenshotController,
+            child: Stack(
+              children: [
+                Image.asset(
+                  'assets/trending2.jpg',
+                  fit: BoxFit.cover,
+                  width: 400,
+                  height: 400,
+                ),
+                Positioned(
+                  right: 25,
+                  bottom: 0,
+                  child: ClipPath(
+                    clipper: BorderClipper(),
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color(0xFF3B5998),
+                            width: 18.0,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  child: Image.asset(
-                    'assets/sample_photo.png',
-                    width: 150,
-                    height: 150,
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    child: Image.asset(
+                      'assets/sample_photo.png',
+                      width: 150,
+                      height: 150,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _saveImage(),
-        tooltip: 'Save Image',
-        child: Icon(Icons.download),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _saveImage(),
+          tooltip: 'Save Image',
+          child: Icon(Icons.download),
+        ),
       ),
     );
   }

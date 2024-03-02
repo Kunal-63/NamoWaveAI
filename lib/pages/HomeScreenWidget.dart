@@ -42,9 +42,9 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     ];
 
     final List<String> images = [
-      'assets/landing1.png',
-      'assets/landing2.png',
-      'assets/landing3.png',
+      'assets/home/1.jpg',
+      'assets/home/2.jpg',
+      'assets/home/3.jpg',
     ];
     int _currentIndex = 0;
 
