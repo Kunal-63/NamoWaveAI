@@ -12,9 +12,9 @@ class LokhSabhaScreen extends StatefulWidget {
 
 class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
   final List<String> images = [
-    'assets/landing1.png',
-    'assets/landing2.png',
-    'assets/landing3.png',
+    'assets/home/home1.jpg',
+    'assets/home/home2.jpg',
+    'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
 
@@ -36,7 +36,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
         ),
         title: Center(
           child: Text(
-            '${widget.lokhSabhaName} - Lokh Sabha',
+            '${widget.lokhSabhaName}',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -78,7 +78,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                   height: 20,
                 ),
                 Text(
-                  'Lokh Sabha Templates',
+                  'Templates',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

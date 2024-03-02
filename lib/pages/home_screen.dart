@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:theog/pages/HomeScreenWidget.dart';
-import 'package:theog/pages/ProfileScreenWidget.dart';
 import 'package:theog/pages/SearchScreenWidget.dart';
-
-// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:theog/pages/ProfileScreenWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,45 +20,65 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   static List<String> images = [
-    'assets/landing1.png',
-    'assets/landing2.png',
-    'assets/landing3.png',
+    'assets/home/image1.jpg',
+    'assets/home/image2.jpg',
+    'assets/home/image3.jpg',
   ];
   int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: GNav(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          backgroundColor: Colors.transparent,
-          activeColor: Colors.white,
-          color: Colors.white,
-          tabBackgroundColor: Colors.grey[700]!,
-          tabMargin: EdgeInsets.all(5),
-          gap: 8,
-          onTabChange: (value) {
-            setState(() {
-              _selectedIndex = value;
-            });
-          },
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
-          iconSize: 24,
-          tabs: [
-            GButton(
-              icon: Icons.home,
-              text: 'Home',
+      backgroundColor: Color.fromRGBO(18, 18, 18, 0.7),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              images[_currentIndex],
+              fit: BoxFit.cover,
             ),
-            GButton(
-              icon: Icons.search,
-              text: 'Search',
-            ),
-            GButton(
-              icon: Icons.person,
-              text: 'Profile',
-            ),
-          ],
-        ));
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: _widgetOptions.elementAt(_selectedIndex),
+              ),
+              GNav(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                activeColor: Colors.white,
+                backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
+                color: Colors.white,
+                tabBackgroundColor: Colors.grey[700]!,
+                tabMargin: EdgeInsets.all(5),
+                gap: 8,
+                onTabChange: (value) {
+                  setState(() {
+                    _selectedIndex = value;
+                    _currentIndex = value;
+                  });
+                },
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+                iconSize: 24,
+                tabs: [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.search,
+                    text: 'Search',
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: 'Profile',
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

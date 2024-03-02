@@ -33,7 +33,7 @@ class OtpScreen extends StatelessWidget {
   Future<void> resendOtp(String phoneNumber, BuildContext context) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.38:8000/resend_otp'),
+        Uri.parse('http://localhost:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -89,7 +89,7 @@ class OtpScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.7),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,

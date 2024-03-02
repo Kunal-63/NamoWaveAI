@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   sendOtp(String phoneNumber) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.38:8000/send_otp'),
+        Uri.parse('http://localhost:8000/send_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -160,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 10.0),
                       Container(
                         child: TextFormField(
+                          style: TextStyle(color: Colors.white),
                           keyboardType: TextInputType.phone,
                           controller: _phoneNumberController,
                           validator: (value) {

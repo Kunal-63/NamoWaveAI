@@ -164,7 +164,9 @@ class _CropPageState extends State<CropPage> {
           Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                
+              },
               backgroundColor: const Color(0xFFBC764A),
               tooltip: 'done',
               child: const Icon(Icons.check_box),
@@ -217,6 +219,10 @@ class _CropPageState extends State<CropPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 24.0),
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.grey[100],
+                  ),
                   onPressed: () {
                     _uploadImage();
                   },

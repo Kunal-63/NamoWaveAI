@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-// import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -13,43 +11,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/login_background.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Scaffold(
-          backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-          body: SingleChildScrollView(
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/login1.png',
-                      height: 190,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                SizedBox(
+                  height: 100,
+                ),
+                Container(
+                  height: 85,
+                  width: 100,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage(
+                      'assets/sample_photo.png',
                     ),
-                    Positioned(
-                        top: 147.5,
-                        child: Container(
-                          height: 85,
-                          width: 100,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(
-                              'assets/sample_photo.png',
-                            ),
-                          ),
-                        ))
-                  ],
+                  ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 15,
                 ),
                 const Text(
                   'John Doe',
@@ -73,50 +56,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                ListTile(
-                  title: const Text(
-                    'Email',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: const Text('kunaladwani1456@gmail.com',
-                      style: TextStyle(color: Colors.white)),
-                  leading: const Icon(Icons.email, color: Colors.white),
-                ),
-                ListTile(
-                  title: const Text('Phone',
-                      style: TextStyle(color: Colors.white)),
-                  subtitle: const Text('1234567890',
-                      style: TextStyle(color: Colors.white)),
-                  leading: const Icon(Icons.phone, color: Colors.white),
-                ),
-                ListTile(
-                  title: const Text('Lokhsabha',
-                      style: TextStyle(color: Colors.white)),
-                  subtitle: const Text('Ahmedabad',
-                      style: TextStyle(color: Colors.white)),
-                  leading: const Icon(
-                    Icons.location_city,
-                    color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(right: 15, left: 15),
+                  child: Column(
+                    children: [
+                      _buildListTile(
+                        title: 'Party',
+                        subtitle: 'BJP',
+                        icon: Icons.flag,
+                      ),
+                      _buildListTile(
+                        title: 'Phone',
+                        subtitle: '1234567890',
+                        icon: Icons.phone,
+                      ),
+                      _buildListTile(
+                        title: 'Lokhsabha',
+                        subtitle: 'Ahmedabad',
+                        icon: Icons.location_city,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[800],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text(
-                      'Edit Profile',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildButton('Edit Profile', () {
+                      // Edit profile button pressed
+                    }),
+                    _buildButton('Sign Out', () {
+                      // Sign out button pressed
+                    }),
+                  ],
                 ),
                 SizedBox(
                   height: 20,
@@ -124,6 +99,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  Widget _buildListTile({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.white, // Add a white border
+          ),
+        ),
+      ),
+      child: ListTile(
+        title: Text(
+          title,
+          style: TextStyle(color: Colors.white),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: Icon(icon, color: Colors.white),
+        horizontalTitleGap: 0,
+      ),
+    );
+  }
+
+  Widget _buildButton(String text, VoidCallback onPressed) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
+      onPressed: onPressed,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 18, color: Colors.black),
+        ),
+      ),
+    );
   }
 }

@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.7),
         appBar: AppBar(
           title: Text(widget.title),
           elevation: 0.0,

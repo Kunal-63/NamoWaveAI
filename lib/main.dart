@@ -87,13 +87,13 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/splash.png'),
+          image: AssetImage('assets/splash/background.jpg'),
           fit: BoxFit.cover,
         ),
       ),
       child: Scaffold(
         backgroundColor:
-            Color.fromRGBO(18, 18, 18, 1), // Set the background color
+            Color.fromRGBO(12, 12, 12, 0.8), // Set the background color
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
