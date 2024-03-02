@@ -19,7 +19,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 100,
+                  height: 70,
                 ),
                 Container(
                   height: 85,
@@ -65,10 +65,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         subtitle: 'BJP',
                         icon: Icons.flag,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       _buildListTile(
                         title: 'Phone',
                         subtitle: '1234567890',
                         icon: Icons.phone,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       _buildListTile(
                         title: 'Lokhsabha',
@@ -111,12 +117,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.white, // Add a white border
+          border: Border.all(
+            color: Colors.white,
           ),
-        ),
-      ),
+          borderRadius: BorderRadius.circular(10.0)),
       child: ListTile(
         title: Text(
           title,

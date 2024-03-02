@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
                 color: Colors.white,
                 tabBackgroundColor: Colors.grey[700]!,
-                tabMargin: EdgeInsets.all(5),
+                tabMargin: EdgeInsets.all(10),
                 gap: 8,
                 onTabChange: (value) {
                   setState(() {
@@ -57,8 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _currentIndex = value;
                   });
                 },
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 9),
                 iconSize: 24,
                 tabs: [
                   GButton(

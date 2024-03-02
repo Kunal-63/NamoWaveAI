@@ -77,29 +77,29 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           children: [
             Column(
               children: [
-                CarouselSlider.builder(
-                  itemCount: images.length,
-                  options: CarouselOptions(
-                    height: MediaQuery.of(context).size.height * 0.5,
-                    aspectRatio: 1 / 1,
-                    viewportFraction: 1.0,
-                    autoPlay: true,
-                    enlargeCenterPage: false,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                  ),
-                  itemBuilder:
-                      (BuildContext context, int index, int realIndex) {
-                    return Image.asset(
-                      images[index],
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                ),
+                // CarouselSlider.builder(
+                //   itemCount: images.length,
+                //   options: CarouselOptions(
+                //     height: MediaQuery.of(context).size.height * 0.5,
+                //     aspectRatio: 1 / 1,
+                //     viewportFraction: 1.0,
+                //     autoPlay: true,
+                //     enlargeCenterPage: false,
+                //     onPageChanged: (index, reason) {
+                //       setState(() {
+                //         _currentIndex = index;
+                //       });
+                //     },
+                //   ),
+                //   itemBuilder:
+                //       (BuildContext context, int index, int realIndex) {
+                //     return Image.asset(
+                //       images[index],
+                //       width: MediaQuery.of(context).size.width,
+                //       fit: BoxFit.cover,
+                //     );
+                //   },
+                // ),
                 SizedBox(
                   height: 20,
                 ),
