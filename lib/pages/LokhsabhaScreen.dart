@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:theog/pages/border.dart';
 
 class LokhSabhaScreen extends StatefulWidget {
   final String lokhSabhaName;
@@ -17,6 +18,14 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
     'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
+
+  final List<String> templates = [
+    'assets/templates/template1.png',
+    'assets/templates/template1.png',
+    'assets/templates/template2.png',
+    'assets/templates/template2.png',
+    // Add more paths as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -93,50 +102,65 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/imageEditor');
-                        },
-                        child: Image.asset(
-                          'assets/treding1.jpg',
-                          width: 150,
-                          height: 150,
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/trending2.jpg',
-                        width: 150,
-                        height: 150,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Image.asset(
-                        'assets/trending3.jpg',
-                        width: 150,
-                        height: 150,
-                      ),
-                      Image.asset(
-                        'assets/trending4.jpg',
-                        width: 150,
-                        height: 150,
-                      ),
-                    ],
+                  // Use a ListView.builder to dynamically create containers
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: (templates.length / 2).ceil(),
+                    itemBuilder: (context, index) {
+                      int startIndex = index * 2;
+                      int endIndex = startIndex + 1;
+
+                      return Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              if (startIndex < templates.length)
+                                _buildImageContainer(
+                                    context, templates[startIndex]),
+                              if (endIndex < templates.length)
+                                _buildImageContainer(
+                                    context, templates[endIndex]),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20,
-              ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageContainer(BuildContext context, String imagePath) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BorderScreen(
+              imagePath: imagePath,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: 150,
+        width: 150,
+        margin: EdgeInsets.symmetric(horizontal: 8), // Adjust spacing here
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
           ),
         ),
       ),

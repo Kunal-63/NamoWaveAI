@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:theog/pages/ImageEditor.dart';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
 

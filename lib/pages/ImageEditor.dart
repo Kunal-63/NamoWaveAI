@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'dart:typed_data';
 
 class ImageEditor extends StatefulWidget {
-  const ImageEditor({Key? key}) : super(key: key);
+  final String imagePath;
+  const ImageEditor({Key? key, required this.imagePath}) : super(key: key);
 
   @override
   State<ImageEditor> createState() => _ImageEditorState();
@@ -15,83 +17,230 @@ class _ImageEditorState extends State<ImageEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Color.fromRGBO(12, 12, 12, 1),
         appBar: AppBar(
+          title: Text(''),
+          elevation: 0.0,
           backgroundColor: Colors.transparent,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-        ),
-        body: Center(
-          child: Screenshot(
-            controller: screenshotController,
-            child: Stack(
-              children: [
-                Image.asset(
-                  'assets/trending2.jpg',
-                  fit: BoxFit.cover,
-                  width: 400,
-                  height: 400,
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                surfaceTintColor: Colors.transparent,
+                foregroundColor: Colors.transparent,
+                disabledBackgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(45.0),
                 ),
-                Positioned(
-                  right: 25,
-                  bottom: 0,
-                  child: ClipPath(
-                    clipper: BorderClipper(),
-                    child: Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Color(0xFF3B5998),
-                            width: 18.0,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+              child: Container(
+                child: Row(
+                  children: [
+                    Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    SizedBox(width: 5.0),
+                    Icon(
+                      LineAwesomeIcons.fast_forward,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Large box with an image
+              Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Screenshot(
+                  controller: screenshotController,
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        widget.imagePath,
+                        fit: BoxFit.cover,
+                        width: 400,
+                        height: 400,
+                      ),
+                      Positioned(
+                        right: 25,
+                        bottom: 0,
+                        child: ClipPath(
+                          clipper: BorderClipper(),
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Color(
+                                      0xFF3B5998), // Replace with the color of the clothes
+                                  width: 18.0,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: Container(
+                          child: Image.asset(
+                            'assets\jitu.jpg',
+                            width: 150,
+                            height: 150,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    child: Image.asset(
-                      'assets/sample_photo.png',
-                      width: 150,
-                      height: 150,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _saveImage(),
-          tooltip: 'Save Image',
-          child: Icon(Icons.download),
-        ),
-      ),
-    );
-  }
+              ),
 
-  Future<void> _saveImage() async {
-    try {
-      final imageBytes = await screenshotController.capture();
-      await ImageGallerySaver.saveImage(Uint8List.fromList(imageBytes!));
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Image saved to gallery'),
-      ));
-    } catch (e) {
-      print('Error saving image: $e');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error saving image'),
-      ));
-    }
+              SizedBox(
+                height: 30,
+              ),
+
+              // Three round buttons
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: Colors.grey[800],
+                  tooltip: 'Crop',
+                  child: const Icon(Icons.crop),
+                ),
+                FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: Colors.grey[800],
+                  tooltip: 'color',
+                  child: const Icon(Icons.color_lens_outlined),
+                ),
+                FloatingActionButton(
+                  onPressed: () {},
+                  tooltip: 'Save Image',
+                  child: Icon(Icons.download),
+                ),
+              ]),
+
+              SizedBox(
+                height: 30,
+              ),
+
+              // Horizontally scrollable list of small boxes
+              Container(
+                height: 200,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        color: Colors.grey,
+                        child: Center(
+                          child: Text('Item 1'),
+                        ),
+                      ),
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        color: Colors.grey,
+                        child: Center(
+                          child: Text('Item 2'),
+                        ),
+                      ),
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        color: Colors.grey,
+                        child: Center(
+                          child: Text('Item 3'),
+                        ),
+                      ),
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        color: Colors.grey,
+                        child: Center(
+                          child: Text('Item 4'),
+                        ),
+                      ),
+                      Container(
+                        height: 150,
+                        width: 150,
+                        margin: EdgeInsets.symmetric(horizontal: 5),
+                        color: Colors.grey,
+                        child: Center(
+                          child: Text('Item 5'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 30,
+              ),
+
+              Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                ),
+              ),
+
+              SizedBox(
+                height: 30,
+              ),
+
+              // Big rectangular-shaped button
+              Container(
+                width: 400,
+                margin: EdgeInsets.all(10),
+                child: FloatingActionButton(
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(),
+                  backgroundColor: Colors.grey[800],
+                  child: Text('Save'),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
 

@@ -116,11 +116,11 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> images = [
-      'assets/home/home1.jpg',
-      'assets/home/home2.jpg',
-      'assets/home/home3.jpg',
-    ];
+    // final List<String> images = [
+    //   'assets/home/home1.jpg',
+    //   'assets/home/home2.jpg',
+    //   'assets/home/home3.jpg',
+    // ];
     int _currentIndex = 0;
 
     return Scaffold(

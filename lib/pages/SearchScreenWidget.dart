@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:theog/pages/LokhsabhaScreen.dart';
-import 'package:theog/pages/HomeScreenWidget.dart'; // Import your HomeScreen file
+import 'package:theog/pages/HomeScreenWidget.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -16,8 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    filteredLokhSabhaList = HomeScreenWidget
-        .LokhSabhaList; // Reference to Lokh Sabha list from HomeScreen
+    filteredLokhSabhaList = HomeScreenWidget.LokhSabhaList;
   }
 
   void filterLokhSabhas(String query) {
@@ -29,97 +28,94 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
-        body: Container(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 50,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
+      body: Container(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(45),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(45),
-                  ),
-                  child: TextFormField(
-                    controller: searchController,
-                    onChanged: filterLokhSabhas,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      fillColor: Color.fromRGBO(100, 100, 100, 0.5),
-                      filled: true,
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      ),
-                      hintText: 'Enter keyword you want to search for',
-                      hintStyle: TextStyle(
-                        color: Colors.grey[300],
-                      ),
-                      labelText: 'Search',
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
+                child: TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  controller: searchController,
+                  onChanged: filterLokhSabhas,
+                  keyboardType: TextInputType.text,
+                  decoration: InputDecoration(
+                    fillColor: Color.fromRGBO(100, 100, 100, 0.5),
+                    filled: true,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    hintText: 'Enter keyword you want to search for',
+                    hintStyle: TextStyle(
+                      color: Colors.grey[300],
+                    ),
+                    labelText: 'Search',
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                // Conditionally render the elements based on the search query
-                searchController.text.isEmpty
-                    ? Container() // Empty container when nothing is typed
-                    : Expanded(
-                        child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // 2 containers in a row
-                            crossAxisSpacing: 10.0, // space between containers
-                            mainAxisSpacing: 10.0, // space between rows
-                          ),
-                          itemCount: filteredLokhSabhaList.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LokhSabhaScreen(
-                                      lokhSabhaName:
-                                          filteredLokhSabhaList[index],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/places/${filteredLokhSabhaList[index].toUpperCase()}.png',
-                                    ),
-                                    fit: BoxFit.cover,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              searchController.text.isEmpty
+                  ? Container()
+                  : Expanded(
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
+                        ),
+                        itemCount: filteredLokhSabhaList.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LokhSabhaScreen(
+                                    lokhSabhaName: filteredLokhSabhaList[index],
                                   ),
                                 ),
-                                child: Center(
-                                  child: Text(''),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/places/${filteredLokhSabhaList[index].toUpperCase()}.png',
+                                  ),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                              child: Center(
+                                child: Text(''),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-              ],
-            ),
+                    ),
+            ],
           ),
         ),
       ),
