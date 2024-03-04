@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:theog/pages/home_screen.dart';
+import 'package:theog/pages/register_screen.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
   // Function to handle OTP verification
-  void verifyOtp(String enteredOtp, String receivedOtp, BuildContext context) {
-    if (receivedOtp == enteredOtp) {
-      Navigator.pushReplacementNamed(context, '/register');
-    } else {
-      showInvalidOtpSnackBar(context);
-    }
-  }
 
   // Function to show SnackBar for invalid OTP
   void showInvalidOtpSnackBar(BuildContext context) {
@@ -80,6 +75,53 @@ class OtpScreen extends StatelessWidget {
         border: Border.all(color: Colors.transparent),
       ),
     );
+
+    Future<void> DataVerifyingInSQL(String phoneNumber) async {
+      final response = await http.post(
+        Uri.parse('http://localhost:8000/verify_otp'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({'phone_number': phoneNumber}),
+      );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        if (responseData['error'] == 'Found user') {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomeScreen(
+                        hphoneNumber: phoneNumber,
+                        hfullname: responseData['fullname'],
+                        hposition: responseData['position'],
+                        hparty: responseData['party'],
+                        hlokhsabha: responseData['Lokhsabha'],
+                      )));
+          return;
+        } else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RegisterScreen(
+                        title: '',
+                        phoneNumber: phoneNumber,
+                      )));
+        }
+      } else {
+        print('Failed to verify OTP. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    }
+
+    void verifyOtp(
+        String enteredOtp, String receivedOtp, BuildContext context) {
+      if (receivedOtp == enteredOtp) {
+        DataVerifyingInSQL(phoneNumber);
+      } else {
+        showInvalidOtpSnackBar(context);
+      }
+    }
 
     return Container(
       decoration: const BoxDecoration(

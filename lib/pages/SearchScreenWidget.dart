@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:theog/pages/LokhsabhaScreen.dart';
+import 'package:theog/pages/HomeScreenWidget.dart'; // Import your HomeScreen file
 
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  TextEditingController searchController = TextEditingController();
+  List filteredLokhSabhaList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredLokhSabhaList = HomeScreenWidget
+        .LokhSabhaList; // Reference to Lokh Sabha list from HomeScreen
+  }
+
+  void filterLokhSabhas(String query) {
+    setState(() {
+      filteredLokhSabhaList = HomeScreenWidget.LokhSabhaList.where((lokSabha) =>
+          lokSabha.toLowerCase().contains(query.toLowerCase())).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +45,8 @@ class SearchScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(45),
                   ),
                   child: TextFormField(
+                    controller: searchController,
+                    onChanged: filterLokhSabhas,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       fillColor: Color.fromRGBO(100, 100, 100, 0.5),
@@ -46,7 +71,53 @@ class SearchScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                // Conditionally render the elements based on the search query
+                searchController.text.isEmpty
+                    ? Container() // Empty container when nothing is typed
+                    : Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // 2 containers in a row
+                            crossAxisSpacing: 10.0, // space between containers
+                            mainAxisSpacing: 10.0, // space between rows
+                          ),
+                          itemCount: filteredLokhSabhaList.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LokhSabhaScreen(
+                                      lokhSabhaName:
+                                          filteredLokhSabhaList[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      'assets/places/${filteredLokhSabhaList[index].toUpperCase()}.png',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(''),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
               ],
             ),
           ),

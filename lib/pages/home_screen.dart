@@ -5,7 +5,20 @@ import 'package:theog/pages/SearchScreenWidget.dart';
 import 'package:theog/pages/ProfileScreenWidget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String hphoneNumber;
+  final String hposition;
+  final String hparty;
+  final String hfullname;
+  final String hlokhsabha;
+
+  const HomeScreen({
+    Key? key,
+    required this.hphoneNumber,
+    required this.hposition,
+    required this.hfullname,
+    required this.hparty,
+    required this.hlokhsabha,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,11 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  static List<Widget> _widgetOptions = [
-    HomeScreenWidget(),
-    SearchScreen(),
-    ProfileScreen(),
-  ];
+  late List<Widget> _widgetOptions;
 
   static List<String> images = [
     'assets/home/image1.jpg',
@@ -25,6 +34,25 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/home/image3.jpg',
   ];
   int _currentIndex = 0;
+
+  late final String phoneNumberNull;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _widgetOptions = [
+      HomeScreenWidget(),
+      SearchScreen(),
+      ProfileScreen(
+        fullname: widget.hfullname,
+        position: widget.hposition,
+        party: widget.hparty,
+        phoneNumber: widget.hphoneNumber,
+        lokhsabha: widget.hlokhsabha,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +79,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 tabBackgroundColor: Colors.grey[700]!,
                 tabMargin: EdgeInsets.all(10),
                 gap: 8,
+                selectedIndex: 0,
                 onTabChange: (value) {
                   setState(() {
                     _selectedIndex = value;
                     _currentIndex = value;
                   });
                 },
-                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 9),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                 iconSize: 24,
                 tabs: [
                   GButton(

@@ -4,10 +4,12 @@ import 'crop.dart';
 
 class RegisterScreen extends StatefulWidget {
   final String title;
+  final String phoneNumber;
 
   const RegisterScreen({
     Key? key,
     required this.title,
+    required this.phoneNumber,
   }) : super(key: key);
 
   @override
@@ -20,6 +22,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController controller3 = TextEditingController();
 
   String? _selectedParty;
+  @override
+  void initState() {
+    super.initState();
+    controller3.text = widget.phoneNumber;
+  }
 
   bool areFieldsFilled() {
     return controller1.text.isNotEmpty &&

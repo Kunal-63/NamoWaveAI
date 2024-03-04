@@ -78,6 +78,7 @@ flutter:
     - assets/places/
     - assets/flags/
     - assets/splash/
+    - assets/ahmedabad/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

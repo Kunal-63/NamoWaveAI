@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:theog/pages/home_screen.dart';
 // import 'package:provider/provider.dart';
 // import 'package:theog/data_provider.dart';
 
@@ -114,7 +116,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(
+                          hphoneNumber: 'Guest Number',
+                          hfullname: 'Guest',
+                          hposition: 'Guest',
+                          hparty: 'Guest Party',
+                          hlokhsabha: 'Guest Lokhsabha',
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     child: Row(

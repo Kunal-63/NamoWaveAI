@@ -59,7 +59,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                   CarouselSlider.builder(
                     itemCount: images.length,
                     options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.3,
                       aspectRatio: 1 / 1,
                       viewportFraction: 1.0,
                       autoPlay: true,

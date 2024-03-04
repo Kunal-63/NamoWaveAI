@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:theog/pages/ImageEditor.dart';
-import 'package:theog/pages/ProfilePicture.dart';
-// import 'package:theog/pages/crop.dart';
-import 'package:theog/pages/home_screen.dart';
+// import 'package:theog/pages/ImageEditor.dart';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
-import 'package:theog/pages/ProfileScreenWidget.dart';
-import 'package:theog/pages/register_screen.dart';
-import 'package:theog/pages/SearchScreenWidget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,16 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => AnimatedSplash(),
         '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(
-              title: 'Register',
-            ),
-        '/profile': (context) => ProfileScreen(),
         '/otp': (context) => OtpScreen(),
-        '/home': (context) => HomeScreen(),
-        '/search': (context) => SearchScreen(),
-        '/profile-picture': (context) => ProfilePictureScreen(),
-        '/imageEditor': (context) => ImageEditor(),
-        // '/crop': (context) => CropPage(title: '')
       },
     );
   }

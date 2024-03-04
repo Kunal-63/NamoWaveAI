@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final String fullname;
+  final String position;
+  final String party;
+  final String phoneNumber;
+  final String lokhsabha;
+  const ProfileScreen({
+    Key? key,
+    required this.fullname,
+    required this.position,
+    required this.party,
+    required this.phoneNumber,
+    required this.lokhsabha,
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -27,15 +39,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
                     backgroundImage: AssetImage(
-                      'assets/sample_photo.png',
+                      widget.fullname == "Guest" || widget.fullname == "guest"
+                          ? 'assets/dummy.jpg'
+                          : 'assets/sample_photo_user.png',
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                const Text(
-                  'John Doe',
+                Text(
+                  widget.fullname,
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -45,8 +59,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  'President',
+                Text(
+                  widget.position,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -62,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       _buildListTile(
                         title: 'Party',
-                        subtitle: 'BJP',
+                        subtitle: widget.party,
                         icon: Icons.flag,
                       ),
                       SizedBox(
@@ -70,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       _buildListTile(
                         title: 'Phone',
-                        subtitle: '1234567890',
+                        subtitle: widget.phoneNumber,
                         icon: Icons.phone,
                       ),
                       SizedBox(
@@ -78,7 +92,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       _buildListTile(
                         title: 'Lokhsabha',
-                        subtitle: 'Ahmedabad',
+                        subtitle: widget.lokhsabha,
                         icon: Icons.location_city,
                       ),
                     ],
@@ -91,12 +105,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _buildButton('Edit Profile', () {
-                      // Edit profile button pressed
-                    }),
-                    _buildButton('Sign Out', () {
-                      // Sign out button pressed
-                    }),
+                    if (widget.fullname == "Guest" ||
+                        widget.fullname == "guest")
+                      _buildButton('Sign In', () {
+                        // Sign in button pressed
+                      })
+                    else ...[
+                      _buildButton('Edit Profile', () {
+                        // Edit profile button pressed
+                      }),
+                      _buildButton('Sign Out', () {
+                        // Sign out button pressed
+                      }),
+                    ],
                   ],
                 ),
                 SizedBox(
