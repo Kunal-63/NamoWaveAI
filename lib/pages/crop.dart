@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:theog/pages/home_screen.dart';
 
 class CropPage extends StatefulWidget {
   final String title;
@@ -164,7 +167,19 @@ class _CropPageState extends State<CropPage> {
           Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                // _sendDataToFastAPI();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                          hphoneNumber: "7990187279",
+                          hposition: "President",
+                          hfullname: "Kunal Adwani",
+                          hparty: "BJP",
+                          hlokhsabha: "Ahmedabad")),
+                );
+              },
               backgroundColor: const Color(0xFFBC764A),
               tooltip: 'done',
               child: const Icon(Icons.check_box),
@@ -172,6 +187,44 @@ class _CropPageState extends State<CropPage> {
           ),
       ],
     );
+  }
+
+  Future<void> _sendDataToFastAPI() async {
+    try {
+      String base64Image = "";
+
+      if (_croppedFile != null) {
+        // Encode the image file as a base64 string
+        List<int> imageBytes = await File(_croppedFile!.path).readAsBytes();
+        base64Image = base64Encode(imageBytes);
+      }
+
+      final response = await http.post(
+        Uri.parse('YOUR_FASTAPI_ENDPOINT'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'fullname': widget.fullname,
+          'party': widget.party,
+          'lokhsabha': widget.lokhsabha,
+          'position': widget.position,
+          'image': base64Image, // Include the base64 encoded image
+          // Add more data fields as needed
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Handle successful response
+        print('Data sent successfully');
+      } else {
+        // Handle error response
+        print('Error sending data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Exception while sending data: $e');
+    }
   }
 
   Widget _uploaderCard() {

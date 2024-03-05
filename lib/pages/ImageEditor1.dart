@@ -4,15 +4,16 @@ import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
-class ImageEditor extends StatefulWidget {
+class ImageEditorScamsw extends StatefulWidget {
   final String imagePath;
-  const ImageEditor({Key? key, required this.imagePath}) : super(key: key);
+  const ImageEditorScamsw({Key? key, required this.imagePath})
+      : super(key: key);
 
   @override
-  State<ImageEditor> createState() => _ImageEditorState();
+  State<ImageEditorScamsw> createState() => _ImageEditorScamswState();
 }
 
-class _ImageEditorState extends State<ImageEditor> {
+class _ImageEditorScamswState extends State<ImageEditorScamsw> {
   ScreenshotController screenshotController = ScreenshotController();
 
   @override
@@ -115,8 +116,8 @@ class _ImageEditorState extends State<ImageEditor> {
                         child: Container(
                           child: Image.asset(
                             'assets/modified_image_b.png',
-                            width: 75,
-                            height: 75,
+                            width: 150,
+                            height: 150,
                           ),
                         ),
                       ),

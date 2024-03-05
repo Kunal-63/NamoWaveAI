@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     backgroundColor: Colors.white,
                     backgroundImage: AssetImage(
                       widget.fullname == "Guest" || widget.fullname == "guest"
-                          ? 'assets/dummy.jpg'
+                          ? 'assets/images1.png'
                           : 'assets/sample_photo_user.png',
                     ),
                   ),
