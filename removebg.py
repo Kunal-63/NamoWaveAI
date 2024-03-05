@@ -1,13 +1,18 @@
-from rembg import remove
-from PIL import Image
+import requests
+
+def RemoveBg(path, output_path):
+    response = requests.post(
+        'https://api.remove.bg/v1.0/removebg',
+        files={'image_file': open(path, 'rb')},
+        data={'size': 'auto'},
+        headers={'X-Api-Key': 'Cg4Pm8uwsWYM6xirf8TsVXdr'},
+    )
+    if response.status_code == requests.codes.ok:
+        with open(output_path, 'wb') as out:
+            out.write(response.content)
+    else:
+        print("Error:", response.status_code, response.text)
 
 
-
-def remove_bg(input_path, output_path):
-    input_image = Image.open(input_path)
-    output_image = remove(input_image)
-    output_image.save(output_path)
-
-
-if __name__ == "__main__":
-    remove_bg("./posts/treding1.jpg", "./posts/trendig1.png")
+if __name__ == '__main__':
+    RemoveBg('profiles/7990187279.jpg', 'profiles/7990187279.png')
