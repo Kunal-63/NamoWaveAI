@@ -14,7 +14,7 @@ class CropPage extends StatefulWidget {
   final String party;
   final String position;
   final String lokhsabha;
-
+  final String phoneNumber;
   const CropPage({
     Key? key,
     required this.title,
@@ -22,6 +22,7 @@ class CropPage extends StatefulWidget {
     required this.party,
     required this.lokhsabha,
     required this.position,
+    required this.phoneNumber,
   }) : super(key: key);
 
   @override
@@ -47,6 +48,7 @@ class _CropPageState extends State<CropPage> {
             ? AppBar(
                 title: Text(widget.title),
                 backgroundColor: Colors.transparent,
+                elevation: 0.0,
               )
             : null,
         body: Column(
@@ -168,17 +170,7 @@ class _CropPageState extends State<CropPage> {
             padding: const EdgeInsets.only(left: 25.0),
             child: FloatingActionButton(
               onPressed: () {
-                // _sendDataToFastAPI();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                          hphoneNumber: "7990187279",
-                          hposition: "President",
-                          hfullname: "Kunal Adwani",
-                          hparty: "BJP",
-                          hlokhsabha: "Ahmedabad")),
-                );
+                _sendDataToFastAPI();
               },
               backgroundColor: const Color(0xFFBC764A),
               tooltip: 'done',
@@ -200,23 +192,34 @@ class _CropPageState extends State<CropPage> {
       }
 
       final response = await http.post(
-        Uri.parse('YOUR_FASTAPI_ENDPOINT'),
+        Uri.parse('http://192.168.1.16:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
+          'phone_number': widget.phoneNumber,
           'fullname': widget.fullname,
           'party': widget.party,
           'lokhsabha': widget.lokhsabha,
           'position': widget.position,
-          'image': base64Image, // Include the base64 encoded image
-          // Add more data fields as needed
+          'image': base64Image,
         }),
       );
 
       if (response.statusCode == 200) {
-        // Handle successful response
         print('Data sent successfully');
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                  hphoneNumber: widget.phoneNumber,
+                  hposition: widget.position,
+                  hfullname: widget.fullname,
+                  hparty: widget.party,
+                  hlokhsabha: widget.lokhsabha)),
+        );
       } else {
         // Handle error response
         print('Error sending data. Status code: ${response.statusCode}');
@@ -322,10 +325,36 @@ class _CropPageState extends State<CropPage> {
     ;
   }
 
+  void _showSampleImagePopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Sample Image'),
+          content: Image.asset(
+            'assets/registration/sample_image.gif',
+            height: 150.0,
+            width: 150.0,
+            fit: BoxFit.cover,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> _uploadImage() async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
+      _showSampleImagePopup();
       setState(() {
         _pickedFile = pickedFile;
       });

@@ -28,7 +28,7 @@ class OtpScreen extends StatelessWidget {
   Future<void> resendOtp(String phoneNumber, BuildContext context) async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8000/resend_otp'),
+        Uri.parse('http://192.168.1.16:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -78,7 +78,7 @@ class OtpScreen extends StatelessWidget {
 
     Future<void> DataVerifyingInSQL(String phoneNumber) async {
       final response = await http.post(
-        Uri.parse('http://localhost:8000/verify_otp'),
+        Uri.parse('http://192.168.1.16:8000/verify_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -87,7 +87,7 @@ class OtpScreen extends StatelessWidget {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print(responseData);
-        if (responseData['error'] == 'Found user') {
+        if (responseData['message'] == 'user found') {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -96,7 +96,7 @@ class OtpScreen extends StatelessWidget {
                         hfullname: responseData['fullname'],
                         hposition: responseData['position'],
                         hparty: responseData['party'],
-                        hlokhsabha: responseData['Lokhsabha'],
+                        hlokhsabha: responseData['lokhsabha'],
                       )));
           return;
         } else {

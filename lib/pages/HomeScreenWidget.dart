@@ -5,6 +5,7 @@ import 'package:theog/pages/LokhsabhaScreen.dart';
 class HomeScreenWidget extends StatefulWidget {
   const HomeScreenWidget({
     super.key,
+    required String backgroundImage,
   });
 
   static List LokhSabhaImages = [

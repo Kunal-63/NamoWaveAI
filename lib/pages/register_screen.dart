@@ -25,7 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    controller3.text = widget.phoneNumber;
   }
 
   bool areFieldsFilled() {
@@ -353,6 +352,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     party: "$_selectedParty",
                                     position: controller2.text,
                                     lokhsabha: controller3.text,
+                                    phoneNumber: widget.phoneNumber,
                                   ),
                                 ),
                               );

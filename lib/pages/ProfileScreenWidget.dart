@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:theog/pages/EditProfileScreen.dart';
+import 'package:theog/pages/login.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String fullname;
@@ -108,14 +110,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     if (widget.fullname == "Guest" ||
                         widget.fullname == "guest")
                       _buildButton('Sign In', () {
-                        // Sign in button pressed
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
                       })
                     else ...[
                       _buildButton('Edit Profile', () {
-                        // Edit profile button pressed
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(
+                                    currentFullname: widget.fullname,
+                                    currentParty: widget.party,
+                                    currentPhoneNumber: widget.phoneNumber,
+                                    currentLokhsabha: widget.lokhsabha,
+                                    currentPosition: widget.position,
+                                    profileURL: 'assets/dummy.jpg',
+                                  )),
+                        );
                       }),
                       _buildButton('Sign Out', () {
-                        // Sign out button pressed
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
                       }),
                     ],
                   ],

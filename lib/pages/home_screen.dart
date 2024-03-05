@@ -33,16 +33,15 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/home/image2.jpg',
     'assets/home/image3.jpg',
   ];
-  int _currentIndex = 0;
-
-  late final String phoneNumberNull;
 
   @override
   void initState() {
     super.initState();
 
     _widgetOptions = [
-      HomeScreenWidget(),
+      HomeScreenWidget(
+        backgroundImage: images[_selectedIndex],
+      ),
       SearchScreen(),
       ProfileScreen(
         fullname: widget.hfullname,
@@ -55,6 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    // Cleanup code here if needed
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -63,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              images[_currentIndex],
+              images[_selectedIndex],
               fit: BoxFit.cover,
             ),
           ),
@@ -79,16 +84,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Colors.white,
                 tabBackgroundColor: Colors.grey[700]!,
                 tabMargin: EdgeInsets.all(10),
-                gap: 8,
+                gap: MediaQuery.of(context).size.width * 0.01,
                 selectedIndex: 0,
                 onTabChange: (value) {
                   setState(() {
                     _selectedIndex = value;
-                    _currentIndex = value;
                   });
                 },
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05,
+                  vertical: MediaQuery.of(context).size.height * 0.02,
+                ),
                 iconSize: 24,
                 tabs: [
                   GButton(
