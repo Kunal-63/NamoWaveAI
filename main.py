@@ -1,12 +1,16 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import random
 import base64
 import mysql.connector as con
-from typing import Optional
+from typing import Optional, List
 from removebg import RemoveBg
+from ColorAI import ColorChangeAI
 import requests
+import os
+from fastapi.staticfiles import StaticFiles
 
 mydb = con.connect(
     host="localhost",
@@ -17,18 +21,20 @@ mydb = con.connect(
 
 
 
+
+
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 otp = ""
-
-profile = {
-    'profile-picture':"assets/dummy.jpg",
-    'full-name': "Guest",
-    'phone-number' : '',
-    'party': '',
-    'lokhsabha':''
-}
-
+app.mount("/templates", StaticFiles(directory="templates"), name="templates")
 class LoginRequest(BaseModel):
     phone_number: str
 
@@ -39,9 +45,13 @@ class UserData(BaseModel):
     lokhsabha: str
     position: str
     image: Optional[str] = None
+
+class ColorChangeModel(BaseModel):
+    phoneNumber: str
+    template_url: str
     
 def upload_image_to_imgbb(image_path: str) -> str:
-    imgbb_api_key = "9ed666bcae79116dea7d068c2aaa3163"  # Replace with your ImgBB API key
+    imgbb_api_key = "9ed666bcae79116dea7d068c2aaa3163" 
 
     with open(image_path, "rb") as image_file:
         encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
@@ -101,11 +111,8 @@ async def process_user_data(user_data: UserData):
         with open("profiles/{}.jpg".format(user_data.phone_number), "wb") as image_file:
             image_file.write(image_bytes)
         RemoveBg("profiles/{}.jpg".format(user_data.phone_number), "profiles/{}.png".format(user_data.phone_number))
-
         image_path = "profiles/{}.png".format(user_data.phone_number)
         imgbb_url = upload_image_to_imgbb(image_path)
-
-        # Update the profile_url with the ImgBB URL
         profile_url = imgbb_url
     
     else:
@@ -127,9 +134,52 @@ async def process_user_data(user_data: UserData):
     mydb.commit()
     return {"fullname":user_data.fullname,"position":user_data.position,"phonenumber":user_data.phone_number,"party":user_data.party,"lokhsabha":user_data.lokhsabha,"profile_url":profile_url, "message": "Data received successfully"}
 
+def template_exists(template_name: str, cur):
+    cur.execute("SELECT template_name FROM templates WHERE template_name = %s", (template_name,))
+    return cur.fetchone() is not None
+
+@app.get("/templates")
+async def get_template_links():
+    template_links = []
+    
+    cur = mydb.cursor()
+    folder_path = "templates"
+    files = os.listdir(folder_path)
+    existing_files = []
+    for file in files:
+        # print("File Name :",file)
+        cur.execute("SELECT template_name from templates WHERE template_name = %s",[file])
+        result = cur.fetchall()
+        # print("Template Name :",result)
+        if len(result) == 0:
+            # print("No template found")
+            file_path = os.path.join(folder_path, file)
+            if os.path.isfile(file_path):  # Ensure it's a file (not a directory)
+                template_link = upload_image_to_imgbb(file_path)
+                cur.execute("INSERT INTO TEMPLATES VALUES(%s,%s)", [file,template_link])
+                mydb.commit()
+        else:
+            pass
+        
+    
+
+    cur.execute("select template_link from templates")
+    results = cur.fetchall()
+    for template_link in results:
+        template_links.append(template_link[0])
+
+    return {"templates_links": template_links}
+
+@app.post("/color_change_template")
+async def color_change_template(template_data: ColorChangeModel):
+    print("Color Changing...")
+    print(template_data)
+    uploaded_url, rgb_values = ColorChangeAI(template_data.phoneNumber, template_data.template_url)
+    r, g, b = int(rgb_values[0]), int(rgb_values[1]), int(rgb_values[2])
+    return {"uploaded_url": uploaded_url, "r": r, "g": g, "b": b}
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
