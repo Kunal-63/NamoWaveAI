@@ -8,12 +8,20 @@ import 'package:flutter/services.dart';
 
 class ImageEditor extends StatefulWidget {
   final String imagePath;
+  final String fullname;
   final String profileURL;
+  final int rValue;
+  final int gValue;
+  final int bValue;
 
   const ImageEditor({
     Key? key,
     required this.imagePath,
     required this.profileURL,
+    required this.rValue,
+    required this.gValue,
+    required this.bValue,
+    required this.fullname,
   }) : super(key: key);
 
   @override
@@ -117,7 +125,7 @@ class _ImageEditorState extends State<ImageEditor> {
                     controller: screenshotController,
                     child: Stack(
                       children: [
-                        Image.asset(
+                        Image.network(
                           widget.imagePath,
                           fit: BoxFit.cover,
                           width: 400,
@@ -125,27 +133,42 @@ class _ImageEditorState extends State<ImageEditor> {
                         ),
                         Positioned(
                           right: 0,
-                          bottom: -75,
-                          child: Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
                           bottom: 0,
                           child: Container(
                             width: 400,
                             height: 10,
-                            color: Colors.blue,
+                            color: Color.fromRGBO(
+                                widget.rValue, widget.gValue, widget.bValue, 1),
                           ),
                         ),
                         Positioned(
-                            right: -20,
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            padding: EdgeInsets.only(top: 7, left: 10),
+                            width: 185,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                              ),
+                              color: Color.fromRGBO(widget.rValue,
+                                  widget.gValue, widget.bValue, 1),
+                            ),
+                            child: Text(
+                              widget.fullname,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                            // color: Color.fromRGBO(
+                            //     widget.rValue, widget.gValue, widget.bValue, 1),
+                          ),
+                        ),
+                        Positioned(
+                            right: -40,
                             bottom: -20,
                             child: Image.network(
                               widget.profileURL,
@@ -197,29 +220,6 @@ class _ImageEditorState extends State<ImageEditor> {
                 ),
 
                 // Horizontally scrollable list of small boxes
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: 300,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        _buildLoremContainer('Lorem Ipsum'),
-                        _buildLoremContainer('Lorem ipsum dolor sit amet'),
-                        _buildLoremContainer(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit'),
-                        _buildLoremContainer(
-                            'Lorem ipsum dolor sit amet, consectetur'),
-                        _buildLoremContainer(
-                            'Lorem ipsum dolor sit amet, consectetur'),
-                      ],
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
               ],
             ),
           ),

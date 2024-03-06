@@ -1,23 +1,122 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:theog/pages/ImageEditor.dart';
-// import 'package:theog/pages/LokhsabhaScreen.dart';
+import 'package:http/http.dart' as http;
 
 class BorderScreen extends StatelessWidget {
   final String imagePath;
   final String profileURL;
+  final String fullname;
+  final String phoneNumber;
+
   BorderScreen({
     Key? key,
     required this.imagePath,
     required this.profileURL,
+    required this.phoneNumber,
+    required this.fullname,
   }) : super(key: key);
 
-  final List borderImages = [
+  final List<String> borderImages = [
     'assets/borders/template1.png',
     'assets/borders/template1.png',
     'assets/borders/template1.png',
     'assets/borders/template1.png',
     'assets/borders/template1.png',
   ];
+
+  Future<Map<String, dynamic>> colorChangeTemplate() async {
+    final apiUrl = 'http://192.168.1.8:8000/color_change_template';
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'phoneNumber': phoneNumber,
+          'template_url': imagePath,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      throw Exception('Failed to load data: $error');
+    }
+  }
+
+  void _onContainerTap(BuildContext context, String imagePath) async {
+    // Show loading indicator
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+      barrierDismissible:
+          false, // To prevent the user from dismissing the dialog
+    );
+
+    try {
+      Map<String, dynamic> result = await colorChangeTemplate();
+
+      print("Result :" + result.toString());
+
+      String uploadedUrl = result['uploaded_url'];
+      int rValue = result['r'];
+      int gValue = result['g'];
+      int bValue = result['b'];
+      // Hide loading indicator
+      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) {
+          // return Container();
+
+          return ImageEditor(
+            profileURL: uploadedUrl,
+            imagePath: imagePath,
+            rValue: rValue,
+            gValue: gValue,
+            bValue: bValue,
+            fullname: fullname,
+          );
+        }),
+      );
+    } catch (error) {
+      // Hide loading indicator
+      Navigator.pop(context);
+
+      // Handle error, e.g., show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $error'),
+        ),
+      );
+    }
+  }
+
+  Widget _buildImageContainer(BuildContext context, String imagePath1) {
+    return GestureDetector(
+      onTap: () => _onContainerTap(context, imagePath),
+      child: Container(
+        width: 150,
+        height: 150,
+        margin: EdgeInsets.all(8), // Add margin for equal spacing
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: Image.asset(imagePath1).image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,66 +141,21 @@ class BorderScreen extends StatelessWidget {
           title: Text('Frames'),
         ),
         body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: (borderImages.length / 2).ceil(),
-                  itemBuilder: (context, index) {
-                    int startIndex = index * 2;
-                    int endIndex = startIndex + 1;
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            if (startIndex < borderImages.length)
-                              _buildImageContainer(
-                                  context, borderImages[startIndex]),
-                            if (endIndex < borderImages.length)
-                              _buildImageContainer(
-                                  context, borderImages[endIndex]),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
+                SizedBox(height: 20),
+                Wrap(
+                  spacing: 8, // Spacing between items
+                  runSpacing: 20, // Spacing between rows
+                  children: [
+                    for (String borderImage in borderImages)
+                      _buildImageContainer(context, borderImage),
+                  ],
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildImageContainer(BuildContext context, String imagePath) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ImageEditor(
-              imagePath: this.imagePath,
-              profileURL: this.profileURL,
-            ),
-          ),
-        );
-      },
-      child: Container(
-        width: 150,
-        height: 150,
-        margin: EdgeInsets.symmetric(horizontal: 8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-            image: Image.asset(imagePath).image,
-            fit: BoxFit.cover,
           ),
         ),
       ),

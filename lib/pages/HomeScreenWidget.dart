@@ -4,10 +4,14 @@ import 'package:theog/pages/LokhsabhaScreen.dart';
 
 class HomeScreenWidget extends StatefulWidget {
   final String profileURL;
+  final String phoneNumber;
+  final String fullname;
   const HomeScreenWidget({
     super.key,
     required String backgroundImage,
     required this.profileURL,
+    required this.phoneNumber,
+    required this.fullname,
   });
 
   static List LokhSabhaImages = [
@@ -187,6 +191,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => LokhSabhaScreen(
+                                          fullname: widget.fullname,
+                                          phoneNumber: widget.phoneNumber,
                                           profileURL: widget.profileURL,
                                           lokhSabhaName:
                                               LokhSabhaList[containerNumber],
@@ -218,6 +224,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => LokhSabhaScreen(
+                                          fullname: widget.fullname,
+                                          phoneNumber: widget.phoneNumber,
                                           profileURL: widget.profileURL,
                                           lokhSabhaName: LokhSabhaList[
                                               containerNumber + 1],
@@ -265,6 +273,8 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => LokhSabhaScreen(
+                                  fullname: widget.fullname,
+                                  phoneNumber: widget.phoneNumber,
                                   profileURL: widget.profileURL,
                                   lokhSabhaName: LokhSabhaList[22],
                                 ),

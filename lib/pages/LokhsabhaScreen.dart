@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:theog/pages/border.dart';
 
 class LokhSabhaScreen extends StatefulWidget {
   final String lokhSabhaName;
   final String profileURL;
+  final String phoneNumber;
+  final String fullname;
 
   LokhSabhaScreen({
     required this.lokhSabhaName,
     required this.profileURL,
+    required this.phoneNumber,
+    required this.fullname,
   });
 
   @override
@@ -22,14 +29,54 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
     'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
+  List<String> templates = []; // List to store template paths
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    // Fetch template paths when the screen initializes
+    _fetchTemplates();
+  }
 
-  final List<String> templates = [
-    'assets/templates/template1.png',
-    'assets/templates/template1.png',
-    'assets/templates/template2.png',
-    'assets/templates/template2.png',
-    // Add more paths as needed
-  ];
+  Future<void> _fetchTemplates() async {
+    try {
+      setState(() {
+        isLoading = true; // Show loading indicator
+      });
+
+      final response = await http.get(
+        Uri.parse('http://192.168.1.8:8000/templates'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print("Data : " + data.toString());
+        // Check if 'templates_links' key exists and its value is not null
+        if (data.containsKey('templates_links') &&
+            data['templates_links'] != null) {
+          setState(() {
+            templates = List<String>.from(data['templates_links']);
+            isLoading = false; // Hide loading indicator
+          });
+        } else {
+          print('Key "templates_links" is null or missing in the response.');
+          setState(() {
+            isLoading = false; // Hide loading indicator
+          });
+        }
+      } else {
+        print('Failed to fetch templates. Status code: ${response.statusCode}');
+        setState(() {
+          isLoading = false; // Hide loading indicator
+        });
+      }
+    } catch (e) {
+      print('Error fetching templates: $e');
+      setState(() {
+        isLoading = false; // Hide loading indicator
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +145,11 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                   Text(
                     'Templates',
                     style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        decoration: TextDecoration.none),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -151,8 +199,10 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => BorderScreen(
+              fullname: widget.fullname,
               profileURL: widget.profileURL,
               imagePath: imagePath,
+              phoneNumber: widget.phoneNumber,
             ),
           ),
         );
@@ -164,7 +214,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: AssetImage(imagePath),
+            image: Image.network(imagePath).image,
             fit: BoxFit.cover,
           ),
         ),
