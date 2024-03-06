@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:theog/pages/LokhsabhaScreen.dart';
 
 class HomeScreenWidget extends StatefulWidget {
+  final String profileURL;
   const HomeScreenWidget({
     super.key,
     required String backgroundImage,
+    required this.profileURL,
   });
 
   static List LokhSabhaImages = [
@@ -185,6 +187,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => LokhSabhaScreen(
+                                          profileURL: widget.profileURL,
                                           lokhSabhaName:
                                               LokhSabhaList[containerNumber],
                                         ),
@@ -215,6 +218,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => LokhSabhaScreen(
+                                          profileURL: widget.profileURL,
                                           lokhSabhaName: LokhSabhaList[
                                               containerNumber + 1],
                                         ),
@@ -261,6 +265,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => LokhSabhaScreen(
+                                  profileURL: widget.profileURL,
                                   lokhSabhaName: LokhSabhaList[22],
                                 ),
                               ),

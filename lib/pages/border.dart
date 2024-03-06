@@ -4,7 +4,12 @@ import 'package:theog/pages/ImageEditor.dart';
 
 class BorderScreen extends StatelessWidget {
   final String imagePath;
-  BorderScreen({Key? key, required this.imagePath}) : super(key: key);
+  final String profileURL;
+  BorderScreen({
+    Key? key,
+    required this.imagePath,
+    required this.profileURL,
+  }) : super(key: key);
 
   final List borderImages = [
     'assets/borders/template1.png',
@@ -83,6 +88,7 @@ class BorderScreen extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => ImageEditor(
               imagePath: this.imagePath,
+              profileURL: this.profileURL,
             ),
           ),
         );

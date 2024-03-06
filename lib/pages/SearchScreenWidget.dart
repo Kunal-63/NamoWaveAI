@@ -3,7 +3,11 @@ import 'package:theog/pages/LokhsabhaScreen.dart';
 import 'package:theog/pages/HomeScreenWidget.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  final String profileURL;
+  const SearchScreen({
+    Key? key,
+    required this.profileURL,
+  }) : super(key: key);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -92,6 +96,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => LokhSabhaScreen(
+                                    profileURL: widget.profileURL,
                                     lokhSabhaName: filteredLokhSabhaList[index],
                                   ),
                                 ),

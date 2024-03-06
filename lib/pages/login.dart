@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _showLoading(); // Show loading indicator
 
       final response = await http.post(
-        Uri.parse('http://192.168.86.99:8000/send_otp'),
+        Uri.parse('http://192.168.1.8:8000/send_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

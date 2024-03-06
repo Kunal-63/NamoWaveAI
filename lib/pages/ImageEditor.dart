@@ -8,8 +8,13 @@ import 'package:flutter/services.dart';
 
 class ImageEditor extends StatefulWidget {
   final String imagePath;
+  final String profileURL;
 
-  const ImageEditor({Key? key, required this.imagePath}) : super(key: key);
+  const ImageEditor({
+    Key? key,
+    required this.imagePath,
+    required this.profileURL,
+  }) : super(key: key);
 
   @override
   State<ImageEditor> createState() => _ImageEditorState();
@@ -119,7 +124,7 @@ class _ImageEditorState extends State<ImageEditor> {
                           height: 400,
                         ),
                         Positioned(
-                          left: 0,
+                          right: 0,
                           bottom: -75,
                           child: Container(
                             width: 80,
@@ -130,6 +135,23 @@ class _ImageEditorState extends State<ImageEditor> {
                             ),
                           ),
                         ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          child: Container(
+                            width: 400,
+                            height: 10,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        Positioned(
+                            right: -20,
+                            bottom: -20,
+                            child: Image.network(
+                              widget.profileURL,
+                              height: 125,
+                              width: 125,
+                            ))
                       ],
                     ),
                   ),

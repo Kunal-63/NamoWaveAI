@@ -4,8 +4,12 @@ import 'package:theog/pages/border.dart';
 
 class LokhSabhaScreen extends StatefulWidget {
   final String lokhSabhaName;
+  final String profileURL;
 
-  LokhSabhaScreen({required this.lokhSabhaName});
+  LokhSabhaScreen({
+    required this.lokhSabhaName,
+    required this.profileURL,
+  });
 
   @override
   State<LokhSabhaScreen> createState() => _LokhSabhaScreenState();
@@ -147,6 +151,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => BorderScreen(
+              profileURL: widget.profileURL,
               imagePath: imagePath,
             ),
           ),
