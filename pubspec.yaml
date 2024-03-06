@@ -45,6 +45,7 @@ dependencies:
   image_gallery_saver: ^2.0.3
   screenshot: ^2.1.0
   image: ^3.3.0
+  esys_flutter_share_plus: ^2.2.0
 
 
 

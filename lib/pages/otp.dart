@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:http/http.dart' as http;
@@ -5,12 +7,16 @@ import 'dart:convert';
 import 'package:theog/pages/home_screen.dart';
 import 'package:theog/pages/register_screen.dart';
 
-class OtpScreen extends StatelessWidget {
+class OtpScreen extends StatefulWidget {
   const OtpScreen({Key? key}) : super(key: key);
 
-  // Function to handle OTP verification
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
 
-  // Function to show SnackBar for invalid OTP
+class _OtpScreenState extends State<OtpScreen> {
+  bool _isLoading = false;
+  // Function to handle OTP verification
   void showInvalidOtpSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -27,8 +33,12 @@ class OtpScreen extends StatelessWidget {
   // Function to resend OTP
   Future<void> resendOtp(String phoneNumber, BuildContext context) async {
     try {
+      setState(() {
+        _isLoading = true;
+      });
+
       final response = await http.post(
-        Uri.parse('http://192.168.1.16:8000/resend_otp'),
+        Uri.parse('http://192.168.86.99:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -51,6 +61,10 @@ class OtpScreen extends StatelessWidget {
       }
     } catch (e) {
       print('Error resending OTP: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -78,7 +92,7 @@ class OtpScreen extends StatelessWidget {
 
     Future<void> DataVerifyingInSQL(String phoneNumber) async {
       final response = await http.post(
-        Uri.parse('http://192.168.1.16:8000/verify_otp'),
+        Uri.parse('http://192.168.86.99:8000/verify_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -97,6 +111,7 @@ class OtpScreen extends StatelessWidget {
                         hposition: responseData['position'],
                         hparty: responseData['party'],
                         hlokhsabha: responseData['lokhsabha'],
+                        profileURL: responseData['profile_url'],
                       )));
           return;
         } else {
@@ -194,10 +209,12 @@ class OtpScreen extends StatelessWidget {
                   onPressed: () {
                     verifyOtp(enteredOtp, receivedOtp, context);
                   },
-                  child: const Text(
-                    "Verify",
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
+                  child: _isLoading
+                      ? CircularProgressIndicator() // Show loading indicator
+                      : const Text(
+                          "Verify",
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                        ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     padding: const EdgeInsets.all(20),
@@ -206,6 +223,16 @@ class OtpScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (_isLoading)
+                  Container(
+                    color: Colors.black.withOpacity(0.5),
+                    child: Center(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),

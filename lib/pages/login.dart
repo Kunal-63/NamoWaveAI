@@ -1,12 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:theog/pages/home_screen.dart';
-// import 'package:provider/provider.dart';
-// import 'package:theog/data_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,15 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // int _currentIndex = 0;
-  final List<String> images = [
-    'assets/landing/image1.jpg',
-    'assets/landing/image2.jpg',
-    'assets/landing/image3.jpg',
-  ];
-
   final TextEditingController _phoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false; // Added loading indicator state
 
   void _showInvalidNumberPopup(String message, String error) {
     showDialog(
@@ -44,10 +37,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  void _showLoading() {
+    setState(() {
+      _isLoading = true;
+    });
+  }
+
+  void _hideLoading() {
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   sendOtp(String phoneNumber) async {
     try {
+      _showLoading(); // Show loading indicator
+
       final response = await http.post(
-        Uri.parse('http://192.168.1.16:8000/send_otp'),
+        Uri.parse('http://192.168.86.99:8000/send_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -57,13 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
 
-        // Check if 'error' is not null before accessing its properties
         if (responseData['error'] != null) {
           _showInvalidNumberPopup(
               responseData['message'], responseData['error']);
         } else {
-          // Provider.of<PhoneNumberProvider>(context, listen: false).phoneNumber =
-          //     phoneNumber;
           Navigator.pushNamed(
             context,
             '/otp',
@@ -83,6 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
         'Failed to send OTP. Please try again later.',
         'SERVER_ERROR',
       );
+    } finally {
+      _hideLoading(); // Hide loading indicator regardless of success or failure
     }
   }
 
@@ -125,6 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           hposition: 'Guest',
                           hparty: 'Guest Party',
                           hlokhsabha: 'Guest Lokhsabha',
+                          profileURL:
+                              'https://www.starpng.com/public/uploads/preview/narendra-modi-png-images-download-21557464012rwdpoyrfso.png',
                         ),
                       ),
                     );
@@ -244,6 +252,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
+            if (_isLoading)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

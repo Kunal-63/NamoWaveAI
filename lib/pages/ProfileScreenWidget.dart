@@ -8,6 +8,7 @@ class ProfileScreen extends StatefulWidget {
   final String party;
   final String phoneNumber;
   final String lokhsabha;
+  final String profileURL;
   const ProfileScreen({
     Key? key,
     required this.fullname,
@@ -15,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
     required this.party,
     required this.phoneNumber,
     required this.lokhsabha,
+    required this.profileURL,
   }) : super(key: key);
 
   @override
@@ -40,11 +42,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: 100,
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    backgroundImage: AssetImage(
-                      widget.fullname == "Guest" || widget.fullname == "guest"
-                          ? 'assets/images1.png'
-                          : 'assets/sample_photo_user.png',
-                    ),
+                    backgroundImage: Image.network(
+                      widget.profileURL,
+                    ).image,
                   ),
                 ),
                 const SizedBox(

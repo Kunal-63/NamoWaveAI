@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'dart:ui';
+
 import 'package:theog/pages/home_screen.dart';
 
 class CropPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class CropPage extends StatefulWidget {
   final String position;
   final String lokhsabha;
   final String phoneNumber;
+
   const CropPage({
     Key? key,
     required this.title,
@@ -32,6 +34,7 @@ class CropPage extends StatefulWidget {
 class _CropPageState extends State<CropPage> {
   XFile? _pickedFile;
   CroppedFile? _croppedFile;
+  bool _isLoading = false; // Added loading indicator state
 
   @override
   Widget build(BuildContext context) {
@@ -44,41 +47,37 @@ class _CropPageState extends State<CropPage> {
       ),
       child: Scaffold(
         backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
-        appBar: !kIsWeb
-            ? AppBar(
-                title: Text(widget.title),
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-              )
-            : null,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+          title: Text(widget.title),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+        body: Stack(
           children: [
-            if (kIsWeb)
-              Padding(
-                padding: const EdgeInsets.all(kIsWeb ? 24.0 : 16.0),
-                child: Text(
-                  widget.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium!
-                      .copyWith(color: Theme.of(context).highlightColor),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  if (_croppedFile != null || _pickedFile != null)
+                    _imageCard()
+                  else
+                    _uploaderCard(),
+                ],
+              ),
+            ),
+            if (_isLoading)
+              Container(
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ),
-            Expanded(child: _body()),
           ],
         ),
       ),
     );
-  }
-
-  Widget _body() {
-    if (_croppedFile != null || _pickedFile != null) {
-      return _imageCard();
-    } else {
-      return _uploaderCard();
-    }
   }
 
   Widget _imageCard() {
@@ -88,12 +87,11 @@ class _CropPageState extends State<CropPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: kIsWeb ? 24.0 : 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Card(
               elevation: 4.0,
               child: Padding(
-                padding: const EdgeInsets.all(kIsWeb ? 24.0 : 16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: _image(),
               ),
             ),
@@ -115,7 +113,7 @@ class _CropPageState extends State<CropPage> {
           maxWidth: 0.8 * screenWidth,
           maxHeight: 0.7 * screenHeight,
         ),
-        child: kIsWeb ? Image.network(path) : Image.file(File(path)),
+        child: Image.file(File(path)),
       );
     } else if (_pickedFile != null) {
       final path = _pickedFile!.path;
@@ -124,7 +122,7 @@ class _CropPageState extends State<CropPage> {
           maxWidth: 0.8 * screenWidth,
           maxHeight: 0.7 * screenHeight,
         ),
-        child: kIsWeb ? Image.network(path) : Image.file(File(path)),
+        child: Image.file(File(path)),
       );
     } else {
       return const SizedBox.shrink();
@@ -181,18 +179,56 @@ class _CropPageState extends State<CropPage> {
     );
   }
 
+  Future<void> _cropImage() async {
+    if (_pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: _pickedFile!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Color.fromRGBO(12, 12, 12, 1),
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true,
+          ),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+          WebUiSettings(
+            context: context,
+            presentStyle: CropperPresentStyle.dialog,
+            boundary: const CroppieBoundary(
+              width: 520,
+              height: 520,
+            ),
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          _croppedFile = croppedFile;
+        });
+      }
+    }
+  }
+
+  // ... (existing code)
+
   Future<void> _sendDataToFastAPI() async {
     try {
       String base64Image = "";
 
       if (_croppedFile != null) {
-        // Encode the image file as a base64 string
         List<int> imageBytes = await File(_croppedFile!.path).readAsBytes();
         base64Image = base64Encode(imageBytes);
       }
 
+      _showLoading();
+
       final response = await http.post(
-        Uri.parse('http://192.168.1.16:8000/process_user_data'),
+        Uri.parse('http://192.168.86.99:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -211,23 +247,43 @@ class _CropPageState extends State<CropPage> {
         final responseData = jsonDecode(response.body);
         print(responseData);
         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomeScreen(
-                  hphoneNumber: widget.phoneNumber,
-                  hposition: widget.position,
-                  hfullname: widget.fullname,
-                  hparty: widget.party,
-                  hlokhsabha: widget.lokhsabha)),
-        );
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen(
+                      hphoneNumber: widget.phoneNumber,
+                      hfullname: responseData['fullname'],
+                      hposition: responseData['position'],
+                      hparty: responseData['party'],
+                      hlokhsabha: responseData['lokhsabha'],
+                      profileURL: responseData['profile_url'],
+                    )));
       } else {
-        // Handle error response
         print('Error sending data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle exceptions
       print('Exception while sending data: $e');
+    } finally {
+      _hideLoading(); // Ensure loading indicator is hidden after response or exception
     }
+  }
+
+  void _showLoading() {
+    setState(() {
+      _isLoading = true;
+    });
+  }
+
+  void _hideLoading() {
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _clear() {
+    setState(() {
+      _pickedFile = null;
+      _croppedFile = null;
+    });
   }
 
   Widget _uploaderCard() {
@@ -238,7 +294,7 @@ class _CropPageState extends State<CropPage> {
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: SizedBox(
-          width: kIsWeb ? 380.0 : 320.0,
+          width: 320.0,
           height: 300.0,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -290,39 +346,15 @@ class _CropPageState extends State<CropPage> {
     );
   }
 
-  Future<void> _cropImage() async {
-    if (_pickedFile != null) {
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: _pickedFile!.path,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
-        uiSettings: [
-          AndroidUiSettings(
-              toolbarTitle: 'Cropper',
-              toolbarColor: Color.fromRGBO(12, 12, 12, 1),
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: true),
-          IOSUiSettings(
-            title: 'Cropper',
-          ),
-          WebUiSettings(
-            context: context,
-            presentStyle: CropperPresentStyle.dialog,
-            boundary: const CroppieBoundary(
-              width: 520,
-              height: 520,
-            ),
-          ),
-        ],
-      );
-      if (croppedFile != null) {
-        setState(() {
-          _croppedFile = croppedFile;
-        });
-      }
+  Future<void> _uploadImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      _showSampleImagePopup();
+      setState(() {
+        _pickedFile = pickedFile;
+      });
     }
-    ;
   }
 
   void _showSampleImagePopup() {
@@ -348,23 +380,5 @@ class _CropPageState extends State<CropPage> {
         );
       },
     );
-  }
-
-  Future<void> _uploadImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      _showSampleImagePopup();
-      setState(() {
-        _pickedFile = pickedFile;
-      });
-    }
-  }
-
-  void _clear() {
-    setState(() {
-      _pickedFile = null;
-      _croppedFile = null;
-    });
   }
 }

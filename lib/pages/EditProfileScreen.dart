@@ -191,7 +191,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _sendDataToFastAPI() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.16:8000/process_user_data'),
+        Uri.parse('http://192.168.86.99:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -216,7 +216,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   hposition: responseData['position'],
                   hfullname: responseData['fullname'],
                   hparty: responseData['party'],
-                  hlokhsabha: responseData['lokhsabha'])),
+                  hlokhsabha: responseData['lokhsabha'],
+                  profileURL: responseData['profile_url'])),
         );
       } else {
         // Handle error response
