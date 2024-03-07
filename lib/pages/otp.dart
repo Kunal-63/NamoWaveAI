@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
       });
 
       final response = await http.post(
-        Uri.parse('http://192.168.0.20:8000/resend_otp'),
+        Uri.parse('http://192.168.1.8:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -91,41 +91,49 @@ class _OtpScreenState extends State<OtpScreen> {
     );
 
     Future<void> DataVerifyingInSQL(String phoneNumber) async {
-      final response = await http.post(
-        Uri.parse('http://192.168.0.20:8000/verify_otp'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({'phone_number': phoneNumber}),
-      );
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        print(responseData);
-        if (responseData['message'] == 'user found') {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HomeScreen(
-                        hphoneNumber: phoneNumber,
-                        hfullname: responseData['fullname'],
-                        hposition: responseData['position'],
-                        hparty: responseData['party'],
-                        hlokhsabha: responseData['lokhsabha'],
-                        profileURL: responseData['profile_url'],
-                      )));
-          return;
-        } else {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => RegisterScreen(
-                        title: '',
-                        phoneNumber: phoneNumber,
-                      )));
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        final response = await http.post(
+          Uri.parse('http://192.168.1.8:8000/verify_otp'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({'phone_number': phoneNumber}),
+        );
+        if (response.statusCode == 200) {
+          final responseData = jsonDecode(response.body);
+          print(responseData);
+          if (responseData['message'] == 'user found') {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeScreen(
+                          hphoneNumber: phoneNumber,
+                          hfullname: responseData['fullname'],
+                          hposition: responseData['position'],
+                          hparty: responseData['party'],
+                          hlokhsabha: responseData['lokhsabha'],
+                          profileURL: responseData['profile_url'],
+                        )));
+            return;
+          } else {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RegisterScreen(
+                          title: '',
+                          phoneNumber: phoneNumber,
+                        )));
+          }
         }
-      } else {
-        print('Failed to verify OTP. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
+      } catch (e) {
+        print('Error $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
 

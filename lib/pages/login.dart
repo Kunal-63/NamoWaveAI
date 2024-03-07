@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _showLoading(); // Show loading indicator
 
       final response = await http.post(
-        Uri.parse('http://192.168.0.20:8000/send_otp'),
+        Uri.parse('http://192.168.1.8:8000/send_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -65,8 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
         final responseData = jsonDecode(response.body);
 
         if (responseData['error'] != null) {
-          _showInvalidNumberPopup(
-              responseData['message'], responseData['error']);
+          _showInvalidNumberPopup(responseData['message'] ?? 'Invaild Number',
+              responseData['error'] ?? 'Error');
         } else {
           Navigator.pushNamed(
             context,

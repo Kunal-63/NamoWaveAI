@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:theog/pages/ImageEditor.dart';
+import 'package:theog/pages/ImageEditor.dart'; // Import your ImageEditor subclasses
 import 'package:http/http.dart' as http;
 
 class BorderScreen extends StatelessWidget {
@@ -19,14 +19,14 @@ class BorderScreen extends StatelessWidget {
 
   final List<String> borderImages = [
     'assets/borders/template1.png',
-    'assets/borders/template1.png',
-    'assets/borders/template1.png',
-    'assets/borders/template1.png',
-    'assets/borders/template1.png',
+    'assets/borders/template2.png', // Add more image paths as needed
+    'assets/borders/template3.png',
+    'assets/borders/template4.png',
+    'assets/borders/template5.png',
   ];
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
-    final apiUrl = 'http://192.168.0.20:8000/color_change_template';
+    final apiUrl = 'http://192.168.1.8:8000/color_change_template';
 
     try {
       final response = await http.post(
@@ -49,7 +49,6 @@ class BorderScreen extends StatelessWidget {
   }
 
   void _onContainerTap(BuildContext context, String imagePath) async {
-    // Show loading indicator
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -57,41 +56,94 @@ class BorderScreen extends StatelessWidget {
           child: CircularProgressIndicator(),
         );
       },
-      barrierDismissible:
-          false, // To prevent the user from dismissing the dialog
+      barrierDismissible: false,
     );
 
     try {
       Map<String, dynamic> result = await colorChangeTemplate();
 
-      print("Result :" + result.toString());
-
       String uploadedUrl = result['uploaded_url'];
       int rValue = result['r'];
       int gValue = result['g'];
       int bValue = result['b'];
-      // Hide loading indicator
-      Navigator.pop(context);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) {
-          // return Container();
 
-          return ImageEditor(
-            profileURL: uploadedUrl,
-            imagePath: imagePath,
-            rValue: rValue,
-            gValue: gValue,
-            bValue: bValue,
-            fullname: fullname,
-          );
-        }),
-      );
+      Navigator.pop(context);
+
+      // Determine which image was clicked and navigate accordingly
+      if (imagePath == borderImages[0]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor(
+              profileURL: uploadedUrl,
+              imagePath: imagePath,
+              rValue: rValue,
+              gValue: gValue,
+              bValue: bValue,
+              fullname: fullname,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[1]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor2(
+              profileURL: uploadedUrl,
+              imagePath: imagePath,
+              rValue: rValue,
+              gValue: gValue,
+              bValue: bValue,
+              fullname: fullname,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[2]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor3(
+              profileURL: uploadedUrl,
+              imagePath: imagePath,
+              rValue: rValue,
+              gValue: gValue,
+              bValue: bValue,
+              fullname: fullname,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[3]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor4(
+              profileURL: uploadedUrl,
+              imagePath: imagePath,
+              rValue: rValue,
+              gValue: gValue,
+              bValue: bValue,
+              fullname: fullname,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[4]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor5(
+              profileURL: uploadedUrl,
+              imagePath: imagePath,
+              rValue: rValue,
+              gValue: gValue,
+              bValue: bValue,
+              fullname: fullname,
+            );
+          }),
+        );
+      }
     } catch (error) {
-      // Hide loading indicator
       Navigator.pop(context);
 
-      // Handle error, e.g., show an error message to the user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error: $error'),
@@ -102,11 +154,11 @@ class BorderScreen extends StatelessWidget {
 
   Widget _buildImageContainer(BuildContext context, String imagePath1) {
     return GestureDetector(
-      onTap: () => _onContainerTap(context, imagePath),
+      onTap: () => _onContainerTap(context, imagePath1),
       child: Container(
         width: 150,
         height: 150,
-        margin: EdgeInsets.all(8), // Add margin for equal spacing
+        margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
@@ -147,8 +199,8 @@ class BorderScreen extends StatelessWidget {
               children: [
                 SizedBox(height: 20),
                 Wrap(
-                  spacing: 8, // Spacing between items
-                  runSpacing: 20, // Spacing between rows
+                  spacing: 8,
+                  runSpacing: 20,
                   children: [
                     for (String borderImage in borderImages)
                       _buildImageContainer(context, borderImage),
