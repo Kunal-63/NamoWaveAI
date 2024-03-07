@@ -6,6 +6,22 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:esys_flutter_share_plus/esys_flutter_share_plus.dart';
 import 'package:flutter/services.dart';
 
+Color calculateColor(int r, int g, int b) {
+  try {
+    // Ensure that color values are within the valid range
+    r = (r - 20).clamp(0, 255);
+    g = (g - 20).clamp(0, 255);
+    b = (b - 20).clamp(0, 255);
+
+    // Return the calculated color
+    return Color.fromRGBO(r, g, b, 1);
+  } catch (e) {
+    // Handle any potential errors (e.g., if color values are null)
+    print("Error calculating color: $e");
+    return Colors.orange; // Provide a default color
+  }
+}
+
 class ImageEditor extends StatefulWidget {
   final String imagePath;
   final String fullname;
@@ -137,11 +153,8 @@ class _ImageEditorState extends State<ImageEditor> {
                           child: Container(
                             width: 400,
                             height: 10,
-                            color: Color.fromRGBO(
-                                (widget.rValue - 20).clamp(0, 255),
-                                (widget.gValue - 20).clamp(0, 255),
-                                (widget.bValue - 20).clamp(0, 255),
-                                1),
+                            color: calculateColor(
+                                widget.rValue, widget.gValue, widget.bValue),
                           ),
                         ),
                         Positioned(
@@ -155,8 +168,8 @@ class _ImageEditorState extends State<ImageEditor> {
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
                               ),
-                              color: Color.fromRGBO(widget.rValue,
-                                  widget.gValue, widget.bValue, 1),
+                              color: calculateColor(
+                                  widget.rValue, widget.gValue, widget.bValue),
                             ),
                             child: Text(
                               widget.fullname,
@@ -236,35 +249,6 @@ class _ImageEditorState extends State<ImageEditor> {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoremContainer(String text) {
-    return Container(
-      height: 200,
-      width: 300,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      color: Colors.grey,
-      child: Stack(
-        children: [
-          Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                _copyToClipboard(text);
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -409,11 +393,8 @@ class _ImageEditor2State extends State<ImageEditor2> {
                                 bottomRight: Radius.circular(20),
                               ),
                             ),
-                            color: Color.fromRGBO(
-                                (widget.rValue - 20).clamp(0, 255),
-                                (widget.gValue - 20).clamp(0, 255),
-                                (widget.bValue - 20).clamp(0, 255),
-                                1),
+                            color: calculateColor(
+                                widget.rValue, widget.gValue, widget.bValue),
                             child: Text(
                               widget.fullname,
                               style: TextStyle(
@@ -436,11 +417,8 @@ class _ImageEditor2State extends State<ImageEditor2> {
                                 topLeft: Radius.circular(20),
                                 bottomLeft: Radius.circular(20),
                               ),
-                              color: Color.fromRGBO(
-                                  (widget.rValue - 20).clamp(0, 255),
-                                  (widget.gValue - 20).clamp(0, 255),
-                                  (widget.bValue - 20).clamp(0, 255),
-                                  1),
+                              color: calculateColor(
+                                  widget.rValue, widget.gValue, widget.bValue),
                             ),
 
                             // color: Color.fromRGBO(
@@ -513,35 +491,6 @@ class _ImageEditor2State extends State<ImageEditor2> {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoremContainer(String text) {
-    return Container(
-      height: 200,
-      width: 300,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      color: Colors.grey,
-      child: Stack(
-        children: [
-          Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                _copyToClipboard(text);
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -679,11 +628,8 @@ class _ImageEditor4State extends State<ImageEditor4> {
                           child: Container(
                             width: 400,
                             height: 10,
-                            color: Color.fromRGBO(
-                                (widget.rValue - 20).clamp(0, 255),
-                                (widget.gValue - 20).clamp(0, 255),
-                                (widget.bValue - 20).clamp(0, 255),
-                                1),
+                            color: calculateColor(
+                                widget.rValue, widget.gValue, widget.bValue),
                           ),
                         ),
                         Positioned(
@@ -697,8 +643,8 @@ class _ImageEditor4State extends State<ImageEditor4> {
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20),
                               ),
-                              color: Color.fromRGBO(widget.rValue,
-                                  widget.gValue, widget.bValue, 1),
+                              color: calculateColor(
+                                  widget.rValue, widget.gValue, widget.bValue),
                             ),
                             child: Text(
                               widget.fullname,
@@ -778,35 +724,6 @@ class _ImageEditor4State extends State<ImageEditor4> {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoremContainer(String text) {
-    return Container(
-      height: 200,
-      width: 300,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      color: Colors.grey,
-      child: Stack(
-        children: [
-          Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                _copyToClipboard(text);
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -944,11 +861,8 @@ class _ImageEditor3State extends State<ImageEditor3> {
                           child: Container(
                             width: 400,
                             height: 10,
-                            color: Color.fromRGBO(
-                                (widget.rValue - 20).clamp(0, 255),
-                                (widget.gValue - 20).clamp(0, 255),
-                                (widget.bValue - 20).clamp(0, 255),
-                                1),
+                            color: calculateColor(
+                                widget.rValue, widget.gValue, widget.bValue),
                           ),
                         ),
                         Positioned(
@@ -964,11 +878,8 @@ class _ImageEditor3State extends State<ImageEditor3> {
                                 // bottomRight: Radius.circular(20),
                               ),
                             ),
-                            color: Color.fromRGBO(
-                                (widget.rValue - 20).clamp(0, 255),
-                                (widget.gValue - 20).clamp(0, 255),
-                                (widget.bValue - 20).clamp(0, 255),
-                                1),
+                            color: calculateColor(
+                                widget.rValue, widget.gValue, widget.bValue),
                             child: Text(
                               widget.fullname,
                               style: TextStyle(
@@ -991,11 +902,8 @@ class _ImageEditor3State extends State<ImageEditor3> {
                                 topLeft: Radius.circular(20),
                                 // bottomLeft: Radius.circular(20),
                               ),
-                              color: Color.fromRGBO(
-                                  (widget.rValue - 20).clamp(0, 255),
-                                  (widget.gValue - 20).clamp(0, 255),
-                                  (widget.bValue - 20).clamp(0, 255),
-                                  1),
+                              color: calculateColor(
+                                  widget.rValue, widget.gValue, widget.bValue),
                             ),
 
                             // color: Color.fromRGBO(
@@ -1068,35 +976,6 @@ class _ImageEditor3State extends State<ImageEditor3> {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoremContainer(String text) {
-    return Container(
-      height: 200,
-      width: 300,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      color: Colors.grey,
-      child: Stack(
-        children: [
-          Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                _copyToClipboard(text);
-              },
-            ),
-          ),
         ],
       ),
     );
@@ -1236,8 +1115,8 @@ class _ImageEditor5State extends State<ImageEditor5> {
                             width: 400,
                             height: 10,
 
-                            color: Color.fromRGBO(
-                                widget.rValue, widget.gValue, widget.bValue, 1),
+                            color: calculateColor(
+                                widget.rValue, widget.gValue, widget.bValue),
 
                             child: Text(
                               widget.fullname,
@@ -1259,8 +1138,8 @@ class _ImageEditor5State extends State<ImageEditor5> {
                             height: 85,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Color.fromRGBO(widget.rValue,
-                                  widget.gValue, widget.bValue, 1),
+                              color: calculateColor(
+                                  widget.rValue, widget.gValue, widget.bValue),
                             ),
                           ),
                         ),
@@ -1330,35 +1209,6 @@ class _ImageEditor5State extends State<ImageEditor5> {
                 ),
               ),
             ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLoremContainer(String text) {
-    return Container(
-      height: 200,
-      width: 300,
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      color: Colors.grey,
-      child: Stack(
-        children: [
-          Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: IconButton(
-              icon: Icon(Icons.copy),
-              onPressed: () {
-                _copyToClipboard(text);
-              },
-            ),
-          ),
         ],
       ),
     );

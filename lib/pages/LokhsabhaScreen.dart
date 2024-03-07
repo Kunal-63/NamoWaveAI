@@ -201,7 +201,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
             builder: (context) => BorderScreen(
               fullname: widget.fullname,
               profileURL: widget.profileURL,
-              imagePath: imagePath,
+              imagePathURL: imagePath,
               phoneNumber: widget.phoneNumber,
             ),
           ),

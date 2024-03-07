@@ -4,14 +4,14 @@ import 'package:theog/pages/ImageEditor.dart'; // Import your ImageEditor subcla
 import 'package:http/http.dart' as http;
 
 class BorderScreen extends StatelessWidget {
-  final String imagePath;
+  final String imagePathURL;
   final String profileURL;
   final String fullname;
   final String phoneNumber;
 
   BorderScreen({
     Key? key,
-    required this.imagePath,
+    required this.imagePathURL,
     required this.profileURL,
     required this.phoneNumber,
     required this.fullname,
@@ -34,7 +34,7 @@ class BorderScreen extends StatelessWidget {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'phoneNumber': phoneNumber,
-          'template_url': imagePath,
+          'template_url': imagePathURL,
         }),
       );
 
@@ -76,7 +76,7 @@ class BorderScreen extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return ImageEditor(
               profileURL: uploadedUrl,
-              imagePath: imagePath,
+              imagePath: imagePathURL,
               rValue: rValue,
               gValue: gValue,
               bValue: bValue,
@@ -90,7 +90,7 @@ class BorderScreen extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return ImageEditor2(
               profileURL: uploadedUrl,
-              imagePath: imagePath,
+              imagePath: imagePathURL,
               rValue: rValue,
               gValue: gValue,
               bValue: bValue,
@@ -104,7 +104,7 @@ class BorderScreen extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return ImageEditor3(
               profileURL: uploadedUrl,
-              imagePath: imagePath,
+              imagePath: imagePathURL,
               rValue: rValue,
               gValue: gValue,
               bValue: bValue,
@@ -118,7 +118,7 @@ class BorderScreen extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return ImageEditor4(
               profileURL: uploadedUrl,
-              imagePath: imagePath,
+              imagePath: imagePathURL,
               rValue: rValue,
               gValue: gValue,
               bValue: bValue,
@@ -132,7 +132,7 @@ class BorderScreen extends StatelessWidget {
           MaterialPageRoute(builder: (context) {
             return ImageEditor5(
               profileURL: uploadedUrl,
-              imagePath: imagePath,
+              imagePath: imagePathURL,
               rValue: rValue,
               gValue: gValue,
               bValue: bValue,
