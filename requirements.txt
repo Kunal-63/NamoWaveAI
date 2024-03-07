@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+mysql-connector-python
+opencv-python
+numpy
+pillow
+scikit-learn
+requests

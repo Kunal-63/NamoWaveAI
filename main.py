@@ -77,9 +77,28 @@ async def send_otp(request: Request, login_request: LoginRequest):
         raise HTTPException(status_code=400, detail="Invalid phone number")
     global otp
     otp = str(random.randint(100000, 999999))
-    print(f"OTP: {otp}")
+    try:
+        # Generate a 6-digit random OTP
+        otp = str(random.randint(100000, 999999))
+        apiKeys = "x10fCNTlP2gecAOj86aLuYXZJ9qzKFMnbwVsGBD5rvIEydHhk7BMceCQjPR6IVkmqa0t1FAoxNhrwgus"
+        
+        url = f"https://www.fast2sms.com/dev/bulkV2?authorization={apiKeys}&variables_values={otp}&route=otp&numbers={phone_number}"
+        
 
-    return {"otp": otp, "error": None}
+        response = requests.get(url)
+        result = response.json()
+        print(result)
+        print(f"Phone Number: {phone_number} OTP: {otp}")
+        if result['return']:
+            return {'success': True, 'otp': otp}
+        else:
+            raise Exception(result['message'])
+
+    except Exception as e:
+        raise Exception(str(e))
+    
+
+   
 
 @app.post("/resend_otp")
 async def resend_otp(request: Request, login_request: LoginRequest):
@@ -179,7 +198,7 @@ async def color_change_template(template_data: ColorChangeModel):
     return {"uploaded_url": uploaded_url, "r": r, "g": g, "b": b}
 
 
-if __name__ == "__main__":  
-    import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+import uvicorn
+
+uvicorn.run(app, host="0.0.0.0", port=8000)
