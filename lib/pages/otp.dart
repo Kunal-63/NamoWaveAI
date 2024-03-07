@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
       });
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.8:8000/resend_otp'),
+        Uri.parse('http://192.168.0.20:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -92,7 +92,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
     Future<void> DataVerifyingInSQL(String phoneNumber) async {
       final response = await http.post(
-        Uri.parse('http://192.168.1.8:8000/verify_otp'),
+        Uri.parse('http://192.168.0.20:8000/verify_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
