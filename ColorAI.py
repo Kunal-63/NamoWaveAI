@@ -108,9 +108,9 @@ def ColorChangeAI(phoneNumber, templateURL):
         print("Error uploading", e)
         return None, None
 
-# uploaded_url, rgb_values = ColorChangeAI("7990187279", "https://i.ibb.co/m6Jm1r2/1480c234fb22.jpg")
-# print("Uploaded URL:", uploaded_url)
-# print("RGB Values:", rgb_values)
+uploaded_url, rgb_values = ColorChangeAI("7990187279", "https://i.ibb.co/m6Jm1r2/1480c234fb22.jpg")
+print("Uploaded URL:", uploaded_url)
+print("RGB Values:", rgb_values)
 
 
 # import cv2

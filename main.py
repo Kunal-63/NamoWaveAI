@@ -19,10 +19,6 @@ mydb = con.connect(
     database="theog"
 )
 
-
-
-
-
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
