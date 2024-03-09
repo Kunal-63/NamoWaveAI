@@ -25,7 +25,7 @@ Color calculateColor(int r, int g, int b) {
 class ImageEditor extends StatefulWidget {
   final String imagePath;
   final String fullname;
-  final String profileURL;
+  final List profileURL;
   final int rValue;
   final int gValue;
   final int bValue;
@@ -47,8 +47,9 @@ class ImageEditor extends StatefulWidget {
 class _ImageEditorState extends State<ImageEditor> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
+  int currentProfileUrlIndex = 0;
 
-  Future<void> _saveToGallery() async {
+  void _saveToGallery() async {
     _showLoading();
     Uint8List? image = await screenshotController.capture();
     if (image != null) {
@@ -81,11 +82,6 @@ class _ImageEditorState extends State<ImageEditor> {
     }
   }
 
-  void _copyToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    _showSnackBar('Text copied to clipboard!');
-  }
-
   void _showLoading() {
     setState(() {
       isLoading = true;
@@ -105,6 +101,13 @@ class _ImageEditorState extends State<ImageEditor> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  void _refreshProfileUrl() {
+    setState(() {
+      currentProfileUrlIndex =
+          (currentProfileUrlIndex + 1) % widget.profileURL.length;
+    });
   }
 
   @override
@@ -154,7 +157,10 @@ class _ImageEditorState extends State<ImageEditor> {
                             width: 400,
                             height: 10,
                             color: calculateColor(
-                                widget.rValue, widget.gValue, widget.bValue),
+                              widget.rValue,
+                              widget.gValue,
+                              widget.bValue,
+                            ),
                           ),
                         ),
                         Positioned(
@@ -169,7 +175,10 @@ class _ImageEditorState extends State<ImageEditor> {
                                 topLeft: Radius.circular(20),
                               ),
                               color: calculateColor(
-                                  widget.rValue, widget.gValue, widget.bValue),
+                                widget.rValue,
+                                widget.gValue,
+                                widget.bValue,
+                              ),
                             ),
                             child: Text(
                               widget.fullname,
@@ -179,18 +188,17 @@ class _ImageEditorState extends State<ImageEditor> {
                                 fontSize: 12,
                               ),
                             ),
-                            // color: Color.fromRGBO(
-                            //     widget.rValue, widget.gValue, widget.bValue, 1),
                           ),
                         ),
                         Positioned(
-                            right: -40,
-                            bottom: -20,
-                            child: Image.network(
-                              widget.profileURL,
-                              height: 125,
-                              width: 125,
-                            ))
+                          right: -40,
+                          bottom: -20,
+                          child: Image.network(
+                            widget.profileURL[currentProfileUrlIndex],
+                            height: 125,
+                            width: 125,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -200,22 +208,12 @@ class _ImageEditorState extends State<ImageEditor> {
                   height: 30,
                 ),
 
+                // Refresh button
+
                 // Three round buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'Crop',
-                    //   child: const Icon(Icons.crop),
-                    // ),
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'color',
-                    //   child: const Icon(Icons.color_lens_outlined),
-                    // ),
                     FloatingActionButton(
                       onPressed: _saveToGallery,
                       backgroundColor: Colors.grey[800],
@@ -228,6 +226,11 @@ class _ImageEditorState extends State<ImageEditor> {
                       tooltip: 'Share',
                       child: Icon(Icons.share),
                     ),
+                    FloatingActionButton(
+                        onPressed: _refreshProfileUrl,
+                        backgroundColor: Colors.grey[800],
+                        tooltip: 'Refresh',
+                        child: Icon(Icons.refresh)),
                   ],
                 ),
 
@@ -258,7 +261,7 @@ class _ImageEditorState extends State<ImageEditor> {
 class ImageEditor2 extends StatefulWidget {
   final String imagePath;
   final String fullname;
-  final String profileURL;
+  final List profileURL;
   final int rValue;
   final int gValue;
   final int bValue;
@@ -280,8 +283,9 @@ class ImageEditor2 extends StatefulWidget {
 class _ImageEditor2State extends State<ImageEditor2> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
+  int currentProfileUrlIndex = 0;
 
-  Future<void> _saveToGallery() async {
+  void _saveToGallery() async {
     _showLoading();
     Uint8List? image = await screenshotController.capture();
     if (image != null) {
@@ -314,11 +318,6 @@ class _ImageEditor2State extends State<ImageEditor2> {
     }
   }
 
-  void _copyToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    _showSnackBar('Text copied to clipboard!');
-  }
-
   void _showLoading() {
     setState(() {
       isLoading = true;
@@ -338,6 +337,13 @@ class _ImageEditor2State extends State<ImageEditor2> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  void _refreshProfileUrl() {
+    setState(() {
+      currentProfileUrlIndex =
+          (currentProfileUrlIndex + 1) % widget.profileURL.length;
+    });
   }
 
   @override
@@ -429,7 +435,7 @@ class _ImageEditor2State extends State<ImageEditor2> {
                             right: -40,
                             bottom: -20,
                             child: Image.network(
-                              widget.profileURL,
+                              widget.profileURL[currentProfileUrlIndex],
                               height: 125,
                               width: 125,
                             ))
@@ -470,6 +476,11 @@ class _ImageEditor2State extends State<ImageEditor2> {
                       tooltip: 'Share',
                       child: Icon(Icons.share),
                     ),
+                    FloatingActionButton(
+                        onPressed: _refreshProfileUrl,
+                        backgroundColor: Colors.grey[800],
+                        tooltip: 'Refresh',
+                        child: Icon(Icons.refresh)),
                   ],
                 ),
 
@@ -500,7 +511,7 @@ class _ImageEditor2State extends State<ImageEditor2> {
 class ImageEditor4 extends StatefulWidget {
   final String imagePath;
   final String fullname;
-  final String profileURL;
+  final List profileURL;
   final int rValue;
   final int gValue;
   final int bValue;
@@ -522,8 +533,9 @@ class ImageEditor4 extends StatefulWidget {
 class _ImageEditor4State extends State<ImageEditor4> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
+  int currentProfileUrlIndex = 0;
 
-  Future<void> _saveToGallery() async {
+  void _saveToGallery() async {
     _showLoading();
     Uint8List? image = await screenshotController.capture();
     if (image != null) {
@@ -556,11 +568,6 @@ class _ImageEditor4State extends State<ImageEditor4> {
     }
   }
 
-  void _copyToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    _showSnackBar('Text copied to clipboard!');
-  }
-
   void _showLoading() {
     setState(() {
       isLoading = true;
@@ -580,6 +587,13 @@ class _ImageEditor4State extends State<ImageEditor4> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  void _refreshProfileUrl() {
+    setState(() {
+      currentProfileUrlIndex =
+          (currentProfileUrlIndex + 1) % widget.profileURL.length;
+    });
   }
 
   @override
@@ -662,7 +676,7 @@ class _ImageEditor4State extends State<ImageEditor4> {
                             right: -40,
                             bottom: -20,
                             child: Image.network(
-                              widget.profileURL,
+                              widget.profileURL[currentProfileUrlIndex],
                               height: 125,
                               width: 125,
                             ))
@@ -703,6 +717,11 @@ class _ImageEditor4State extends State<ImageEditor4> {
                       tooltip: 'Share',
                       child: Icon(Icons.share),
                     ),
+                    FloatingActionButton(
+                        onPressed: _refreshProfileUrl,
+                        backgroundColor: Colors.grey[800],
+                        tooltip: 'Refresh',
+                        child: Icon(Icons.refresh)),
                   ],
                 ),
 
@@ -733,7 +752,7 @@ class _ImageEditor4State extends State<ImageEditor4> {
 class ImageEditor3 extends StatefulWidget {
   final String imagePath;
   final String fullname;
-  final String profileURL;
+  final List profileURL;
   final int rValue;
   final int gValue;
   final int bValue;
@@ -755,8 +774,9 @@ class ImageEditor3 extends StatefulWidget {
 class _ImageEditor3State extends State<ImageEditor3> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
+  int currentProfileUrlIndex = 0;
 
-  Future<void> _saveToGallery() async {
+  void _saveToGallery() async {
     _showLoading();
     Uint8List? image = await screenshotController.capture();
     if (image != null) {
@@ -789,11 +809,6 @@ class _ImageEditor3State extends State<ImageEditor3> {
     }
   }
 
-  void _copyToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    _showSnackBar('Text copied to clipboard!');
-  }
-
   void _showLoading() {
     setState(() {
       isLoading = true;
@@ -813,6 +828,13 @@ class _ImageEditor3State extends State<ImageEditor3> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  void _refreshProfileUrl() {
+    setState(() {
+      currentProfileUrlIndex =
+          (currentProfileUrlIndex + 1) % widget.profileURL.length;
+    });
   }
 
   @override
@@ -914,7 +936,7 @@ class _ImageEditor3State extends State<ImageEditor3> {
                             right: -40,
                             bottom: -20,
                             child: Image.network(
-                              widget.profileURL,
+                              widget.profileURL[currentProfileUrlIndex],
                               height: 125,
                               width: 125,
                             ))
@@ -955,6 +977,11 @@ class _ImageEditor3State extends State<ImageEditor3> {
                       tooltip: 'Share',
                       child: Icon(Icons.share),
                     ),
+                    FloatingActionButton(
+                        onPressed: _refreshProfileUrl,
+                        backgroundColor: Colors.grey[800],
+                        tooltip: 'Refresh',
+                        child: Icon(Icons.refresh)),
                   ],
                 ),
 
@@ -985,7 +1012,7 @@ class _ImageEditor3State extends State<ImageEditor3> {
 class ImageEditor5 extends StatefulWidget {
   final String imagePath;
   final String fullname;
-  final String profileURL;
+  final List profileURL;
   final int rValue;
   final int gValue;
   final int bValue;
@@ -1007,8 +1034,9 @@ class ImageEditor5 extends StatefulWidget {
 class _ImageEditor5State extends State<ImageEditor5> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
+  int currentProfileUrlIndex = 0;
 
-  Future<void> _saveToGallery() async {
+  void _saveToGallery() async {
     _showLoading();
     Uint8List? image = await screenshotController.capture();
     if (image != null) {
@@ -1041,11 +1069,6 @@ class _ImageEditor5State extends State<ImageEditor5> {
     }
   }
 
-  void _copyToClipboard(String text) {
-    Clipboard.setData(ClipboardData(text: text));
-    _showSnackBar('Text copied to clipboard!');
-  }
-
   void _showLoading() {
     setState(() {
       isLoading = true;
@@ -1065,6 +1088,13 @@ class _ImageEditor5State extends State<ImageEditor5> {
         duration: Duration(seconds: 2),
       ),
     );
+  }
+
+  void _refreshProfileUrl() {
+    setState(() {
+      currentProfileUrlIndex =
+          (currentProfileUrlIndex + 1) % widget.profileURL.length;
+    });
   }
 
   @override
@@ -1147,7 +1177,7 @@ class _ImageEditor5State extends State<ImageEditor5> {
                             right: -40,
                             bottom: -20,
                             child: Image.network(
-                              widget.profileURL,
+                              widget.profileURL[currentProfileUrlIndex],
                               height: 125,
                               width: 125,
                             ))
@@ -1187,6 +1217,12 @@ class _ImageEditor5State extends State<ImageEditor5> {
                       backgroundColor: Colors.grey[800],
                       tooltip: 'Share',
                       child: Icon(Icons.share),
+                    ),
+                    FloatingActionButton(
+                      onPressed: _refreshProfileUrl,
+                      backgroundColor: Colors.grey[800],
+                      tooltip: 'Refresh',
+                      child: Icon(Icons.refresh),
                     ),
                   ],
                 ),

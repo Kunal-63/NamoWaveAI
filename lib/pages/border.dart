@@ -62,7 +62,7 @@ class BorderScreen extends StatelessWidget {
     try {
       Map<String, dynamic> result = await colorChangeTemplate();
 
-      String uploadedUrl = result['uploaded_url'];
+      List uploadedUrl = result['uploaded_url'];
       int rValue = result['r'];
       int gValue = result['g'];
       int bValue = result['b'];
