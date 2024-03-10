@@ -180,13 +180,22 @@ class _ImageEditorState extends State<ImageEditor> {
                                 widget.bValue,
                               ),
                             ),
-                            child: Text(
-                              widget.fullname,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/instagram.jpeg',
+                                  height: 10,
+                                  width: 10,
+                                ),
+                                Text(
+                                  widget.fullname,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

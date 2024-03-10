@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:theog/pages/FramesTesting.dart';
 import 'package:theog/pages/login.dart';
 import 'package:theog/pages/otp.dart';
 
@@ -51,7 +52,8 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
     // Navigate to the main screen when text animation completes
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => LoginScreen(), // Your main screen
+        // builder: (context) => LoginScreen(),
+        builder: (context) => FramesTesting(),
       ),
     );
   }
