@@ -199,7 +199,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _sendDataToFastAPI() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.8:8000/process_user_data'),
+        Uri.parse('http://192.168.1.3:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

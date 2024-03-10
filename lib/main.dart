@@ -75,10 +75,12 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/logo.png',
-                height: 200.0,
-                width: 200.0,
+              ClipOval(
+                child: Image.asset(
+                  'assets/logo.png',
+                  height: 200.0,
+                  width: 200.0,
+                ),
               ),
             ],
           ),

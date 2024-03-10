@@ -216,8 +216,6 @@ class _CropPageState extends State<CropPage> {
     }
   }
 
-  // ... (existing code)
-
   Future<void> _sendDataToFastAPI() async {
     try {
       String base64Image = "";
@@ -230,7 +228,7 @@ class _CropPageState extends State<CropPage> {
       _showLoading();
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.8:8000/process_user_data'),
+        Uri.parse('http://192.168.1.3:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -240,6 +238,7 @@ class _CropPageState extends State<CropPage> {
           'party': widget.party,
           'lokhsabha': widget.lokhsabha,
           'position': widget.position,
+          'vidhansabha': widget.vidhansabha,
           'image': base64Image,
         }),
       );

@@ -93,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -345,14 +345,94 @@ class _RegisterScreenState extends State<RegisterScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ListTile(
-                title: Text('President'),
+                title: Text('Ahmedabad'),
                 onTap: () {
-                  _setSelectedVidhanSabha('President');
+                  _setSelectedVidhanSabha('Ahmedabad');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Gandhinagar'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Gandhinagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Surat'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Surat');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Vadodara'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Vadodara');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Rajkot'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Rajkot');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Bhavnagar'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Bhavnagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Jamnagar'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Jamnagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Junagadh'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Junagadh');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Surendranagar'),
+                onTap: () {
+                  _setSelectedVidhanSabha('Surendranagar');
                   Navigator.pop(context);
                 },
               ),
@@ -511,7 +591,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             // Show political parties dialog
                             _showPositionsDialog(context);
                           },
-                          initialValue: controller2.text,
+                          // initialValue: controller2.text,
                           readOnly: true,
                           controller: controller2,
                           style: TextStyle(color: Colors.white),
@@ -551,7 +631,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             _showLokhsabhaDialog(context);
                           },
                           readOnly: true,
-                          initialValue: controller3.text,
+                          // initialValue: controller3.text,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
@@ -587,7 +667,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             _showVidhanSabhaDialog(context);
                           },
                           readOnly: true,
-                          initialValue: controller4.text,
+                          // initialValue: controller4.text,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
