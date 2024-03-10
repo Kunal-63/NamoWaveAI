@@ -209,6 +209,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           'party': _partyController.text,
           'lokhsabha': _lokhsabhaController.text,
           'position': _positionController.text,
+          'vidhansabha': _vidhansabhaController.text,
         }),
       );
 

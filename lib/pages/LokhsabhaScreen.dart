@@ -10,12 +10,13 @@ class LokhSabhaScreen extends StatefulWidget {
   final String profileURL;
   final String phoneNumber;
   final String fullname;
-
+  final String position;
   LokhSabhaScreen({
     required this.lokhSabhaName,
     required this.profileURL,
     required this.phoneNumber,
     required this.fullname,
+    required this.position,
   });
 
   @override
@@ -203,6 +204,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
               profileURL: widget.profileURL,
               imagePathURL: imagePath,
               phoneNumber: widget.phoneNumber,
+              position: widget.position,
             ),
           ),
         );

@@ -9,13 +9,14 @@ class BorderScreen extends StatelessWidget {
   final String profileURL;
   final String fullname;
   final String phoneNumber;
-
+  final String position;
   BorderScreen({
     Key? key,
     required this.imagePathURL,
     required this.profileURL,
     required this.phoneNumber,
     required this.fullname,
+    required this.position,
   }) : super(key: key);
 
   final List<String> borderImages = [
@@ -63,7 +64,7 @@ class BorderScreen extends StatelessWidget {
       Map<String, dynamic> result = await colorChangeTemplate();
 
       List RGBList = result['RGBValues'];
-      List TextList = result['TextValues'];
+      List TextList = result['TextColors'];
 
       Navigator.pop(context);
 
@@ -72,9 +73,13 @@ class BorderScreen extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) {
-            return FramesTesting(
+            return ImageEditor(
               RGBValues: RGBList,
               TextValues: TextList,
+              profileURL: [profileURL],
+              imagePath: imagePathURL,
+              fullname: fullname,
+              position: position,
             );
           }),
         );

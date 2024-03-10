@@ -558,7 +558,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           //   _showPoliticalPartiesDialog(context);
                           // },
                           // initialValue: _selectedParty,
-                          readOnly: true,
+                          // readOnly: true,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.bubble_chart,

@@ -46,6 +46,8 @@ dependencies:
   screenshot: ^2.1.0
   image: ^3.3.0
   esys_flutter_share_plus: ^2.2.0
+  translator: ^1.0.0
+  google_fonts: ^6.2.0
 
 
 
@@ -95,12 +97,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: GujaratiFont1
-  #     fonts:
-  #       - asset: fonts/GJDW0XTT.TTF
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: GujaratiFont1
+      fonts:
+        - asset: fonts/GJDW0XTT.TTF
+        # - asset: fonts/Schyler-Italic.ttf
+        #   style: italic
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -6,6 +6,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:esys_flutter_share_plus/esys_flutter_share_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
+import 'package:translator/translator.dart';
 
 class FramesTesting extends StatefulWidget {
   final List RGBValues;
@@ -26,6 +27,7 @@ class _FramesTestingState extends State<FramesTesting> {
   int currentProfileUrlIndex = 0;
   double fontSize = 12.0;
   String currentFontFamily = 'Default';
+  int currentSelectedColorIndex = 0;
   List<String> fontFamilies = [
     'Default',
     'Arial',
@@ -108,6 +110,18 @@ class _FramesTestingState extends State<FramesTesting> {
     );
   }
 
+  Future<String> translateToGujarati(String text) async {
+    GoogleTranslator translator = GoogleTranslator();
+
+    Translation translation = await translator.translate(
+      text,
+      from: 'en', // Source language (English)
+      to: 'gu', // Target language (Gujarati)
+    );
+
+    return translation.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,9 +182,12 @@ class _FramesTestingState extends State<FramesTesting> {
                                   topLeft: Radius.circular(20),
                                   bottomLeft: Radius.circular(20)),
                               color: Color.fromRGBO(
-                                  widget.RGBValues[0][0],
-                                  widget.RGBValues[0][1],
-                                  widget.RGBValues[0][2],
+                                  widget.RGBValues[currentSelectedColorIndex]
+                                      [0],
+                                  widget.RGBValues[currentSelectedColorIndex]
+                                      [1],
+                                  widget.RGBValues[currentSelectedColorIndex]
+                                      [2],
                                   1),
                             ),
                             child: Row(
@@ -207,9 +224,12 @@ class _FramesTestingState extends State<FramesTesting> {
                                       'ધારાસભ્ય, અમદાવાદ વિધાનસભા',
                                       style: TextStyle(
                                         color: Color.fromRGBO(
-                                            widget.TextValues[0][0],
-                                            widget.TextValues[0][1],
-                                            widget.TextValues[0][2],
+                                            widget.TextValues[
+                                                currentSelectedColorIndex][0],
+                                            widget.TextValues[
+                                                currentSelectedColorIndex][1],
+                                            widget.TextValues[
+                                                currentSelectedColorIndex][2],
                                             1),
                                         fontWeight: FontWeight.bold,
                                         fontSize: fontSize,
@@ -220,9 +240,12 @@ class _FramesTestingState extends State<FramesTesting> {
                                       'પૂર્વ મંત્રી, ગુજરાત સરકાર',
                                       style: TextStyle(
                                         color: Color.fromRGBO(
-                                            widget.TextValues[0][0],
-                                            widget.TextValues[0][1],
-                                            widget.TextValues[0][2],
+                                            widget.TextValues[
+                                                currentSelectedColorIndex][0],
+                                            widget.TextValues[
+                                                currentSelectedColorIndex][1],
+                                            widget.TextValues[
+                                                currentSelectedColorIndex][2],
                                             1),
                                         fontWeight: FontWeight.bold,
                                         fontSize: fontSize - 2,
@@ -397,6 +420,113 @@ class _FramesTestingState extends State<FramesTesting> {
                 SizedBox(
                   height: 30,
                 ),
+                Column(
+                  children: [
+                    Text(
+                      "Color Palette",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 0;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[0][0],
+                                  widget.RGBValues[0][1],
+                                  widget.RGBValues[0][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 1;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[1][0],
+                                  widget.RGBValues[1][1],
+                                  widget.RGBValues[1][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 2;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[2][0],
+                                  widget.RGBValues[2][1],
+                                  widget.RGBValues[2][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 3;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[3][0],
+                                  widget.RGBValues[3][1],
+                                  widget.RGBValues[3][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 4;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[4][0],
+                                  widget.RGBValues[4][1],
+                                  widget.RGBValues[4][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
               ],
             ),
           ),

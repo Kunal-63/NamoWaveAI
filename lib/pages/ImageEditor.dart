@@ -5,39 +5,24 @@ import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:esys_flutter_share_plus/esys_flutter_share_plus.dart';
 import 'package:flutter/services.dart';
-
-Color calculateColor(int r, int g, int b) {
-  try {
-    // Ensure that color values are within the valid range
-    r = (r - 20).clamp(0, 255);
-    g = (g - 20).clamp(0, 255);
-    b = (b - 20).clamp(0, 255);
-
-    // Return the calculated color
-    return Color.fromRGBO(r, g, b, 1);
-  } catch (e) {
-    // Handle any potential errors (e.g., if color values are null)
-    print("Error calculating color: $e");
-    return Colors.orange; // Provide a default color
-  }
-}
+import 'package:translator/translator.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ImageEditor extends StatefulWidget {
   final String imagePath;
   final String fullname;
   final List profileURL;
-  final int rValue;
-  final int gValue;
-  final int bValue;
-
+  final List RGBValues;
+  final List TextValues;
+  final String position;
   const ImageEditor({
     Key? key,
     required this.imagePath,
     required this.profileURL,
-    required this.rValue,
-    required this.gValue,
-    required this.bValue,
+    required this.RGBValues,
+    required this.TextValues,
     required this.fullname,
+    required this.position,
   }) : super(key: key);
 
   @override
@@ -48,6 +33,34 @@ class _ImageEditorState extends State<ImageEditor> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
   int currentProfileUrlIndex = 0;
+  double fontSize = 12.0;
+  String currentFontFamily = 'Default';
+  int currentSelectedColorIndex = 0;
+  late Future<String> translatedFullName;
+  late Future<String> translatedDesignation;
+
+  List<String> fontFamilies = [
+    'Default',
+    'Arial',
+    'Times New Roman',
+    'Courier New',
+    GoogleFonts.acme().fontFamily!,
+    GoogleFonts.pacifico().fontFamily!,
+    GoogleFonts.indieFlower().fontFamily!,
+    GoogleFonts.caveat().fontFamily!,
+    GoogleFonts.greatVibes().fontFamily!,
+    GoogleFonts.dancingScript().fontFamily!,
+    GoogleFonts.poppins().fontFamily!,
+    GoogleFonts.roboto().fontFamily!,
+    GoogleFonts.raleway().fontFamily!,
+    GoogleFonts.lato().fontFamily!,
+  ];
+
+  void _changeFontFamily(String fontFamily) {
+    setState(() {
+      currentFontFamily = fontFamily;
+    });
+  }
 
   void _saveToGallery() async {
     _showLoading();
@@ -94,6 +107,21 @@ class _ImageEditorState extends State<ImageEditor> {
     });
   }
 
+  void _increaseFontSize() {
+    setState(() {
+      fontSize += 2.0; // Increase font size by 2.0
+    });
+  }
+
+  void _decreaseFontSize() {
+    setState(() {
+      if (fontSize > 2.0) {
+        fontSize -=
+            2.0; // Decrease font size by 2.0, but ensure it doesn't go below 2.0
+      }
+    });
+  }
+
   void _showSnackBar(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -103,11 +131,40 @@ class _ImageEditorState extends State<ImageEditor> {
     );
   }
 
-  void _refreshProfileUrl() {
-    setState(() {
-      currentProfileUrlIndex =
-          (currentProfileUrlIndex + 1) % widget.profileURL.length;
-    });
+  Future<String> translateToGujarati(String text) async {
+    GoogleTranslator translator = GoogleTranslator();
+
+    Translation translation = await translator.translate(
+      text,
+      from: 'en', // Source language (English)
+      to: 'gu', // Target language (Gujarati)
+    );
+
+    return translation.text;
+  }
+
+  Map<String, String> fontFamilyTranslations = {
+    'Default': 'Default',
+    'Arial': 'Arial',
+    'Times New Roman': 'Times New Roman',
+    'Courier New': 'Courier New',
+    'Acme': 'Acme',
+    'Pacifico': 'Pacifico',
+    'Indie Flower': 'Indie Flower',
+    'Caveat': 'Caveat',
+    'Great Vibes': 'Great Vibes',
+    'Dancing Script': 'Dancing Script',
+    'Poppins': 'Poppins',
+    'Roboto': 'Roboto',
+    'Raleway': 'Raleway',
+    'Lato': 'Lato',
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    translatedFullName = translateToGujarati(widget.fullname);
+    translatedDesignation = translateToGujarati(widget.position);
   }
 
   @override
@@ -151,57 +208,136 @@ class _ImageEditorState extends State<ImageEditor> {
                           height: 400,
                         ),
                         Positioned(
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            width: 400,
-                            height: 10,
-                            color: calculateColor(
-                              widget.rValue,
-                              widget.gValue,
-                              widget.bValue,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
+                          bottom: 10,
                           right: 0,
                           child: Container(
-                            padding: EdgeInsets.only(top: 7, left: 10),
-                            width: 185,
-                            height: 35,
+                            padding:
+                                EdgeInsets.only(left: 25, top: 5, bottom: 5),
+                            width: 275,
+                            height: 50,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                              ),
-                              color: calculateColor(
-                                widget.rValue,
-                                widget.gValue,
-                                widget.bValue,
-                              ),
+                                  topLeft: Radius.circular(20),
+                                  bottomLeft: Radius.circular(20)),
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[currentSelectedColorIndex]
+                                      [0],
+                                  widget.RGBValues[currentSelectedColorIndex]
+                                      [1],
+                                  widget.RGBValues[currentSelectedColorIndex]
+                                      [2],
+                                  1),
                             ),
                             child: Row(
                               children: [
-                                Image.asset(
-                                  'assets/instagram.jpeg',
-                                  height: 10,
-                                  width: 10,
-                                ),
-                                Text(
-                                  widget.fullname,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ),
+                                // Image.asset(
+                                //   'assets/instagram.jpeg',
+                                //   height: 10,
+                                //   width: 10,
+                                // ),
+                                // SizedBox(
+                                //   width: 5,
+                                // ),
+                                // Image.asset(
+                                //   'assets/instagram.jpeg',
+                                //   height: 10,
+                                //   width: 10,
+                                // ),
+                                // SizedBox(
+                                //   width: 5,
+                                // ),
+                                // Image.asset(
+                                //   'assets/instagram.jpeg',
+                                //   height: 10,
+                                //   width: 10,
+                                // ),
+                                // SizedBox(
+                                //   width: 5,
+                                // ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FutureBuilder<String>(
+                                      future: translatedFullName,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else {
+                                          return FittedBox(
+                                            child: Text(
+                                              snapshot.data ??
+                                                  '', // Use the translated text
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    widget.TextValues[
+                                                            currentSelectedColorIndex]
+                                                        [0],
+                                                    widget.TextValues[
+                                                            currentSelectedColorIndex]
+                                                        [1],
+                                                    widget.TextValues[
+                                                        currentSelectedColorIndex][2],
+                                                    1),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: fontSize,
+                                                fontFamily: currentFontFamily,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    FutureBuilder<String>(
+                                      future: translatedDesignation,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else {
+                                          return FittedBox(
+                                            child: Text(
+                                              snapshot.data ??
+                                                  '', // Use the translated text
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    widget.TextValues[
+                                                            currentSelectedColorIndex]
+                                                        [0],
+                                                    widget.TextValues[
+                                                            currentSelectedColorIndex]
+                                                        [1],
+                                                    widget.TextValues[
+                                                        currentSelectedColorIndex][2],
+                                                    1),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: fontSize,
+                                                fontFamily: currentFontFamily,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
                         ),
                         Positioned(
-                          right: -40,
-                          bottom: -20,
+                          right: -10,
+                          bottom: 0,
                           child: Image.network(
                             widget.profileURL[currentProfileUrlIndex],
                             height: 125,
@@ -235,11 +371,6 @@ class _ImageEditorState extends State<ImageEditor> {
                       tooltip: 'Share',
                       child: Icon(Icons.share),
                     ),
-                    FloatingActionButton(
-                        onPressed: _refreshProfileUrl,
-                        backgroundColor: Colors.grey[800],
-                        tooltip: 'Refresh',
-                        child: Icon(Icons.refresh)),
                   ],
                 ),
 
@@ -247,998 +378,220 @@ class _ImageEditorState extends State<ImageEditor> {
                   height: 30,
                 ),
 
-                // Horizontally scrollable list of small boxes
-              ],
-            ),
-          ),
-          if (isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class ImageEditor2 extends StatefulWidget {
-  final String imagePath;
-  final String fullname;
-  final List profileURL;
-  final int rValue;
-  final int gValue;
-  final int bValue;
-
-  const ImageEditor2({
-    Key? key,
-    required this.imagePath,
-    required this.profileURL,
-    required this.rValue,
-    required this.gValue,
-    required this.bValue,
-    required this.fullname,
-  }) : super(key: key);
-
-  @override
-  State<ImageEditor2> createState() => _ImageEditor2State();
-}
-
-class _ImageEditor2State extends State<ImageEditor2> {
-  ScreenshotController screenshotController = ScreenshotController();
-  bool isLoading = false;
-  int currentProfileUrlIndex = 0;
-
-  void _saveToGallery() async {
-    _showLoading();
-    Uint8List? image = await screenshotController.capture();
-    if (image != null) {
-      final result = await ImageGallerySaver.saveImage(image);
-      print(result);
-
-      _hideLoading();
-      _showSnackBar('Image saved successfully!');
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to save image.');
-    }
-  }
-
-  void _shareImage() async {
-    _showLoading();
-    Uint8List? imageBytes = await screenshotController.capture();
-    if (imageBytes != null) {
-      await Share.file(
-        'image.png',
-        'image.png',
-        imageBytes,
-        'image/png',
-        text: 'Check out this cool image!',
-      );
-      _hideLoading();
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to share image.');
-    }
-  }
-
-  void _showLoading() {
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void _hideLoading() {
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
-  void _refreshProfileUrl() {
-    setState(() {
-      currentProfileUrlIndex =
-          (currentProfileUrlIndex + 1) % widget.profileURL.length;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Large box with an image
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Screenshot(
-                    controller: screenshotController,
-                    child: Stack(
-                      children: [
-                        Image.network(
-                          widget.imagePath,
-                          fit: BoxFit.cover,
-                          width: 400,
-                          height: 400,
-                        ),
-                        Positioned(
-                          left: 0,
-                          bottom: 15,
-                          child: Container(
-                            width: 100,
-                            height: 10,
-                            padding: EdgeInsets.only(top: 7, right: 10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20),
-                                bottomRight: Radius.circular(20),
-                              ),
-                            ),
-                            color: calculateColor(
-                                widget.rValue, widget.gValue, widget.bValue),
-                            child: Text(
-                              widget.fullname,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 15,
-                          right: 0,
-                          child: Container(
-                            padding: EdgeInsets.only(top: 7, left: 10),
-                            width: 285,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20),
-                              ),
-                              color: calculateColor(
-                                  widget.rValue, widget.gValue, widget.bValue),
-                            ),
-
-                            // color: Color.fromRGBO(
-                            //     widget.rValue, widget.gValue, widget.bValue, 1),
-                          ),
-                        ),
-                        Positioned(
-                            right: -40,
-                            bottom: -20,
-                            child: Image.network(
-                              widget.profileURL[currentProfileUrlIndex],
-                              height: 125,
-                              width: 125,
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                // Three round buttons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'Crop',
-                    //   child: const Icon(Icons.crop),
-                    // ),
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'color',
-                    //   child: const Icon(Icons.color_lens_outlined),
-                    // ),
-                    FloatingActionButton(
-                      onPressed: _saveToGallery,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Save Image',
-                      child: Icon(Icons.download),
-                    ),
-                    FloatingActionButton(
-                      onPressed: _shareImage,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Share',
-                      child: Icon(Icons.share),
-                    ),
-                    FloatingActionButton(
-                        onPressed: _refreshProfileUrl,
-                        backgroundColor: Colors.grey[800],
-                        tooltip: 'Refresh',
-                        child: Icon(Icons.refresh)),
-                  ],
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                // Horizontally scrollable list of small boxes
-              ],
-            ),
-          ),
-          if (isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class ImageEditor4 extends StatefulWidget {
-  final String imagePath;
-  final String fullname;
-  final List profileURL;
-  final int rValue;
-  final int gValue;
-  final int bValue;
-
-  const ImageEditor4({
-    Key? key,
-    required this.imagePath,
-    required this.profileURL,
-    required this.rValue,
-    required this.gValue,
-    required this.bValue,
-    required this.fullname,
-  }) : super(key: key);
-
-  @override
-  State<ImageEditor4> createState() => _ImageEditor4State();
-}
-
-class _ImageEditor4State extends State<ImageEditor4> {
-  ScreenshotController screenshotController = ScreenshotController();
-  bool isLoading = false;
-  int currentProfileUrlIndex = 0;
-
-  void _saveToGallery() async {
-    _showLoading();
-    Uint8List? image = await screenshotController.capture();
-    if (image != null) {
-      final result = await ImageGallerySaver.saveImage(image);
-      print(result);
-
-      _hideLoading();
-      _showSnackBar('Image saved successfully!');
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to save image.');
-    }
-  }
-
-  void _shareImage() async {
-    _showLoading();
-    Uint8List? imageBytes = await screenshotController.capture();
-    if (imageBytes != null) {
-      await Share.file(
-        'image.png',
-        'image.png',
-        imageBytes,
-        'image/png',
-        text: 'Check out this cool image!',
-      );
-      _hideLoading();
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to share image.');
-    }
-  }
-
-  void _showLoading() {
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void _hideLoading() {
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
-  void _refreshProfileUrl() {
-    setState(() {
-      currentProfileUrlIndex =
-          (currentProfileUrlIndex + 1) % widget.profileURL.length;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Large box with an image
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Screenshot(
-                    controller: screenshotController,
-                    child: Stack(
+                    Column(
                       children: [
-                        Image.network(
-                          widget.imagePath,
-                          fit: BoxFit.cover,
-                          width: 400,
-                          height: 400,
+                        Text(
+                          "Font Size",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15),
                           child: Container(
-                            width: 400,
-                            height: 10,
-                            color: calculateColor(
-                                widget.rValue, widget.gValue, widget.bValue),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          child: Container(
-                            padding: EdgeInsets.only(top: 7, right: 10),
-                            width: 185,
-                            height: 35,
+                            height: 60,
+                            width: 100, // Adjust padding as needed
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20),
-                              ),
-                              color: calculateColor(
-                                  widget.rValue, widget.gValue, widget.bValue),
+                              border: Border.all(
+                                  color: Colors.white), // Border color
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Border radius
                             ),
-                            child: Text(
-                              widget.fullname,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: FloatingActionButton(
+                                    onPressed: _decreaseFontSize,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
+                                    backgroundColor: Colors.grey[800],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: FloatingActionButton(
+                                    onPressed: _increaseFontSize,
+                                    child: Icon(Icons.add,
+                                        size: 20, color: Colors.white),
+                                    backgroundColor: Colors.grey[800],
+                                  ),
+                                ),
+                              ],
                             ),
-                            // color: Color.fromRGBO(
-                            //     widget.rValue, widget.gValue, widget.bValue, 1),
                           ),
                         ),
-                        Positioned(
-                            right: -40,
-                            bottom: -20,
-                            child: Image.network(
-                              widget.profileURL[currentProfileUrlIndex],
-                              height: 125,
-                              width: 125,
-                            ))
                       ],
                     ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                // Three round buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'Crop',
-                    //   child: const Icon(Icons.crop),
-                    // ),
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'color',
-                    //   child: const Icon(Icons.color_lens_outlined),
-                    // ),
-                    FloatingActionButton(
-                      onPressed: _saveToGallery,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Save Image',
-                      child: Icon(Icons.download),
-                    ),
-                    FloatingActionButton(
-                      onPressed: _shareImage,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Share',
-                      child: Icon(Icons.share),
-                    ),
-                    FloatingActionButton(
-                        onPressed: _refreshProfileUrl,
-                        backgroundColor: Colors.grey[800],
-                        tooltip: 'Refresh',
-                        child: Icon(Icons.refresh)),
-                  ],
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                // Horizontally scrollable list of small boxes
-              ],
-            ),
-          ),
-          if (isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class ImageEditor3 extends StatefulWidget {
-  final String imagePath;
-  final String fullname;
-  final List profileURL;
-  final int rValue;
-  final int gValue;
-  final int bValue;
-
-  const ImageEditor3({
-    Key? key,
-    required this.imagePath,
-    required this.profileURL,
-    required this.rValue,
-    required this.gValue,
-    required this.bValue,
-    required this.fullname,
-  }) : super(key: key);
-
-  @override
-  State<ImageEditor3> createState() => _ImageEditor3State();
-}
-
-class _ImageEditor3State extends State<ImageEditor3> {
-  ScreenshotController screenshotController = ScreenshotController();
-  bool isLoading = false;
-  int currentProfileUrlIndex = 0;
-
-  void _saveToGallery() async {
-    _showLoading();
-    Uint8List? image = await screenshotController.capture();
-    if (image != null) {
-      final result = await ImageGallerySaver.saveImage(image);
-      print(result);
-
-      _hideLoading();
-      _showSnackBar('Image saved successfully!');
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to save image.');
-    }
-  }
-
-  void _shareImage() async {
-    _showLoading();
-    Uint8List? imageBytes = await screenshotController.capture();
-    if (imageBytes != null) {
-      await Share.file(
-        'image.png',
-        'image.png',
-        imageBytes,
-        'image/png',
-        text: 'Check out this cool image!',
-      );
-      _hideLoading();
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to share image.');
-    }
-  }
-
-  void _showLoading() {
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void _hideLoading() {
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
-  void _refreshProfileUrl() {
-    setState(() {
-      currentProfileUrlIndex =
-          (currentProfileUrlIndex + 1) % widget.profileURL.length;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Large box with an image
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Screenshot(
-                    controller: screenshotController,
-                    child: Stack(
+                    Column(
                       children: [
-                        Image.network(
-                          widget.imagePath,
-                          fit: BoxFit.cover,
-                          width: 400,
-                          height: 400,
+                        Text(
+                          "Font Family",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        Positioned(
-                          right: 0,
-                          bottom: 0,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15),
                           child: Container(
-                            width: 400,
-                            height: 10,
-                            color: calculateColor(
-                                widget.rValue, widget.gValue, widget.bValue),
-                          ),
-                        ),
-                        Positioned(
-                          left: 0,
-                          bottom: 15,
-                          child: Container(
-                            width: 100,
-                            height: 10,
-                            padding: EdgeInsets.only(top: 7, right: 10),
+                            padding:
+                                EdgeInsets.all(5.0), // Adjust padding as needed
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(20),
-                                // bottomRight: Radius.circular(20),
-                              ),
+                              border: Border.all(
+                                  color: Colors.white), // Border color
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Border radius
                             ),
-                            color: calculateColor(
-                                widget.rValue, widget.gValue, widget.bValue),
-                            child: Text(
-                              widget.fullname,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                              ),
+                            child: DropdownButton<String>(
+                              value: currentFontFamily,
+                              onChanged: (String? newFontFamily) {
+                                if (newFontFamily != null) {
+                                  _changeFontFamily(newFontFamily);
+                                }
+                              },
+                              dropdownColor: Color.fromARGB(241, 12, 12, 12),
+                              iconEnabledColor: Colors.white,
+                              iconDisabledColor: Colors.white,
+                              focusColor: Color.fromRGBO(12, 12, 12, 1),
+                              style: TextStyle(color: Colors.white),
+                              icon: Icon(Icons.arrow_drop_down),
+                              underline: Container(),
+                              items: fontFamilies.map<DropdownMenuItem<String>>(
+                                (String fontFamily) {
+                                  String translatedFontFamily =
+                                      fontFamilyTranslations[fontFamily] ??
+                                          fontFamily;
+                                  return DropdownMenuItem<String>(
+                                    value: fontFamily,
+                                    child: Text(
+                                      translatedFontFamily,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  );
+                                },
+                              ).toList(),
                             ),
                           ),
                         ),
-                        Positioned(
-                          bottom: 15,
-                          right: 0,
-                          child: Container(
-                            padding: EdgeInsets.only(top: 7, left: 10),
-                            width: 285,
-                            height: 35,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                // bottomLeft: Radius.circular(20),
-                              ),
-                              color: calculateColor(
-                                  widget.rValue, widget.gValue, widget.bValue),
-                            ),
-
-                            // color: Color.fromRGBO(
-                            //     widget.rValue, widget.gValue, widget.bValue, 1),
-                          ),
-                        ),
-                        Positioned(
-                            right: -40,
-                            bottom: -20,
-                            child: Image.network(
-                              widget.profileURL[currentProfileUrlIndex],
-                              height: 125,
-                              width: 125,
-                            ))
                       ],
                     ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                // Three round buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'Crop',
-                    //   child: const Icon(Icons.crop),
-                    // ),
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'color',
-                    //   child: const Icon(Icons.color_lens_outlined),
-                    // ),
-                    FloatingActionButton(
-                      onPressed: _saveToGallery,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Save Image',
-                      child: Icon(Icons.download),
-                    ),
-                    FloatingActionButton(
-                      onPressed: _shareImage,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Share',
-                      child: Icon(Icons.share),
-                    ),
-                    FloatingActionButton(
-                        onPressed: _refreshProfileUrl,
-                        backgroundColor: Colors.grey[800],
-                        tooltip: 'Refresh',
-                        child: Icon(Icons.refresh)),
                   ],
                 ),
-
                 SizedBox(
                   height: 30,
                 ),
-
-                // Horizontally scrollable list of small boxes
-              ],
-            ),
-          ),
-          if (isLoading)
-            Container(
-              color: Colors.black.withOpacity(0.5),
-              child: Center(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class ImageEditor5 extends StatefulWidget {
-  final String imagePath;
-  final String fullname;
-  final List profileURL;
-  final int rValue;
-  final int gValue;
-  final int bValue;
-
-  const ImageEditor5({
-    Key? key,
-    required this.imagePath,
-    required this.profileURL,
-    required this.rValue,
-    required this.gValue,
-    required this.bValue,
-    required this.fullname,
-  }) : super(key: key);
-
-  @override
-  State<ImageEditor5> createState() => _ImageEditor5State();
-}
-
-class _ImageEditor5State extends State<ImageEditor5> {
-  ScreenshotController screenshotController = ScreenshotController();
-  bool isLoading = false;
-  int currentProfileUrlIndex = 0;
-
-  void _saveToGallery() async {
-    _showLoading();
-    Uint8List? image = await screenshotController.capture();
-    if (image != null) {
-      final result = await ImageGallerySaver.saveImage(image);
-      print(result);
-
-      _hideLoading();
-      _showSnackBar('Image saved successfully!');
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to save image.');
-    }
-  }
-
-  void _shareImage() async {
-    _showLoading();
-    Uint8List? imageBytes = await screenshotController.capture();
-    if (imageBytes != null) {
-      await Share.file(
-        'image.png',
-        'image.png',
-        imageBytes,
-        'image/png',
-        text: 'Check out this cool image!',
-      );
-      _hideLoading();
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to share image.');
-    }
-  }
-
-  void _showLoading() {
-    setState(() {
-      isLoading = true;
-    });
-  }
-
-  void _hideLoading() {
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: Duration(seconds: 2),
-      ),
-    );
-  }
-
-  void _refreshProfileUrl() {
-    setState(() {
-      currentProfileUrlIndex =
-          (currentProfileUrlIndex + 1) % widget.profileURL.length;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color.fromRGBO(12, 12, 12, 1),
-      appBar: AppBar(
-        title: Text(''),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                // Large box with an image
-                Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: Screenshot(
-                    controller: screenshotController,
-                    child: Stack(
+                Column(
+                  children: [
+                    Text(
+                      "Color Palette",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.network(
-                          widget.imagePath,
-                          fit: BoxFit.cover,
-                          width: 400,
-                          height: 400,
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          child: Container(
-                            padding: EdgeInsets.only(top: 7, right: 10),
-                            width: 400,
-                            height: 10,
-
-                            color: calculateColor(
-                                widget.rValue, widget.gValue, widget.bValue),
-
-                            child: Text(
-                              widget.fullname,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              ),
-                            ),
-                            // color: Color.fromRGBO(
-                            //     widget.rValue, widget.gValue, widget.bValue, 1),
-                          ),
-                        ),
-                        Positioned(
-                          right: -25,
-                          bottom: -25,
-                          child: Container(
-                            width: 85,
-                            height: 85,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: calculateColor(
-                                  widget.rValue, widget.gValue, widget.bValue),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 0;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[0][0],
+                                  widget.RGBValues[0][1],
+                                  widget.RGBValues[0][2],
+                                  1),
                             ),
                           ),
                         ),
-                        Positioned(
-                            right: -40,
-                            bottom: -20,
-                            child: Image.network(
-                              widget.profileURL[currentProfileUrlIndex],
-                              height: 125,
-                              width: 125,
-                            ))
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 1;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[1][0],
+                                  widget.RGBValues[1][1],
+                                  widget.RGBValues[1][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 2;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[2][0],
+                                  widget.RGBValues[2][1],
+                                  widget.RGBValues[2][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 3;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[3][0],
+                                  widget.RGBValues[3][1],
+                                  widget.RGBValues[3][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 4;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[4][0],
+                                  widget.RGBValues[4][1],
+                                  widget.RGBValues[4][2],
+                                  1),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
-
-                // Three round buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'Crop',
-                    //   child: const Icon(Icons.crop),
-                    // ),
-                    // FloatingActionButton(
-                    //   onPressed: () {},
-                    //   backgroundColor: Colors.grey[800],
-                    //   tooltip: 'color',
-                    //   child: const Icon(Icons.color_lens_outlined),
-                    // ),
-                    FloatingActionButton(
-                      onPressed: _saveToGallery,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Save Image',
-                      child: Icon(Icons.download),
-                    ),
-                    FloatingActionButton(
-                      onPressed: _shareImage,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Share',
-                      child: Icon(Icons.share),
-                    ),
-                    FloatingActionButton(
-                      onPressed: _refreshProfileUrl,
-                      backgroundColor: Colors.grey[800],
-                      tooltip: 'Refresh',
-                      child: Icon(Icons.refresh),
-                    ),
                   ],
-                ),
-
-                SizedBox(
-                  height: 30,
-                ),
+                )
 
                 // Horizontally scrollable list of small boxes
               ],

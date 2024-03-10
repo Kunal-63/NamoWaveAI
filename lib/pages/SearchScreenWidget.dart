@@ -6,11 +6,13 @@ class SearchScreen extends StatefulWidget {
   final String profileURL;
   final String phoneNumber;
   final String fullname;
+  final String position;
   const SearchScreen({
     Key? key,
     required this.profileURL,
     required this.phoneNumber,
     required this.fullname,
+    required this.position,
   }) : super(key: key);
 
   @override
@@ -104,6 +106,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     phoneNumber: widget.phoneNumber,
                                     profileURL: widget.profileURL,
                                     lokhSabhaName: filteredLokhSabhaList[index],
+                                    position: widget.position,
                                   ),
                                 ),
                               );

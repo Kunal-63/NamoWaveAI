@@ -47,12 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
         fullname: widget.hfullname,
         phoneNumber: widget.hphoneNumber,
         profileURL: widget.profileURL,
+        position: widget.hposition,
         backgroundImage: images[_selectedIndex],
       ),
       SearchScreen(
         fullname: widget.hfullname,
         phoneNumber: widget.hphoneNumber,
         profileURL: widget.profileURL,
+        position: widget.hposition,
       ),
       ProfileScreen(
         fullname: widget.hfullname,

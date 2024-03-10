@@ -99,6 +99,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         subtitle: widget.lokhsabha,
                         icon: Icons.location_city,
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      _buildListTile(
+                        title: 'Vidhan Sabha',
+                        subtitle: widget.VidhanSabha,
+                        icon: Icons.location_city,
+                      ),
                     ],
                   ),
                 ),
