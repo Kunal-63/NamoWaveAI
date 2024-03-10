@@ -16,6 +16,7 @@ class CropPage extends StatefulWidget {
   final String position;
   final String lokhsabha;
   final String phoneNumber;
+  final String vidhansabha;
 
   const CropPage({
     Key? key,
@@ -25,6 +26,7 @@ class CropPage extends StatefulWidget {
     required this.lokhsabha,
     required this.position,
     required this.phoneNumber,
+    required this.vidhansabha,
   }) : super(key: key);
 
   @override
@@ -255,6 +257,7 @@ class _CropPageState extends State<CropPage> {
                       hposition: responseData['position'],
                       hparty: responseData['party'],
                       hlokhsabha: responseData['lokhsabha'],
+                      hvidhansabha: responseData['vidhansabha'],
                       profileURL: responseData['profile_url'],
                     )));
       } else {

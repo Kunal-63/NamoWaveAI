@@ -9,6 +9,7 @@ class ProfileScreen extends StatefulWidget {
   final String phoneNumber;
   final String lokhsabha;
   final String profileURL;
+  final String VidhanSabha;
   const ProfileScreen({
     Key? key,
     required this.fullname,
@@ -17,6 +18,7 @@ class ProfileScreen extends StatefulWidget {
     required this.phoneNumber,
     required this.lokhsabha,
     required this.profileURL,
+    required this.VidhanSabha,
   }) : super(key: key);
 
   @override
@@ -127,6 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     currentPhoneNumber: widget.phoneNumber,
                                     currentLokhsabha: widget.lokhsabha,
                                     currentPosition: widget.position,
+                                    currentVidhansabh: widget.VidhanSabha,
                                     profileURL: 'assets/dummy.jpg',
                                   )),
                         );

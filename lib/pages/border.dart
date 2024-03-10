@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:theog/pages/FramesTesting.dart';
 import 'package:theog/pages/ImageEditor.dart'; // Import your ImageEditor subclasses
 import 'package:http/http.dart' as http;
 
@@ -19,10 +20,10 @@ class BorderScreen extends StatelessWidget {
 
   final List<String> borderImages = [
     'assets/borders/template1.png',
-    'assets/borders/template2.png', // Add more image paths as needed
-    'assets/borders/template3.png',
-    'assets/borders/template4.png',
-    'assets/borders/template5.png',
+    // 'assets/borders/template2.png', // Add more image paths as needed
+    // 'assets/borders/template3.png',
+    // 'assets/borders/template4.png',
+    // 'assets/borders/template5.png',
   ];
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
@@ -34,7 +35,6 @@ class BorderScreen extends StatelessWidget {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'phoneNumber': phoneNumber,
-          'template_url': imagePathURL,
         }),
       );
 
@@ -62,10 +62,8 @@ class BorderScreen extends StatelessWidget {
     try {
       Map<String, dynamic> result = await colorChangeTemplate();
 
-      List uploadedUrl = result['uploaded_url'];
-      int rValue = result['r'];
-      int gValue = result['g'];
-      int bValue = result['b'];
+      List RGBList = result['RGBValues'];
+      List TextList = result['TextValues'];
 
       Navigator.pop(context);
 
@@ -74,72 +72,68 @@ class BorderScreen extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) {
-            return ImageEditor(
-              profileURL: uploadedUrl,
-              imagePath: imagePathURL,
-              rValue: rValue,
-              gValue: gValue,
-              bValue: bValue,
-              fullname: fullname,
+            return FramesTesting(
+              RGBValues: RGBList,
+              TextValues: TextList,
             );
           }),
         );
-      } else if (imagePath == borderImages[1]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor2(
-              profileURL: uploadedUrl,
-              imagePath: imagePathURL,
-              rValue: rValue,
-              gValue: gValue,
-              bValue: bValue,
-              fullname: fullname,
-            );
-          }),
-        );
-      } else if (imagePath == borderImages[2]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor3(
-              profileURL: uploadedUrl,
-              imagePath: imagePathURL,
-              rValue: rValue,
-              gValue: gValue,
-              bValue: bValue,
-              fullname: fullname,
-            );
-          }),
-        );
-      } else if (imagePath == borderImages[3]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor4(
-              profileURL: uploadedUrl,
-              imagePath: imagePathURL,
-              rValue: rValue,
-              gValue: gValue,
-              bValue: bValue,
-              fullname: fullname,
-            );
-          }),
-        );
-      } else if (imagePath == borderImages[4]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor5(
-              profileURL: uploadedUrl,
-              imagePath: imagePathURL,
-              rValue: rValue,
-              gValue: gValue,
-              bValue: bValue,
-              fullname: fullname,
-            );
-          }),
-        );
+        // } else if (imagePath == borderImages[1]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor2(
+        //         profileURL: uploadedUrl,
+        //         imagePath: imagePathURL,
+        //         rValue: rValue,
+        //         gValue: gValue,
+        //         bValue: bValue,
+        //         fullname: fullname,
+        //       );
+        //     }),
+        //   );
+        // } else if (imagePath == borderImages[2]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor3(
+        //         profileURL: uploadedUrl,
+        //         imagePath: imagePathURL,
+        //         rValue: rValue,
+        //         gValue: gValue,
+        //         bValue: bValue,
+        //         fullname: fullname,
+        //       );
+        //     }),
+        //   );
+        // } else if (imagePath == borderImages[3]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor4(
+        //         profileURL: uploadedUrl,
+        //         imagePath: imagePathURL,
+        //         rValue: rValue,
+        //         gValue: gValue,
+        //         bValue: bValue,
+        //         fullname: fullname,
+        //       );
+        //     }),
+        //   );
+        // } else if (imagePath == borderImages[4]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor5(
+        //         profileURL: uploadedUrl,
+        //         imagePath: imagePathURL,
+        //         rValue: rValue,
+        //         gValue: gValue,
+        //         bValue: bValue,
+        //         fullname: fullname,
+        //       );
+        //     }),
+        //   );
       }
     } catch (error) {
       Navigator.pop(context);

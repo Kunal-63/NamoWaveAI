@@ -115,6 +115,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           hposition: responseData['position'],
                           hparty: responseData['party'],
                           hlokhsabha: responseData['lokhsabha'],
+                          hvidhansabha: responseData['vidhansabha'],
                           profileURL: responseData['profile_url'],
                         )));
             return;

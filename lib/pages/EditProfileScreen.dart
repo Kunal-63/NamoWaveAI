@@ -18,6 +18,7 @@ class EditProfileScreen extends StatefulWidget {
   final String currentLokhsabha;
   final String currentPosition;
   final String profileURL;
+  final String currentVidhansabh;
 
   const EditProfileScreen(
       {Key? key,
@@ -26,6 +27,7 @@ class EditProfileScreen extends StatefulWidget {
       required this.currentPhoneNumber,
       required this.currentLokhsabha,
       required this.currentPosition,
+      required this.currentVidhansabh,
       required this.profileURL})
       : super(key: key);
 
@@ -39,6 +41,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _phoneNumberController;
   late TextEditingController _lokhsabhaController;
   late TextEditingController _positionController;
+  late TextEditingController _vidhansabhaController;
 
   @override
   void initState() {
@@ -50,6 +53,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         TextEditingController(text: widget.currentPhoneNumber);
     _lokhsabhaController = TextEditingController(text: widget.currentLokhsabha);
     _positionController = TextEditingController(text: widget.currentPosition);
+    _vidhansabhaController =
+        TextEditingController(text: widget.currentVidhansabh);
   }
 
   @override
@@ -95,6 +100,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 _buildTextField('Lokhsabha', _lokhsabhaController),
                 SizedBox(height: 10),
                 _buildTextField('Position', _positionController),
+                SizedBox(height: 10),
+                _buildTextField('VidhanSabha', _vidhansabhaController),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -182,6 +189,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           phoneNumber: _phoneNumberController.text,
           lokhsabha: _lokhsabhaController.text,
           position: _positionController.text,
+          vidhansabha: _vidhansabhaController.text,
           title: '',
         ),
       ),
@@ -217,6 +225,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   hfullname: responseData['fullname'],
                   hparty: responseData['party'],
                   hlokhsabha: responseData['lokhsabha'],
+                  hvidhansabha: responseData['vidhansabha'],
                   profileURL: responseData['profile_url'])),
         );
       } else {

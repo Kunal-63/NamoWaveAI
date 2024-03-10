@@ -131,6 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           hposition: 'Guest',
                           hparty: 'Guest Party',
                           hlokhsabha: 'Guest Lokhsabha',
+                          hvidhansabha: 'Guest Vidhansabha',
                           profileURL:
                               'https://www.starpng.com/public/uploads/preview/narendra-modi-png-images-download-21557464012rwdpoyrfso.png',
                         ),

@@ -5,10 +5,15 @@ import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:esys_flutter_share_plus/esys_flutter_share_plus.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 
 class FramesTesting extends StatefulWidget {
+  final List RGBValues;
+  final List TextValues;
   const FramesTesting({
     Key? key,
+    required this.RGBValues,
+    required this.TextValues,
   }) : super(key: key);
 
   @override
@@ -20,6 +25,19 @@ class _FramesTestingState extends State<FramesTesting> {
   bool isLoading = false;
   int currentProfileUrlIndex = 0;
   double fontSize = 12.0;
+  String currentFontFamily = 'Default';
+  List<String> fontFamilies = [
+    'Default',
+    'Arial',
+    'Times New Roman',
+    'Courier New',
+  ];
+
+  void _changeFontFamily(String fontFamily) {
+    setState(() {
+      currentFontFamily = fontFamily;
+    });
+  }
 
   void _saveToGallery() async {
     _showLoading();
@@ -149,7 +167,11 @@ class _FramesTestingState extends State<FramesTesting> {
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(20),
                                   bottomLeft: Radius.circular(20)),
-                              color: Color.fromRGBO(117, 141, 109, 1),
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[0][0],
+                                  widget.RGBValues[0][1],
+                                  widget.RGBValues[0][2],
+                                  1),
                             ),
                             child: Row(
                               children: [
@@ -184,18 +206,28 @@ class _FramesTestingState extends State<FramesTesting> {
                                     Text(
                                       'ધારાસભ્ય, અમદાવાદ વિધાનસભા',
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: Color.fromRGBO(
+                                            widget.TextValues[0][0],
+                                            widget.TextValues[0][1],
+                                            widget.TextValues[0][2],
+                                            1),
                                         fontWeight: FontWeight.bold,
                                         fontSize: fontSize,
+                                        fontFamily: currentFontFamily,
                                       ),
                                     ),
                                     Text(
                                       'પૂર્વ મંત્રી, ગુજરાત સરકાર',
                                       style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: fontSize - 2,
-                                          fontFamily: 'GujaratiFont1'),
+                                        color: Color.fromRGBO(
+                                            widget.TextValues[0][0],
+                                            widget.TextValues[0][1],
+                                            widget.TextValues[0][2],
+                                            1),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: fontSize - 2,
+                                        fontFamily: currentFontFamily,
+                                      ),
                                     ),
                                   ],
                                 )
@@ -246,35 +278,124 @@ class _FramesTestingState extends State<FramesTesting> {
                   height: 30,
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0, right: 15),
-                  child: Container(
-                    padding: EdgeInsets.all(5.0), // Adjust padding as needed
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white), // Border color
-                      borderRadius: BorderRadius.circular(8.0), // Border radius
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
                       children: [
                         Text(
-                          'Change Font Size:',
-                          style: TextStyle(
-                              color: Colors.white, fontFamily: 'GujaratiFont1'),
+                          "Font Size",
+                          style: TextStyle(color: Colors.white),
                         ),
-                        FloatingActionButton(
-                          onPressed: _decreaseFontSize,
-                          child: Icon(Icons.remove),
-                          backgroundColor: Colors.grey[800],
-                        ),
-                        FloatingActionButton(
-                          onPressed: _increaseFontSize,
-                          child: Icon(Icons.add),
-                          backgroundColor: Colors.grey[800],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15),
+                          child: Container(
+                            height: 60,
+                            width: 100, // Adjust padding as needed
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.white), // Border color
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Border radius
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                // Text(
+                                //   'Change Font Size:',
+                                //   style: TextStyle(
+                                //       color: Colors.white,
+                                //       fontFamily: 'GujaratiFont1'),
+                                // ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: FloatingActionButton(
+                                    onPressed: _decreaseFontSize,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
+                                    backgroundColor: Colors.grey[800],
+                                  ),
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: 30,
+                                  child: FloatingActionButton(
+                                    onPressed: _increaseFontSize,
+                                    child: Icon(Icons.add,
+                                        size: 20, color: Colors.white),
+                                    backgroundColor: Colors.grey[800],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                    Column(
+                      children: [
+                        Text(
+                          "Font Family",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0, right: 15),
+                          child: Container(
+                            padding:
+                                EdgeInsets.all(5.0), // Adjust padding as needed
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.white), // Border color
+                              borderRadius:
+                                  BorderRadius.circular(8.0), // Border radius
+                            ),
+                            child: DropdownButton<String>(
+                              value: currentFontFamily,
+                              onChanged: (String? newFontFamily) {
+                                if (newFontFamily != null) {
+                                  _changeFontFamily(newFontFamily);
+                                }
+                              },
+                              dropdownColor: Color.fromARGB(241, 12, 12, 12),
+                              iconEnabledColor:
+                                  Colors.white, // Dropdown button icon color
+                              iconDisabledColor:
+                                  Colors.white, // Dropdown button icon color
+                              focusColor: Color.fromRGBO(
+                                  12, 12, 12, 1), // Dropdown button focus color
+                              style: TextStyle(
+                                  color: Colors
+                                      .white), // Dropdown button text color
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                              ), // Dropdown button icon color
+                              underline: Container(),
+
+                              items: fontFamilies.map<DropdownMenuItem<String>>(
+                                  (String fontFamily) {
+                                return DropdownMenuItem<String>(
+                                  value: fontFamily,
+                                  child: Text(
+                                    fontFamily,
+                                    style: TextStyle(
+                                        color: Colors
+                                            .white), // Dropdown item text color
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
                 ),
               ],
             ),

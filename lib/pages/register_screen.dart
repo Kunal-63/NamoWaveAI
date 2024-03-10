@@ -20,17 +20,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController controller1 = TextEditingController();
   final TextEditingController controller2 = TextEditingController();
   final TextEditingController controller3 = TextEditingController();
+  final TextEditingController controller4 = TextEditingController();
 
   String? _selectedParty;
   @override
   void initState() {
     super.initState();
+    _selectedParty = "BJP";
   }
 
   bool areFieldsFilled() {
     return controller1.text.isNotEmpty &&
         controller2.text.isNotEmpty &&
         controller3.text.isNotEmpty &&
+        controller4.text.isNotEmpty &&
         _selectedParty != null;
   }
 
@@ -54,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _showPoliticalPartiesDialog(BuildContext context) {
+  void _showPositionsDialog(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -63,67 +66,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ListTile(
-                leading: Image.asset(
-                  'assets/flags/bjp.jpg',
-                ),
-                title: Text('BJP'),
+                title: Text('President'),
                 onTap: () {
-                  _setSelectedParty('BJP');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                leading: Image.asset('assets/flags/congress.jpg'),
-                title: Text('Congress'),
-                onTap: () {
-                  _setSelectedParty('Congress');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                leading: Image.asset('assets/flags/aam.jpg'),
-                title: Text('AAP'),
-                onTap: () {
-                  _setSelectedParty('AAP');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                leading: Image.asset('assets/flags/bsp.jpg'),
-                title: Text('BSP'),
-                onTap: () {
-                  _setSelectedParty('BSP');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                leading: Image.asset('assets/flags/sp.jpg'),
-                title: Text('SP'),
-                onTap: () {
-                  _setSelectedParty('SP');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                leading: Image.asset('assets/flags/tmc.jpg'),
-                title: Text('TMC'),
-                onTap: () {
-                  _setSelectedParty('TMC');
+                  _setSelectedPosition('President');
                   Navigator.pop(context);
                 },
               ),
@@ -137,9 +82,293 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _setSelectedParty(String party) {
+  void _setSelectedPosition(String position) {
     setState(() {
-      _selectedParty = party;
+      controller2.text = position;
+      print('Selected party: $_selectedParty');
+    });
+  }
+
+  void _showLokhsabhaDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ListTile(
+                title: Text('Ahmedabad'),
+                onTap: () {
+                  _setSelectedLokhsabha('Ahmedabad');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Gandhinagar'),
+                onTap: () {
+                  _setSelectedLokhsabha('Gandhinagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Surat'),
+                onTap: () {
+                  _setSelectedLokhsabha('Surat');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Vadodara'),
+                onTap: () {
+                  _setSelectedLokhsabha('Vadodara');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Rajkot'),
+                onTap: () {
+                  _setSelectedLokhsabha('Rajkot');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Bhavnagar'),
+                onTap: () {
+                  _setSelectedLokhsabha('Bhavnagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Jamnagar'),
+                onTap: () {
+                  _setSelectedLokhsabha('Jamnagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Junagadh'),
+                onTap: () {
+                  _setSelectedLokhsabha('Junagadh');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Surendranagar'),
+                onTap: () {
+                  _setSelectedLokhsabha('Surendranagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Anand'),
+                onTap: () {
+                  _setSelectedLokhsabha('Anand');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Kheda'),
+                onTap: () {
+                  _setSelectedLokhsabha('Kheda');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Panchmahal'),
+                onTap: () {
+                  _setSelectedLokhsabha('Panchmahal');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Dahod'),
+                onTap: () {
+                  _setSelectedLokhsabha('Dahod');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Vadodara'),
+                onTap: () {
+                  _setSelectedLokhsabha('Vadodara');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Chhota Udaipur'),
+                onTap: () {
+                  _setSelectedLokhsabha('Chhota Udaipur');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Bharuch'),
+                onTap: () {
+                  _setSelectedLokhsabha('Bharuch');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Bardoli'),
+                onTap: () {
+                  _setSelectedLokhsabha('Bardoli');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Surat'),
+                onTap: () {
+                  _setSelectedLokhsabha('Surat');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Navsari'),
+                onTap: () {
+                  _setSelectedLokhsabha('Navsari');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Valsad'),
+                onTap: () {
+                  _setSelectedLokhsabha('Valsad');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Bhavnagar'),
+                onTap: () {
+                  _setSelectedLokhsabha('Bhavnagar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Ankleshwar'),
+                onTap: () {
+                  _setSelectedLokhsabha('Ankleshwar');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              ListTile(
+                title: Text('Chhota Udaipur'),
+                onTap: () {
+                  _setSelectedLokhsabha('Chhota Udaipur');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _setSelectedLokhsabha(String position) {
+    setState(() {
+      controller3.text = position;
+      print('Selected party: $_selectedParty');
+    });
+  }
+
+  void _showVidhanSabhaDialog(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ListTile(
+                title: Text('President'),
+                onTap: () {
+                  _setSelectedVidhanSabha('President');
+                  Navigator.pop(context);
+                },
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _setSelectedVidhanSabha(String position) {
+    setState(() {
+      controller4.text = position;
       print('Selected party: $_selectedParty');
     });
   }
@@ -244,10 +473,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             text: _selectedParty ?? '',
                           ),
                           maxLines: 1,
-                          onTap: () {
-                            // Show political parties dialog
-                            _showPoliticalPartiesDialog(context);
-                          },
+                          // onTap: () {
+                          //   // Show political parties dialog
+                          //   _showPoliticalPartiesDialog(context);
+                          // },
                           // initialValue: _selectedParty,
                           readOnly: true,
                           decoration: InputDecoration(
@@ -277,7 +506,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 70,
-                        child: TextField(
+                        child: TextFormField(
+                          onTap: () {
+                            // Show political parties dialog
+                            _showPositionsDialog(context);
+                          },
+                          initialValue: controller2.text,
+                          readOnly: true,
                           controller: controller2,
                           style: TextStyle(color: Colors.white),
                           maxLines: 1,
@@ -311,12 +546,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: controller3,
                           style: TextStyle(color: Colors.white),
                           maxLines: 1,
+                          onTap: () {
+                            // Show political parties dialog
+                            _showLokhsabhaDialog(context);
+                          },
+                          readOnly: true,
+                          initialValue: controller3.text,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.location_city,
                               color: Colors.white,
                             ),
                             labelText: 'Lokhsabha Constituency',
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 70,
+                        child: TextFormField(
+                          controller: controller4,
+                          style: TextStyle(color: Colors.white),
+                          maxLines: 1,
+                          onTap: () {
+                            // Show political parties dialog
+                            _showVidhanSabhaDialog(context);
+                          },
+                          readOnly: true,
+                          initialValue: controller4.text,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.location_city,
+                              color: Colors.white,
+                            ),
+                            labelText: 'VidhanSabha Constituency',
                             labelStyle: TextStyle(
                               color: Colors.white,
                             ),
@@ -352,6 +629,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     party: "$_selectedParty",
                                     position: controller2.text,
                                     lokhsabha: controller3.text,
+                                    vidhansabha: controller4.text,
                                     phoneNumber: widget.phoneNumber,
                                   ),
                                 ),

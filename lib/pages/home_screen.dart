@@ -10,6 +10,7 @@ class HomeScreen extends StatefulWidget {
   final String hparty;
   final String hfullname;
   final String hlokhsabha;
+  final String hvidhansabha;
   final String profileURL;
 
   const HomeScreen({
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
     required this.hfullname,
     required this.hparty,
     required this.hlokhsabha,
+    required this.hvidhansabha,
     required this.profileURL,
   }) : super(key: key);
 
@@ -58,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         party: widget.hparty,
         phoneNumber: widget.hphoneNumber,
         lokhsabha: widget.hlokhsabha,
+        VidhanSabha: widget.hvidhansabha,
         profileURL: widget.profileURL,
       ),
     ];

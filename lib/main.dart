@@ -52,8 +52,8 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
     // Navigate to the main screen when text animation completes
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        // builder: (context) => LoginScreen(),
-        builder: (context) => FramesTesting(),
+        builder: (context) => LoginScreen(),
+        // builder: (context) => FramesTesting(),
       ),
     );
   }
