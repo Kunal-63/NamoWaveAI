@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
       });
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.3:8000/resend_otp'),
+        Uri.parse('http://localhost:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -96,7 +96,7 @@ class _OtpScreenState extends State<OtpScreen> {
           _isLoading = true;
         });
         final response = await http.post(
-          Uri.parse('http://192.168.1.3:8000/verify_otp'),
+          Uri.parse('http://localhost:8000/verify_otp'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

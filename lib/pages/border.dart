@@ -24,13 +24,13 @@ class BorderScreen extends StatelessWidget {
     'assets/borders/template2.jpg', // Add more image paths as needed
     'assets/borders/template3.jpg',
     'assets/borders/template4.jpg',
-    'assets/borders/template5.jpg',
+    // 'assets/borders/template5.jpg',
     'assets/borders/template6.jpg',
-    'assets/borders/template7.jpg',
+    // 'assets/borders/template7.jpg',
   ];
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
-    final apiUrl = 'http://192.168.1.3:8000/color_change_template';
+    final apiUrl = 'http://localhost:8000/color_change_template';
 
     try {
       final response = await http.post(
@@ -85,62 +85,62 @@ class BorderScreen extends StatelessWidget {
             );
           }),
         );
-        // } else if (imagePath == borderImages[1]) {
-        //   Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(builder: (context) {
-        //       return ImageEditor2(
-        //         profileURL: uploadedUrl,
-        //         imagePath: imagePathURL,
-        //         rValue: rValue,
-        //         gValue: gValue,
-        //         bValue: bValue,
-        //         fullname: fullname,
-        //       );
-        //     }),
-        //   );
-        // } else if (imagePath == borderImages[2]) {
-        //   Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(builder: (context) {
-        //       return ImageEditor3(
-        //         profileURL: uploadedUrl,
-        //         imagePath: imagePathURL,
-        //         rValue: rValue,
-        //         gValue: gValue,
-        //         bValue: bValue,
-        //         fullname: fullname,
-        //       );
-        //     }),
-        //   );
-        // } else if (imagePath == borderImages[3]) {
-        //   Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(builder: (context) {
-        //       return ImageEditor4(
-        //         profileURL: uploadedUrl,
-        //         imagePath: imagePathURL,
-        //         rValue: rValue,
-        //         gValue: gValue,
-        //         bValue: bValue,
-        //         fullname: fullname,
-        //       );
-        //     }),
-        //   );
-        // } else if (imagePath == borderImages[4]) {
-        //   Navigator.pushReplacement(
-        //     context,
-        //     MaterialPageRoute(builder: (context) {
-        //       return ImageEditor5(
-        //         profileURL: uploadedUrl,
-        //         imagePath: imagePathURL,
-        //         rValue: rValue,
-        //         gValue: gValue,
-        //         bValue: bValue,
-        //         fullname: fullname,
-        //       );
-        //     }),
-        //   );
+      } else if (imagePath == borderImages[1]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor2(
+              RGBValues: RGBList,
+              TextValues: TextList,
+              profileURL: [profileURL],
+              imagePath: imagePathURL,
+              fullname: fullname,
+              position: position,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[2]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor3(
+              RGBValues: RGBList,
+              TextValues: TextList,
+              profileURL: [profileURL],
+              imagePath: imagePathURL,
+              fullname: fullname,
+              position: position,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[3]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor4(
+              RGBValues: RGBList,
+              TextValues: TextList,
+              profileURL: [profileURL],
+              imagePath: imagePathURL,
+              fullname: fullname,
+              position: position,
+            );
+          }),
+        );
+      } else if (imagePath == borderImages[5]) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return ImageEditor6(
+              RGBValues: RGBList,
+              TextValues: TextList,
+              profileURL: [profileURL],
+              imagePath: imagePathURL,
+              fullname: fullname,
+              position: position,
+            );
+          }),
+        );
       }
     } catch (error) {
       Navigator.pop(context);
