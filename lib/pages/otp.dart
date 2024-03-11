@@ -155,7 +155,7 @@ class _OtpScreenState extends State<OtpScreen> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(12, 12, 12, 0.7),
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.9),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -169,14 +169,15 @@ class _OtpScreenState extends State<OtpScreen> {
             },
           ),
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+        body: Center(
+          // padding: const EdgeInsets.all(20),
           child: Container(
-            margin: const EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.all(20),
             width: double.infinity,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/otp.gif', height: 200, width: 200),
                 Container(
                   margin: const EdgeInsets.only(bottom: 40),
                   child: Text(
@@ -188,6 +189,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                 ),
                 Pinput(
+                  autofillHints: const [AutofillHints.oneTimeCode],
                   length: 6,
                   controller: TextEditingController(
                     text: enteredOtp,

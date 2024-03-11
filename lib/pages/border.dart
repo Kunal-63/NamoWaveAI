@@ -127,7 +127,7 @@ class BorderScreen extends StatelessWidget {
             );
           }),
         );
-      } else if (imagePath == borderImages[5]) {
+      } else if (imagePath == borderImages[4]) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) {

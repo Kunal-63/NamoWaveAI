@@ -30,54 +30,60 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
     'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
-  List<String> templates = []; // List to store template paths
+  List<String> templates = [
+    'assets/templates/template1.png',
+    'assets/templates/template2.png',
+    'assets/templates/template3.png',
+    'assets/templates/template4.png',
+    'assets/templates/template5.png',
+    'assets/templates/template6.png',
+  ]; // List to store template paths
   bool isLoading = true;
   @override
   void initState() {
     super.initState();
     // Fetch template paths when the screen initializes
-    _fetchTemplates();
   }
 
-  Future<void> _fetchTemplates() async {
-    try {
-      setState(() {
-        isLoading = true; // Show loading indicator
-      });
+  // Future<void> _fetchTemplates() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true; // Show loading indicator
+  //     });
 
-      final response = await http.get(
-        Uri.parse('http://localhost:8000/templates'),
-      );
+  //     final response = await http.get(
+  //       Uri.parse('http://localhost:8000/templates'),
+  //     );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print("Data : " + data.toString());
-        // Check if 'templates_links' key exists and its value is not null
-        if (data.containsKey('templates_links') &&
-            data['templates_links'] != null) {
-          setState(() {
-            templates = List<String>.from(data['templates_links']);
-            isLoading = false; // Hide loading indicator
-          });
-        } else {
-          print('Key "templates_links" is null or missing in the response.');
-          setState(() {
-            isLoading = false; // Hide loading indicator
-          });
-        }
-      } else {
-        print('Failed to fetch templates. Status code: ${response.statusCode}');
-        setState(() {
-          isLoading = false; // Hide loading indicator
-        });
-      }
-    } catch (e) {
-      print('Error fetching templates: $e');
-      setState(() {
-        isLoading = false; // Hide loading indicator
-      });
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       print("Data : " + data.toString());
+  //       // Check if 'templates_links' key exists and its value is not null
+  //       if (data.containsKey('templates_links') &&
+  //           data['templates_links'] != null) {
+  //         setState(() {
+  //           templates = List<String>.from(data['templates_links']);
+  //           isLoading = false; // Hide loading indicator
+  //         });
+  //       } else {
+  //         print('Key "templates_links" is null or missing in the response.');
+  //         setState(() {
+  //           isLoading = false; // Hide loading indicator
+  //         });
+  //       }
+  //     } else {
+  //       print('Failed to fetch templates. Status code: ${response.statusCode}');
+  //       setState(() {
+  //         isLoading = false; // Hide loading indicator
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching templates: $e');
+  //     setState(() {
+  //       isLoading = false; // Hide loading indicator
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +222,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: Image.network(imagePath).image,
+            image: Image.asset(imagePath).image,
             fit: BoxFit.cover,
           ),
         ),

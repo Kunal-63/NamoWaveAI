@@ -32,7 +32,7 @@ class _ImageEditorState extends State<ImageEditor> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
   int currentProfileUrlIndex = 0;
-  double fontSize = 12.0;
+  double fontSize = 10.0;
   String currentFontFamily = 'Default';
   int currentSelectedColorIndex = 0;
   int currentSelectedColorIndex1 = 0;
@@ -44,16 +44,8 @@ class _ImageEditorState extends State<ImageEditor> {
     'Arial',
     'Times New Roman',
     'Courier New',
-    'Acme',
-    'Pacifico',
-    'Indie Flower',
-    'Caveat',
-    'Great Vibes',
-    'Dancing Script',
-    'Poppins',
-    'Roboto',
-    'Raleway',
-    'Lato',
+    'Surat',
+    'Ekatra'
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -201,20 +193,20 @@ class _ImageEditorState extends State<ImageEditor> {
                     controller: screenshotController,
                     child: Stack(
                       children: [
-                        Image.network(
+                        Image.asset(
                           widget.imagePath,
                           fit: BoxFit.cover,
                           width: 400,
                           height: 400,
                         ),
                         Positioned(
-                          bottom: 10,
+                          bottom: 3,
                           right: 0,
                           child: Container(
                             padding:
                                 EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                            width: 200,
-                            height: 50,
+                            width: translatedFullName.toString().length * 6.9,
+                            height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(20),
@@ -638,7 +630,7 @@ class _ImageEditor2State extends State<ImageEditor2> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
   int currentProfileUrlIndex = 0;
-  double fontSize = 12.0;
+  double fontSize = 10.0;
   String currentFontFamily = 'Default';
   int currentSelectedColorIndex = 0;
   int currentSelectedColorIndex1 = 0;
@@ -650,16 +642,8 @@ class _ImageEditor2State extends State<ImageEditor2> {
     'Arial',
     'Times New Roman',
     'Courier New',
-    'Acme',
-    'Pacifico',
-    'Indie Flower',
-    'Caveat',
-    'Great Vibes',
-    'Dancing Script',
-    'Poppins',
-    'Roboto',
-    'Raleway',
-    'Lato',
+    'Surat',
+    'Ekatra'
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -807,7 +791,7 @@ class _ImageEditor2State extends State<ImageEditor2> {
                     controller: screenshotController,
                     child: Stack(
                       children: [
-                        Image.network(
+                        Image.asset(
                           widget.imagePath,
                           fit: BoxFit.cover,
                           width: 400,
@@ -818,7 +802,7 @@ class _ImageEditor2State extends State<ImageEditor2> {
                           right: 0,
                           child: Container(
                             width: 400,
-                            height: 10,
+                            height: 5,
                             color: Color.fromRGBO(
                                 widget.RGBValues[currentSelectedColorIndex1][0],
                                 widget.RGBValues[currentSelectedColorIndex1][1],
@@ -832,8 +816,8 @@ class _ImageEditor2State extends State<ImageEditor2> {
                           child: Container(
                             padding:
                                 EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                            width: 200,
-                            height: 50,
+                            width: translatedFullName.toString().length * 6.8,
+                            height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
@@ -1368,16 +1352,8 @@ class _ImageEditor3State extends State<ImageEditor3> {
     'Arial',
     'Times New Roman',
     'Courier New',
-    'Acme',
-    'Pacifico',
-    'Indie Flower',
-    'Caveat',
-    'Great Vibes',
-    'Dancing Script',
-    'Poppins',
-    'Roboto',
-    'Raleway',
-    'Lato',
+    'Surat',
+    'Ekatra'
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -1525,7 +1501,7 @@ class _ImageEditor3State extends State<ImageEditor3> {
                     controller: screenshotController,
                     child: Stack(
                       children: [
-                        Image.network(
+                        Image.asset(
                           widget.imagePath,
                           fit: BoxFit.cover,
                           width: 400,
@@ -1535,7 +1511,7 @@ class _ImageEditor3State extends State<ImageEditor3> {
                           bottom: 0,
                           left: 0,
                           child: Container(
-                            width: 250,
+                            width: translatedFullName.toString().length * 8,
                             height: 20,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -1557,7 +1533,7 @@ class _ImageEditor3State extends State<ImageEditor3> {
                           child: Container(
                             padding:
                                 EdgeInsets.only(left: 150, top: 5, bottom: 5),
-                            width: 150,
+                            width: 120,
                             height: 20,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -1585,7 +1561,7 @@ class _ImageEditor3State extends State<ImageEditor3> {
                           ),
                         ),
                         Positioned(
-                          right: 80,
+                          right: 95,
                           bottom: 3,
                           child: Row(
                             children: [
@@ -2059,16 +2035,8 @@ class _ImageEditor4State extends State<ImageEditor4> {
     'Arial',
     'Times New Roman',
     'Courier New',
-    'Acme',
-    'Pacifico',
-    'Indie Flower',
-    'Caveat',
-    'Great Vibes',
-    'Dancing Script',
-    'Poppins',
-    'Roboto',
-    'Raleway',
-    'Lato',
+    'Surat',
+    'Ekatra'
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -2216,7 +2184,7 @@ class _ImageEditor4State extends State<ImageEditor4> {
                     controller: screenshotController,
                     child: Stack(
                       children: [
-                        Image.network(
+                        Image.asset(
                           widget.imagePath,
                           fit: BoxFit.cover,
                           width: 400,
@@ -2227,7 +2195,7 @@ class _ImageEditor4State extends State<ImageEditor4> {
                           left: 0,
                           child: Container(
                             width: 300,
-                            height: 20,
+                            height: 7,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                   // topRight: Radius.circular(10),
@@ -2244,13 +2212,13 @@ class _ImageEditor4State extends State<ImageEditor4> {
                           ),
                         ),
                         Positioned(
-                          bottom: 19,
+                          bottom: 6,
                           left: 0,
                           child: Container(
                             padding:
                                 EdgeInsets.only(left: 150, top: 5, bottom: 5),
-                            width: 125,
-                            height: 20,
+                            width: translatedFullName.toString().length * 4.5,
+                            height: 35,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20),
@@ -2751,7 +2719,7 @@ class _ImageEditor6State extends State<ImageEditor6> {
   ScreenshotController screenshotController = ScreenshotController();
   bool isLoading = false;
   int currentProfileUrlIndex = 0;
-  double fontSize = 12.0;
+  double fontSize = 10.0;
   String currentFontFamily = 'Default';
   int currentSelectedColorIndex = 0;
   int currentSelectedColorIndex1 = 0;
@@ -2763,16 +2731,8 @@ class _ImageEditor6State extends State<ImageEditor6> {
     'Arial',
     'Times New Roman',
     'Courier New',
-    'Acme',
-    'Pacifico',
-    'Indie Flower',
-    'Caveat',
-    'Great Vibes',
-    'Dancing Script',
-    'Poppins',
-    'Roboto',
-    'Raleway',
-    'Lato',
+    'Surat',
+    'Ekatra'
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -2920,14 +2880,14 @@ class _ImageEditor6State extends State<ImageEditor6> {
                     controller: screenshotController,
                     child: Stack(
                       children: [
-                        Image.network(
+                        Image.asset(
                           widget.imagePath,
                           fit: BoxFit.cover,
                           width: 400,
                           height: 400,
                         ),
                         Positioned(
-                          bottom: 10,
+                          bottom: 7,
                           right: 0,
                           child: Container(
                             width: 400,
@@ -2945,8 +2905,8 @@ class _ImageEditor6State extends State<ImageEditor6> {
                           child: Container(
                             padding:
                                 EdgeInsets.only(left: 10, top: 5, bottom: 5),
-                            width: 200,
-                            height: 50,
+                            width: translatedFullName.toString().length * 6.8,
+                            height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20),
