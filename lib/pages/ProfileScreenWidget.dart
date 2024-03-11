@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:theog/pages/EditProfileScreen.dart';
 import 'package:theog/pages/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String fullname;
@@ -142,7 +143,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   )),
                         );
                       }),
-                      _buildButton('Sign Out', () {
+                      _buildButton('Sign Out', () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setBool('firstTimeLogin', true);
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

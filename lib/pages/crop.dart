@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:ui';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theog/pages/home_screen.dart';
 
 class CropPage extends StatefulWidget {
@@ -228,7 +228,7 @@ class _CropPageState extends State<CropPage> {
       _showLoading();
 
       final response = await http.post(
-        Uri.parse('http://localhost:8000/process_user_data'),
+        Uri.parse('http://192.168.1.3:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -247,6 +247,15 @@ class _CropPageState extends State<CropPage> {
         print('Data sent successfully');
         final responseData = jsonDecode(response.body);
         print(responseData);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('firstTimeLogin', false);
+        prefs.setString('userPhoneNumber', widget.phoneNumber);
+        prefs.setString('userFullName', responseData['fullname']);
+        prefs.setString('userPosition', responseData['position']);
+        prefs.setString('userParty', responseData['party']);
+        prefs.setString('userLokSabha', responseData['lokhsabha']);
+        prefs.setString('userVidhanSabha', responseData['vidhansabha']);
+        prefs.setString('userProfileURL', responseData['profile_url']);
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

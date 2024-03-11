@@ -205,7 +205,7 @@ class _ImageEditorState extends State<ImageEditor> {
                           child: Container(
                             padding:
                                 EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                            width: translatedFullName.toString().length * 6.9,
+                            width: translatedFullName.toString().length * 5,
                             height: 40,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -332,8 +332,8 @@ class _ImageEditorState extends State<ImageEditor> {
                           bottom: 0,
                           child: Image.network(
                             widget.profileURL[currentProfileUrlIndex],
-                            height: 125,
-                            width: 125,
+                            height: 75,
+                            width: 75,
                           ),
                         ),
                       ],
@@ -944,8 +944,8 @@ class _ImageEditor2State extends State<ImageEditor2> {
                           bottom: 0,
                           child: Image.network(
                             widget.profileURL[currentProfileUrlIndex],
-                            height: 125,
-                            width: 125,
+                            height: 75,
+                            width: 75,
                           ),
                         ),
                       ],
@@ -1556,8 +1556,8 @@ class _ImageEditor3State extends State<ImageEditor3> {
                           bottom: 0,
                           child: Image.network(
                             widget.profileURL[currentProfileUrlIndex],
-                            height: 125,
-                            width: 125,
+                            height: 75,
+                            width: 75,
                           ),
                         ),
                         Positioned(
@@ -2240,8 +2240,8 @@ class _ImageEditor4State extends State<ImageEditor4> {
                           bottom: 0,
                           child: Image.network(
                             widget.profileURL[currentProfileUrlIndex],
-                            height: 125,
-                            width: 125,
+                            height: 75,
+                            width: 75,
                           ),
                         ),
                         Positioned(
@@ -3033,8 +3033,8 @@ class _ImageEditor6State extends State<ImageEditor6> {
                           bottom: 0,
                           child: Image.network(
                             widget.profileURL[currentProfileUrlIndex],
-                            height: 125,
-                            width: 125,
+                            height: 75,
+                            width: 75,
                           ),
                         ),
                       ],

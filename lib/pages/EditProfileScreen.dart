@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final String currentFullname;
@@ -199,7 +200,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _sendDataToFastAPI() async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8000/process_user_data'),
+        Uri.parse('http://192.168.1.3:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -216,7 +217,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       if (response.statusCode == 200) {
         print('Data sent successfully');
         final responseData = jsonDecode(response.body);
-
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('userPhoneNumber', responseData['phonenumber']);
+        prefs.setString('userFullName', responseData['fullname']);
+        prefs.setString('userPosition', responseData['position']);
+        prefs.setString('userParty', responseData['party']);
+        prefs.setString('userLokSabha', responseData['lokhsabha']);
+        prefs.setString('userVidhanSabha', responseData['vidhansabha']);
+        prefs.setString('userProfileURL', responseData['profile_url']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
