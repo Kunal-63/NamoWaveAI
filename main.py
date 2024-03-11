@@ -7,11 +7,12 @@ import base64
 import mysql.connector as con
 from typing import Optional, List
 from removebg import RemoveBg
-from ColorAI import ColorChangeAI
+# from ColorAI import ColorChangeAI
 import requests
 import os
 from fastapi.staticfiles import StaticFiles
-
+from ColorDetection import detect_all_colors
+    
 mydb = con.connect(
     host="localhost",
     user="root",
@@ -40,11 +41,12 @@ class UserData(BaseModel):
     party: str
     lokhsabha: str
     position: str
+    vidhansabha: str
     image: Optional[str] = None
+
 
 class ColorChangeModel(BaseModel):
     phoneNumber: str
-    template_url: str
     
 def upload_image_to_imgbb(image_path: str) -> str:
     imgbb_api_key = "9ed666bcae79116dea7d068c2aaa3163" 
@@ -110,12 +112,12 @@ async def resend_otp(request: Request, login_request: LoginRequest):
 async def verify_otp(request: Request, login_request: LoginRequest):
     cur = mydb.cursor()
     phone_number = login_request.phone_number
-    cur.execute(f"SELECT fullname,position,party,lokhsabha,profile_url FROM users WHERE phonenumber = '{phone_number}'")
+    cur.execute(f"SELECT fullname,position,party,lokhsabha,profile_url,vidhansabha FROM users WHERE phonenumber = '{phone_number}'")
     result = cur.fetchall()
     if len(result) == 0:
         return {"message": "User not found"}
     else:
-        return {"fullname":result[0][0],"position":result[0][1],"party":result[0][2],"lokhsabha":result[0][3],"profile_url":result[0][4],"message": "user found"}
+        return {"fullname":result[0][0],"position":result[0][1],"party":result[0][2],"lokhsabha":result[0][3],"profile_url":result[0][4],"vidhansabha":result[0][5],"message": "user found"}
 
         
 @app.post("/process_user_data")
@@ -129,7 +131,6 @@ async def process_user_data(user_data: UserData):
         image_path = "profiles/{}.png".format(user_data.phone_number)
         imgbb_url = upload_image_to_imgbb(image_path)
         profile_url = imgbb_url
-    
     else:
         profile_url = ""
 
@@ -143,11 +144,11 @@ async def process_user_data(user_data: UserData):
         cur.execute("UPDATE users SET fullname=%s, party=%s, lokhsabha=%s, position=%s, profile_url=%s WHERE phonenumber=%s", (user_data.fullname, user_data.party, user_data.lokhsabha, user_data.position, profile_url, user_data.phone_number))
     else:
         print("Successfully inserted")
-        cur.execute("INSERT INTO users (phonenumber, fullname, party, lokhsabha, position, profile_url) VALUES (%s, %s, %s, %s, %s, %s)", (user_data.phone_number, user_data.fullname, user_data.party, user_data.lokhsabha, user_data.position, profile_url))
+        cur.execute("INSERT INTO users (phonenumber, fullname, party, lokhsabha, position, profile_url, vidhansabha) VALUES (%s, %s, %s, %s, %s, %s, %s)", (user_data.phone_number, user_data.fullname, user_data.party, user_data.lokhsabha, user_data.position, profile_url, user_data.vidhansabha))
 
 
     mydb.commit()
-    return {"fullname":user_data.fullname,"position":user_data.position,"phonenumber":user_data.phone_number,"party":user_data.party,"lokhsabha":user_data.lokhsabha,"profile_url":profile_url, "message": "Data received successfully"}
+    return {"fullname":user_data.fullname,"position":user_data.position,"phonenumber":user_data.phone_number,"party":user_data.party,"lokhsabha":user_data.lokhsabha,"profile_url":profile_url,"vidhansabha":user_data.vidhansabha, "message": "Data received successfully"}
 
 def template_exists(template_name: str, cur):
     cur.execute("SELECT template_name FROM templates WHERE template_name = %s", (template_name,))
@@ -175,9 +176,6 @@ async def get_template_links():
                 mydb.commit()
         else:
             pass
-        
-    
-
     cur.execute("select template_link from templates")
     results = cur.fetchall()
     for template_link in results:
@@ -189,12 +187,13 @@ async def get_template_links():
 async def color_change_template(template_data: ColorChangeModel):
     print("Color Changing...")
     print(template_data)
-    uploaded_url, rgb_values = ColorChangeAI(template_data.phoneNumber, template_data.template_url)
-    r, g, b = int(rgb_values[0]), int(rgb_values[1]), int(rgb_values[2])
-    return {"uploaded_url": uploaded_url, "r": r, "g": g, "b": b}
+    RGBValues, TextColors = detect_all_colors(r"profiles\{}.png".format(template_data.phoneNumber), num_colors=5)
+    return {"RGBValues": RGBValues, "TextColors": TextColors}
 
+    # UploadedURLs, rgb_values = ColorChangeAI(template_data.phoneNumber, template_data.template_url)
+    # r, g, b = int(rgb_values[0]), int(rgb_values[1]), int(rgb_values[2])
+    # return {"uploaded_url": UploadedURLs, "r": r, "g": g, "b": b}
 
 
 import uvicorn
-
 uvicorn.run(app, host="0.0.0.0", port=8000)

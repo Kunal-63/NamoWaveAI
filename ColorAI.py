@@ -8,7 +8,8 @@ from io import BytesIO
 import base64
 from removebg import RemoveBg
 
-def ColorChangeAI(phoneNumber, templateURL, index):
+def ColorChangeAImain(phoneNumber, templateURL, index):
+
     try:
         def get_image_from_url(image_url):
             response = requests.get(image_url)
@@ -56,25 +57,25 @@ def ColorChangeAI(phoneNumber, templateURL, index):
                 modified_image_path = "modified_images/{}_{}.jpg".format(phoneNumber,index)
                 cv2.imwrite(modified_image_path, self.image)
 
-                return modified_image_path
-                # self.remove_background(modified_image_path)
+                # return modified_image_path
+                self.remove_background(modified_image_path)
 
-                # api_key = '9ed666bcae79116dea7d068c2aaa3163'
+                api_key = '9ed666bcae79116dea7d068c2aaa3163'
 
-                # with open("modified_images/{}.png".format(phoneNumber), 'rb') as file:
-                    # image_data = base64.b64encode(file.read()).decode('utf-8')
+                with open("modified_images/{}.png".format(phoneNumber), 'rb') as file:
+                    image_data = base64.b64encode(file.read()).decode('utf-8')
 
-                # endpoint = 'https://api.imgbb.com/1/upload'
-                # payload = {
-                #     'key': api_key,
-                #     'image': image_data
-                # }
-                # response = requests.post(endpoint, data=payload)
-                # result = response.json()
+                endpoint = 'https://api.imgbb.com/1/upload'
+                payload = {
+                    'key': api_key,
+                    'image': image_data
+                }
+                response = requests.post(endpoint, data=payload)
+                result = response.json()
 
-                # if 'data' in result and 'url' in result['data']:
-                #     image_url = result['data']['url']
-                #     return image_url
+                if 'data' in result and 'url' in result['data']:
+                    image_url = result['data']['url']
+                    return image_url
 
             def remove_background(self, image_path):
                 RemoveBg(image_path, "modified_images/{}.png".format(phoneNumber))
@@ -137,8 +138,17 @@ def ColorChangeAI(phoneNumber, templateURL, index):
     except Exception as e:
         print("Error uploading", e)
         return None, None
-for i in range(5):
-    uploaded_url, rgb_values = ColorChangeAI("testing3", "https://i.ibb.co/m6Jm1r2/1480c234fb22.jpg", i)
-    print("Uploaded URL:", uploaded_url)
-    print("RGB Values:", rgb_values)
+    
+def ColorChangeAI(image_name, template_link):
+    ImagesLinks = []
+    RGBValues = []
+    for i in range(5):
+        uploaded_url, rgb_values = ColorChangeAImain(image_name, template_link, i)
+        print("Uploaded URL:", uploaded_url)
+        print("RGB Values:", rgb_values)
+        ImagesLinks.append(uploaded_url)
+        RGBValues = rgb_values
+    return ImagesLinks, RGBValues 
+    
+
 
