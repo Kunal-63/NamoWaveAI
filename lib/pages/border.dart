@@ -21,10 +21,12 @@ class BorderScreen extends StatelessWidget {
 
   final List<String> borderImages = [
     'assets/borders/template1.png',
-    // 'assets/borders/template2.png', // Add more image paths as needed
-    // 'assets/borders/template3.png',
-    // 'assets/borders/template4.png',
-    // 'assets/borders/template5.png',
+    'assets/borders/template2.jpg', // Add more image paths as needed
+    'assets/borders/template3.jpg',
+    'assets/borders/template4.jpg',
+    'assets/borders/template5.jpg',
+    'assets/borders/template6.jpg',
+    'assets/borders/template7.jpg',
   ];
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
