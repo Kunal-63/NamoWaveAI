@@ -74,6 +74,13 @@ class _ImageEditorState extends State<ImageEditor> {
     'assets/borders/template21.jpg',
     'assets/borders/template22.jpg',
     'assets/borders/template23.jpg',
+    'assets/borders/template24.jpg',
+    'assets/borders/template25.jpg',
+    'assets/borders/template26.jpg',
+    'assets/borders/template27.jpg',
+    'assets/borders/template28.jpg',
+    'assets/borders/template29.jpg',
+    'assets/borders/template30.jpg',
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -260,12 +267,36 @@ class _ImageEditorState extends State<ImageEditor> {
                           ),
                         ),
                         Positioned(
-                          bottom: 256,
-                          right: 2,
-                          child: Image.asset(
-                            'assets/amitshah.png',
-                            height: 120,
-                            width: 120,
+                          bottom: 262,
+                          right: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                width: 85,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Color.fromRGBO(
+                                          widget.RGBValues[
+                                              currentSelectedColorIndex][0],
+                                          widget.RGBValues[
+                                              currentSelectedColorIndex][1],
+                                          widget.RGBValues[
+                                              currentSelectedColorIndex][2],
+                                          1),
+                                      width:
+                                          2.0, // Adjust the thickness of the underline as needed
+                                    ),
+                                  ),
+                                ),
+                                child: Image.asset(
+                                  'assets/amitshah.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Positioned(

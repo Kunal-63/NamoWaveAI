@@ -228,7 +228,7 @@ class _CropPageState extends State<CropPage> {
       _showLoading();
 
       final response = await http.post(
-        Uri.parse('http://192.168.1.12:8000/process_user_data'),
+        Uri.parse('http://localhost:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

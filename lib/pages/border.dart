@@ -30,7 +30,7 @@ class BorderScreen extends StatelessWidget {
   ];
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
-    final apiUrl = 'http://192.168.1.12:8000/color_change_template';
+    final apiUrl = 'http://localhost:8000/color_change_template';
 
     try {
       final response = await http.post(

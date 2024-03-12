@@ -53,7 +53,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
   //     });
 
   //     final response = await http.get(
-  //       Uri.parse('http://192.168.1.12:8000/templates'),
+  //       Uri.parse('http://localhost:8000/templates'),
   //     );
 
   //     if (response.statusCode == 200) {
@@ -201,7 +201,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
   }
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
-    final apiUrl = 'http://192.168.1.12:8000/color_change_template';
+    final apiUrl = 'http://localhost:8000/color_change_template';
 
     try {
       final response = await http.post(
