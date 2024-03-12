@@ -47,7 +47,6 @@ class _ImageEditorState extends State<ImageEditor> {
     'IBMPlex',
     'LoraV',
     'LoraI',
-    'Teko',
     'Whisper',
   ];
 
@@ -57,6 +56,24 @@ class _ImageEditorState extends State<ImageEditor> {
     'assets/borders/template3.jpg',
     'assets/borders/template4.jpg',
     'assets/borders/template5.jpg',
+    'assets/borders/template6.jpg',
+    'assets/borders/template7.jpg',
+    'assets/borders/template8.jpg',
+    'assets/borders/template9.jpg',
+    'assets/borders/template10.jpg',
+    'assets/borders/template11.jpg',
+    'assets/borders/template12.jpg',
+    'assets/borders/template13.jpg',
+    'assets/borders/template14.jpg',
+    'assets/borders/template15.jpg',
+    'assets/borders/template16.jpg',
+    'assets/borders/template17.jpg',
+    'assets/borders/template18.jpg',
+    'assets/borders/template19.jpg',
+    'assets/borders/template20.jpg',
+    'assets/borders/template21.jpg',
+    'assets/borders/template22.jpg',
+    'assets/borders/template23.jpg',
   ];
 
   void _changeFontFamily(String fontFamily) {
@@ -541,9 +558,65 @@ class _ImageEditorState extends State<ImageEditor> {
                       ],
                     ),
                   ],
-                )
+                ),
 
                 // Horizontally scrollable list of small boxes
+                SizedBox(
+                  height: 30,
+                ),
+                Column(
+                  children: [
+                    Text(
+                      "Backgrounds",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 10),
+                          for (int i = 0; i < backgroundImages.length; i++)
+                            Row(
+                              children: [
+                                SizedBox(width: 5),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      currentSelectedBackgroundIndex = i;
+                                    });
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Container(
+                                      height: 75,
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image:
+                                              AssetImage(backgroundImages[i]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                              ],
+                            ),
+                          SizedBox(width: 10),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
               ],
             ),
           ),
