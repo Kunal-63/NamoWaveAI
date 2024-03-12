@@ -85,62 +85,62 @@ class BorderScreen extends StatelessWidget {
             );
           }),
         );
-      } else if (imagePath == borderImages[1]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor2(
-              RGBValues: RGBList,
-              TextValues: TextList,
-              profileURL: [profileURL],
-              imagePath: imagePathURL,
-              fullname: fullname,
-              position: position,
-            );
-          }),
-        );
-      } else if (imagePath == borderImages[2]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor3(
-              RGBValues: RGBList,
-              TextValues: TextList,
-              profileURL: [profileURL],
-              imagePath: imagePathURL,
-              fullname: fullname,
-              position: position,
-            );
-          }),
-        );
-      } else if (imagePath == borderImages[3]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor4(
-              RGBValues: RGBList,
-              TextValues: TextList,
-              profileURL: [profileURL],
-              imagePath: imagePathURL,
-              fullname: fullname,
-              position: position,
-            );
-          }),
-        );
-      } else if (imagePath == borderImages[4]) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return ImageEditor6(
-              RGBValues: RGBList,
-              TextValues: TextList,
-              profileURL: [profileURL],
-              imagePath: imagePathURL,
-              fullname: fullname,
-              position: position,
-            );
-          }),
-        );
+        // } else if (imagePath == borderImages[1]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor2(
+        //         RGBValues: RGBList,
+        //         TextValues: TextList,
+        //         profileURL: [profileURL],
+        //         imagePath: imagePathURL,
+        //         fullname: fullname,
+        //         position: position,
+        //       );
+        //     }),
+        //   );
+        // } else if (imagePath == borderImages[2]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor3(
+        //         RGBValues: RGBList,
+        //         TextValues: TextList,
+        //         profileURL: [profileURL],
+        //         imagePath: imagePathURL,
+        //         fullname: fullname,
+        //         position: position,
+        //       );
+        //     }),
+        //   );
+        // } else if (imagePath == borderImages[3]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor4(
+        //         RGBValues: RGBList,
+        //         TextValues: TextList,
+        //         profileURL: [profileURL],
+        //         imagePath: imagePathURL,
+        //         fullname: fullname,
+        //         position: position,
+        //       );
+        //     }),
+        //   );
+        // } else if (imagePath == borderImages[4]) {
+        //   Navigator.pushReplacement(
+        //     context,
+        //     MaterialPageRoute(builder: (context) {
+        //       return ImageEditor6(
+        //         RGBValues: RGBList,
+        //         TextValues: TextList,
+        //         profileURL: [profileURL],
+        //         imagePath: imagePathURL,
+        //         fullname: fullname,
+        //         position: position,
+        //       );
+        //     }),
+        //   );
       }
     } catch (error) {
       Navigator.pop(context);
