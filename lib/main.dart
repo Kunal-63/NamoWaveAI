@@ -42,8 +42,8 @@ class AnimatedSplash extends StatefulWidget {
 
 class _AnimatedSplashState extends State<AnimatedSplash> {
   final String splashText = 'MobileOrlovAI';
-
   String _currentText = '';
+
   late String userPhoneNumber;
   late String userFullName;
   late String userPosition;
@@ -53,29 +53,14 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
   late String userProfileURL;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-
-    _animateText();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final userPhoneNumber = prefs.getString('userPhoneNumber') ?? '';
-    final userFullName = prefs.getString('userFullName') ?? '';
-    final userPosition = prefs.getString('userPosition') ?? '';
-    final userParty = prefs.getString('userParty') ?? '';
-    final userLokSabha = prefs.getString('userLokSabha') ?? '';
-    final userVidhanSabha = prefs.getString('userVidhanSabha') ?? '';
-    final userProfileURL = prefs.getString('userProfileURL') ?? '';
+    _initializeData();
   }
 
-  Future<void> _animateText() async {
-    for (int i = 0; i <= splashText.length; i++) {
-      setState(() {
-        _currentText = splashText.substring(0, i);
-      });
-      await Future.delayed(
-          Duration(milliseconds: 100)); // Adjust the delay as needed
-    }
+  Future<void> _initializeData() async {
+    await _animateText();
+    await _getUserData();
 
     // Navigate to the main screen when text animation completes
     Navigator.of(context).pushReplacement(
@@ -91,9 +76,30 @@ class _AnimatedSplashState extends State<AnimatedSplash> {
                 hvidhansabha: userVidhanSabha,
                 profileURL: userProfileURL,
               ),
-        // builder: (context) => FramesTesting(),
       ),
     );
+  }
+
+  Future<void> _animateText() async {
+    for (int i = 0; i <= splashText.length; i++) {
+      setState(() {
+        _currentText = splashText.substring(0, i);
+      });
+      await Future.delayed(
+          Duration(milliseconds: 100)); // Adjust the delay as needed
+    }
+  }
+
+  Future<void> _getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    userPhoneNumber = prefs.getString('userPhoneNumber') ?? '';
+    userFullName = prefs.getString('userFullName') ?? '';
+    userPosition = prefs.getString('userPosition') ?? '';
+    userParty = prefs.getString('userParty') ?? '';
+    userLokSabha = prefs.getString('userLokSabha') ?? '';
+    userVidhanSabha = prefs.getString('userVidhanSabha') ?? '';
+    userProfileURL = prefs.getString('userProfileURL') ?? '';
   }
 
   @override

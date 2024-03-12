@@ -200,7 +200,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _sendDataToFastAPI() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.3:8000/process_user_data'),
+        Uri.parse('http://192.168.1.12:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -229,12 +229,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           context,
           MaterialPageRoute(
               builder: (context) => HomeScreen(
-                  hphoneNumber: responseData['phonenumber'],
-                  hposition: responseData['position'],
-                  hfullname: responseData['fullname'],
-                  hparty: responseData['party'],
-                  hlokhsabha: responseData['lokhsabha'],
-                  hvidhansabha: responseData['vidhansabha'],
+                  hphoneNumber: _phoneNumberController.text,
+                  hposition: _positionController.text,
+                  hfullname: _fullnameController.text,
+                  hparty: _partyController.text,
+                  hlokhsabha: _lokhsabhaController.text,
+                  hvidhansabha: _vidhansabhaController.text,
                   profileURL: responseData['profile_url'])),
         );
       } else {
