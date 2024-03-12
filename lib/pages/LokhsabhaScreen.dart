@@ -238,6 +238,9 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
       List RGBList = result['RGBValues'];
       List TextList = result['TextColors'];
 
+      RGBList.add([255, 255, 255]);
+      TextList.add([0, 0, 0]);
+
       Navigator.pop(context);
       Navigator.pushReplacement(
         context,

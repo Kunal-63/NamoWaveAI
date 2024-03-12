@@ -230,10 +230,10 @@ class _ImageEditorState extends State<ImageEditor> {
                               widget.RGBValues[currentSelectedColorIndex][0],
                               widget.RGBValues[currentSelectedColorIndex][1],
                               widget.RGBValues[currentSelectedColorIndex][2],
-                              0.8),
+                              0.6),
                         ),
                         Positioned(
-                          top: 25,
+                          top: 27,
                           left: 12.5,
                           child: Container(
                             decoration: BoxDecoration(
@@ -257,6 +257,15 @@ class _ImageEditorState extends State<ImageEditor> {
                                 height: 275,
                               ),
                             ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 256,
+                          right: 2,
+                          child: Image.asset(
+                            'assets/amitshah.png',
+                            height: 120,
+                            width: 120,
                           ),
                         ),
                         Positioned(
@@ -551,6 +560,24 @@ class _ImageEditorState extends State<ImageEditor> {
                                   widget.RGBValues[4][0],
                                   widget.RGBValues[4][1],
                                   widget.RGBValues[4][2],
+                                  1),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              currentSelectedColorIndex = 5;
+                            });
+                          },
+                          child: ClipOval(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              color: Color.fromRGBO(
+                                  widget.RGBValues[5][0],
+                                  widget.RGBValues[5][1],
+                                  widget.RGBValues[5][2],
                                   1),
                             ),
                           ),
