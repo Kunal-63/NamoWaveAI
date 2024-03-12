@@ -42,11 +42,13 @@ class _ImageEditorState extends State<ImageEditor> {
 
   List<String> fontFamilies = [
     'Default',
-    'Arial',
-    'Times New Roman',
-    'Courier New',
-    'Surat',
-    'Ekatra'
+    'Angkor',
+    'Cinzel',
+    'IBMPlex',
+    'LoraV',
+    'LoraI',
+    'Teko',
+    'Whisper',
   ];
 
   List<String> backgroundImages = [
@@ -146,19 +148,13 @@ class _ImageEditorState extends State<ImageEditor> {
 
   Map<String, String> fontFamilyTranslations = {
     'Default': 'Default',
-    'Arial': 'Arial',
-    'Times New Roman': 'Times New Roman',
-    'Courier New': 'Courier New',
-    'Acme': 'Acme',
-    'Pacifico': 'Pacifico',
-    'Indie Flower': 'Indie Flower',
-    'Caveat': 'Caveat',
-    'Great Vibes': 'Great Vibes',
-    'Dancing Script': 'Dancing Script',
-    'Poppins': 'Poppins',
-    'Roboto': 'Roboto',
-    'Raleway': 'Raleway',
-    'Lato': 'Lato',
+    'Angkor': 'Angkor',
+    'Cinzel': 'Cinzel',
+    'IBMPlex': 'IBMPlex',
+    'LoraV': 'LoraV',
+    'LoraI': 'LoraI',
+    'Teko': 'Teko',
+    'Whisper': 'Whisper',
   };
 
   @override
@@ -217,7 +213,34 @@ class _ImageEditorState extends State<ImageEditor> {
                               widget.RGBValues[currentSelectedColorIndex][0],
                               widget.RGBValues[currentSelectedColorIndex][1],
                               widget.RGBValues[currentSelectedColorIndex][2],
-                              0.9),
+                              0.8),
+                        ),
+                        Positioned(
+                          top: 25,
+                          left: 12.5,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0,
+                                      2), // Offset in the direction of shadow
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                widget.imagePath,
+                                fit: BoxFit.cover,
+                                width: 275,
+                                height: 275,
+                              ),
+                            ),
+                          ),
                         ),
                         Positioned(
                           right: -10,
@@ -226,6 +249,49 @@ class _ImageEditorState extends State<ImageEditor> {
                             widget.profileURL[currentProfileUrlIndex],
                             height: 100,
                             width: 100,
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 10,
+                          left: (MediaQuery.of(context).size.width -
+                                  widget.fullname.length * fontSize) /
+                              2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                widget.fullname,
+                                style: TextStyle(
+                                  color: Color.fromRGBO(
+                                      widget.TextValues[
+                                          currentSelectedColorIndex][0],
+                                      widget.TextValues[
+                                          currentSelectedColorIndex][1],
+                                      widget.TextValues[
+                                          currentSelectedColorIndex][2],
+                                      1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: fontSize,
+                                  fontFamily: currentFontFamily,
+                                ),
+                              ),
+                              Text(
+                                widget.position,
+                                style: TextStyle(
+                                  color: Color.fromRGBO(
+                                      widget.TextValues[
+                                          currentSelectedColorIndex][0],
+                                      widget.TextValues[
+                                          currentSelectedColorIndex][1],
+                                      widget.TextValues[
+                                          currentSelectedColorIndex][2],
+                                      1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: fontSize,
+                                  fontFamily: currentFontFamily,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

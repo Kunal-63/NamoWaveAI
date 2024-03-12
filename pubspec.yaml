@@ -100,14 +100,34 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Surat
+    - family: Angkor
       fonts:
-        - asset: fonts/Surat.ttf
+        - asset: fonts/Angkor-Regular.ttf
         # - asset: fonts/Schyler-Italic.ttf
         #   style: italic
-    - family: Ekatra
+    - family: Cinzel
       fonts:
-        - asset: fonts/Ekatra.ttf
+        - asset: fonts/Cinzel-VariableFont_wght.ttf
+    
+    - family: IBMPlex
+      fonts:
+        - asset: fonts/IBMPlexMono-Regular.ttf
+    
+    - family: LoraV
+      fonts:
+        - asset: fonts/Lora-VariableFont_wght.ttf
+    
+    - family: LoraI
+      fonts:
+        - asset: fonts/Lora-Italic-VariableFont_wght.ttf
+    
+    - family: Teko
+      fonts:
+        - asset: fonts/Teko-VariableFont_wght.ttf
+
+    - family: Whisper
+      fonts:
+        - asset: fonts/Whisper-Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
