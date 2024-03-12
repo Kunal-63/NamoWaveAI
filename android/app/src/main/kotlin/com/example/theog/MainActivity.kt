@@ -1,4 +1,4 @@
-package com.example.theog
+package com.orlov.namowaveai
 
 import io.flutter.embedding.android.FlutterActivity
 
