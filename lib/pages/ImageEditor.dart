@@ -39,6 +39,7 @@ class _ImageEditorState extends State<ImageEditor> {
   late Future<String> translatedFullName;
   late Future<String> translatedDesignation;
   int currentSelectedBackgroundIndex = 0;
+  bool isTranslated = false;
 
   List<String> fontFamilies = [
     'Default',
@@ -146,6 +147,12 @@ class _ImageEditorState extends State<ImageEditor> {
         fontSize -=
             2.0; // Decrease font size by 2.0, but ensure it doesn't go below 2.0
       }
+    });
+  }
+
+  void toggleTranslation() {
+    setState(() {
+      isTranslated = !isTranslated;
     });
   }
 
@@ -317,7 +324,9 @@ class _ImageEditorState extends State<ImageEditor> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                widget.fullname,
+                                isTranslated
+                                    ? translatedFullName.toString()
+                                    : widget.fullname,
                                 style: TextStyle(
                                   color: Color.fromRGBO(
                                       widget.TextValues[
@@ -333,7 +342,9 @@ class _ImageEditorState extends State<ImageEditor> {
                                 ),
                               ),
                               Text(
-                                widget.position,
+                                isTranslated
+                                    ? translatedDesignation.toString()
+                                    : widget.position,
                                 style: TextStyle(
                                   color: Color.fromRGBO(
                                       widget.TextValues[
@@ -488,6 +499,16 @@ class _ImageEditorState extends State<ImageEditor> {
                       ],
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+
+                ElevatedButton(
+                  onPressed: toggleTranslation,
+                  child: Text(
+                    isTranslated ? 'Switch to English' : 'Switch to Gujarati',
+                  ),
                 ),
                 SizedBox(
                   height: 30,
