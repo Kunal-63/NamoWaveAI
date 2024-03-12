@@ -122,6 +122,7 @@ async def verify_otp(request: Request, login_request: LoginRequest):
         
 @app.post("/process_user_data")
 async def process_user_data(user_data: UserData):
+    cur = mydb.cursor()
     print("Processing user data...")
     if user_data.image:
         image_bytes = base64.b64decode(user_data.image)
@@ -132,9 +133,13 @@ async def process_user_data(user_data: UserData):
         imgbb_url = upload_image_to_imgbb(image_path)
         profile_url = imgbb_url
     else:
-        profile_url = ""
-
-    cur = mydb.cursor()
+        cur.execute("SELECT profile_url FROM users WHERE phonenumber = %s", [user_data.phone_number])
+        result = cur.fetchall()
+        if len(result) > 0:
+            profile_url = result[0][0]
+        else:   
+            profile_url = ""
+    
     print("Profile URL: ", profile_url, "Full Name :", user_data.fullname, "Phone Number: ", user_data.phone_number, "Party: ", user_data.party, "Lokhsabha: ", user_data.lokhsabha, "Position: ", user_data.position)
 
     cur.execute("select * from users where phonenumber=%s",[user_data.phone_number])
@@ -187,7 +192,12 @@ async def get_template_links():
 async def color_change_template(template_data: ColorChangeModel):
     print("Color Changing...")
     print(template_data)
-    RGBValues, TextColors = detect_all_colors(r"profiles\{}.png".format(template_data.phoneNumber), num_colors=5)
+    try:
+        RGBValues, TextColors = detect_all_colors(r"profiles\{}.png".format(template_data.phoneNumber), num_colors=5)
+    except: 
+        RGBValues = [[0, 0, 0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+        TextColors = [[255,255,255],[255,255,255],[255,255,255],[255,255,255],[255,255,255]]
+    print("RGB", [RGBValues], "TextColors", [TextColors])
     return {"RGBValues": RGBValues, "TextColors": TextColors}
 
     # UploadedURLs, rgb_values = ColorChangeAI(template_data.phoneNumber, template_data.template_url)
