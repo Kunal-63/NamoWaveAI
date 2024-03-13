@@ -38,7 +38,7 @@ class _OtpScreenState extends State<OtpScreen> {
       });
 
       final response = await http.post(
-        Uri.parse('https://65.2.123.1:8000/resend_otp'),
+        Uri.parse('http://65.2.123.1:8000/resend_otp'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
