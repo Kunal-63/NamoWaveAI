@@ -31,6 +31,20 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
     'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
+  void _onButtonTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  List<String> buttonTitles = [
+    'Dahegam',
+    'Gandhinagar South',
+    'Gandhinagar North',
+    'Mansa',
+    'Kalol'
+  ];
+
   List<String> templates = [
     'assets/templates/template1.png',
     'assets/templates/template2.png',
@@ -122,76 +136,97 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Column(
-                children: [
-                  CarouselSlider.builder(
-                    itemCount: images.length,
-                    options: CarouselOptions(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      aspectRatio: 1 / 1,
-                      viewportFraction: 1.0,
-                      autoPlay: true,
-                      enlargeCenterPage: false,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          _currentIndex = index;
-                        });
-                      },
-                    ),
-                    itemBuilder:
-                        (BuildContext context, int index, int realIndex) {
-                      return Image.asset(
-                        images[index],
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.cover,
-                      );
-                    },
+              Container(
+                padding: EdgeInsets.all(3),
+                height: 25,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 5),
+                      for (int i = 0; i < buttonTitles.length; i++)
+                        ElevatedButton(
+                          onPressed: () => _onButtonTapped(i),
+                          style: ElevatedButton.styleFrom(
+                            primary: _currentIndex == i
+                                ? Colors.grey[800] // Selected button color
+                                : Colors.transparent, // Unselected button color
+                            onPrimary: Colors.white, // Text color
+                          ),
+                          child: Text(buttonTitles[i]),
+                        ),
+                      SizedBox(width: 5),
+                    ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Templates',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  // Use a ListView.builder to dynamically create containers
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: (templates.length / 2).ceil(),
-                    itemBuilder: (context, index) {
-                      int startIndex = index * 2;
-                      int endIndex = startIndex + 1;
+                ),
+              ),
 
-                      return Column(
+              CarouselSlider.builder(
+                itemCount: images.length,
+                options: CarouselOptions(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  aspectRatio: 1 / 1,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                  enlargeCenterPage: false,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                itemBuilder: (BuildContext context, int index, int realIndex) {
+                  return Image.asset(
+                    images[index],
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Templates',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              // Use a ListView.builder to dynamically create containers
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: (templates.length / 2).ceil(),
+                itemBuilder: (context, index) {
+                  int startIndex = index * 2;
+                  int endIndex = startIndex + 1;
+
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              if (startIndex < templates.length)
-                                _buildImageContainer(
-                                    context, templates[startIndex]),
-                              if (endIndex < templates.length)
-                                _buildImageContainer(
-                                    context, templates[endIndex]),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
+                          if (startIndex < templates.length)
+                            _buildImageContainer(
+                                context, templates[startIndex]),
+                          if (endIndex < templates.length)
+                            _buildImageContainer(context, templates[endIndex]),
                         ],
-                      );
-                    },
-                  ),
-                ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),

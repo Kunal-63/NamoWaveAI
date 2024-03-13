@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'dart:typed_data';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -40,6 +41,7 @@ class _ImageEditorState extends State<ImageEditor> {
   late Future<String> translatedDesignation;
   int currentSelectedBackgroundIndex = 0;
   bool isTranslated = false;
+  bool isButtonOnRight = true;
 
   List<String> fontFamilies = [
     'Default',
@@ -87,6 +89,12 @@ class _ImageEditorState extends State<ImageEditor> {
   void _changeFontFamily(String fontFamily) {
     setState(() {
       currentFontFamily = fontFamily;
+    });
+  }
+
+  void toggleButtonPosition() {
+    setState(() {
+      isButtonOnRight = !isButtonOnRight;
     });
   }
 
@@ -307,12 +315,28 @@ class _ImageEditorState extends State<ImageEditor> {
                           ),
                         ),
                         Positioned(
-                          right: -10,
+                          right: isButtonOnRight ? -15 : null,
+                          left: isButtonOnRight
+                              ? null
+                              : 100, // Further adjusted left position
                           bottom: 0,
-                          child: Image.network(
-                            widget.profileURL[currentProfileUrlIndex],
-                            height: 100,
-                            width: 100,
+                          child: Container(
+                            width:
+                                100, // Adjusted width of the mirrored image container
+                            child: Transform(
+                              alignment: isButtonOnRight
+                                  ? Alignment.center
+                                  : Alignment.centerLeft,
+                              transform: Matrix4.identity()
+                                ..scale(isButtonOnRight ? 1.0 : -1.0, 1.0),
+                              child: Image.network(
+                                widget.profileURL[currentProfileUrlIndex],
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit
+                                    .cover, // Ensure the image fits within the container
+                              ),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -528,16 +552,36 @@ class _ImageEditorState extends State<ImageEditor> {
                   height: 30,
                 ),
 
-                ElevatedButton(
-                    onPressed: toggleTranslation,
-                    child: Text(
-                      isTranslated ? 'Switch to English' : 'Switch to Gujarati',
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.grey[800],
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: toggleTranslation,
+                        child: Text(
+                          isTranslated
+                              ? 'Switch to English'
+                              : 'Switch to Gujarati',
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.grey[800],
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                        )),
+                    ElevatedButton(
+                        onPressed: toggleButtonPosition,
+                        child: Text(
+                          isButtonOnRight
+                              ? "Switch to left"
+                              : "Switch to right",
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.grey[800],
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                        )),
+                  ],
+                ),
                 SizedBox(
                   height: 30,
                 ),
