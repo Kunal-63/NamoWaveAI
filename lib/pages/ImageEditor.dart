@@ -342,11 +342,11 @@ class _ImageEditorState extends State<ImageEditor> {
                         Positioned(
                           bottom: 10,
                           left: isButtonOnRight
-                              ? (400 - widget.fullname.length * fontSize) / 2
+                              ? (380 - widget.fullname.length * fontSize) / 2
                               : null,
                           right: isButtonOnRight
                               ? null
-                              : (400 - widget.fullname.length * fontSize) / 2,
+                              : (360 - widget.fullname.length * fontSize) / 2,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

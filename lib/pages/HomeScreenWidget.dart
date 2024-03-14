@@ -134,7 +134,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0),
         elevation: 0.0,
       ),
       backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
