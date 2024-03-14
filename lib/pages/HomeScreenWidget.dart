@@ -133,6 +133,10 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
     int _currentIndex = 0;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
+        elevation: 0.0,
+      ),
       backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
       body: Container(
         child: SingleChildScrollView(
@@ -164,7 +168,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                   //   },
                   // ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Text(
