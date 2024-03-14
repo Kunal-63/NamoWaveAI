@@ -57,37 +57,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void _showPositionsDialog(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ListTile(
-                title: Text('President'),
-                onTap: () {
-                  _setSelectedPosition('President');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
+  // void _showPositionsDialog(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Container(
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.center,
+  //           children: [
+  //             ListTile(
+  //               title: Text('President'),
+  //               onTap: () {
+  //                 _setSelectedPosition('President');
+  //                 Navigator.pop(context);
+  //               },
+  //             ),
+  //             SizedBox(
+  //               height: 5,
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-  void _setSelectedPosition(String position) {
-    setState(() {
-      controller2.text = position;
-      print('Selected party: $_selectedParty');
-    });
-  }
+  // void _setSelectedPosition(String position) {
+  //   setState(() {
+  //     controller2.text = position;
+  //     print('Selected party: $_selectedParty');
+  //   });
+  // }
 
   void _showLokhsabhaDialog(BuildContext context) {
     showModalBottomSheet(
@@ -350,9 +350,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ListTile(
-                title: Text('Ahmedabad'),
+                title: Text('Dahegam'),
                 onTap: () {
-                  _setSelectedVidhanSabha('Ahmedabad');
+                  _setSelectedVidhanSabha('Dahegam');
                   Navigator.pop(context);
                 },
               ),
@@ -360,9 +360,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 5,
               ),
               ListTile(
-                title: Text('Gandhinagar'),
+                title: Text('Gandhinagar South'),
                 onTap: () {
-                  _setSelectedVidhanSabha('Gandhinagar');
+                  _setSelectedVidhanSabha('Gandhinagar South');
                   Navigator.pop(context);
                 },
               ),
@@ -370,9 +370,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 5,
               ),
               ListTile(
-                title: Text('Surat'),
+                title: Text('Gandhinagar North'),
                 onTap: () {
-                  _setSelectedVidhanSabha('Surat');
+                  _setSelectedVidhanSabha('Gandhinagar North');
                   Navigator.pop(context);
                 },
               ),
@@ -380,9 +380,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 5,
               ),
               ListTile(
-                title: Text('Vadodara'),
+                title: Text('Mansa'),
                 onTap: () {
-                  _setSelectedVidhanSabha('Vadodara');
+                  _setSelectedVidhanSabha('Mansa');
                   Navigator.pop(context);
                 },
               ),
@@ -390,49 +390,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 5,
               ),
               ListTile(
-                title: Text('Rajkot'),
+                title: Text('Kalol'),
                 onTap: () {
-                  _setSelectedVidhanSabha('Rajkot');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                title: Text('Bhavnagar'),
-                onTap: () {
-                  _setSelectedVidhanSabha('Bhavnagar');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                title: Text('Jamnagar'),
-                onTap: () {
-                  _setSelectedVidhanSabha('Jamnagar');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                title: Text('Junagadh'),
-                onTap: () {
-                  _setSelectedVidhanSabha('Junagadh');
-                  Navigator.pop(context);
-                },
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              ListTile(
-                title: Text('Surendranagar'),
-                onTap: () {
-                  _setSelectedVidhanSabha('Surendranagar');
+                  _setSelectedVidhanSabha('Kalol');
                   Navigator.pop(context);
                 },
               ),
@@ -587,12 +547,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: MediaQuery.of(context).size.width * 0.8,
                         height: 70,
                         child: TextFormField(
-                          onTap: () {
-                            // Show political parties dialog
-                            _showPositionsDialog(context);
-                          },
-                          // initialValue: controller2.text,
-                          readOnly: true,
                           controller: controller2,
                           style: TextStyle(color: Colors.white),
                           maxLines: 1,

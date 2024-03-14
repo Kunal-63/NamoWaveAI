@@ -73,7 +73,7 @@ class _ImageEditorState extends State<ImageEditor> {
     'assets/borders/template17.jpg',
     'assets/borders/template18.jpg',
     'assets/borders/template19.jpg',
-    'assets/borders/template20.jpg',
+    // 'assets/borders/template20.jpg',
     'assets/borders/template21.jpg',
     'assets/borders/template22.jpg',
     'assets/borders/template23.jpg',
@@ -341,7 +341,12 @@ class _ImageEditorState extends State<ImageEditor> {
                         ),
                         Positioned(
                           bottom: 10,
-                          left: (400 - widget.fullname.length * fontSize) / 2,
+                          left: isButtonOnRight
+                              ? (440 - widget.fullname.length * fontSize) / 2
+                              : null,
+                          right: isButtonOnRight
+                              ? null
+                              : (405 - widget.fullname.length * fontSize) / 2,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -572,8 +577,8 @@ class _ImageEditorState extends State<ImageEditor> {
                         onPressed: toggleButtonPosition,
                         child: Text(
                           isButtonOnRight
-                              ? "Switch to left"
-                              : "Switch to right",
+                              ? "Switch to Left"
+                              : "Switch to Right",
                         ),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.grey[800],
@@ -588,7 +593,7 @@ class _ImageEditorState extends State<ImageEditor> {
                 Column(
                   children: [
                     Text(
-                      "Color Palette",
+                      "AI Generated Color Palette",
                       style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(

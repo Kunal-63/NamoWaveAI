@@ -167,11 +167,21 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                     height: 20,
                   ),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text('Lokhsabha',
-                        style: TextStyle(
-                            fontSize: 20,
+                    Text(
+                      'LOKHSABHA',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                        shadows: [
+                          Shadow(
                             color: Colors.white,
-                            fontWeight: FontWeight.bold)),
+                            blurRadius: 1, // Set the blur radius here
+                            offset: Offset(0, 0), // Set the shadow offset here
+                          ),
+                        ],
+                      ),
+                    )
                   ]),
                   Column(
                     children: List.generate(
