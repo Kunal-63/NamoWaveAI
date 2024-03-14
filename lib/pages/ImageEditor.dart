@@ -289,7 +289,7 @@ class _ImageEditorState extends State<ImageEditor> {
                             children: [
                               Container(
                                 width: 85,
-                                height: 50,
+                                height: 55,
                                 decoration: BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
