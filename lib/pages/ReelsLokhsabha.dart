@@ -3,16 +3,15 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:theog/pages/ImageEditor.dart';
 import 'dart:convert';
+import 'package:video_player/video_player.dart';
 
-import 'package:theog/pages/border.dart';
-
-class ReelsLokhabha extends StatefulWidget {
+class ReelsLokhsabhScreen extends StatefulWidget {
   final String lokhSabhaName;
   final String profileURL;
   final String phoneNumber;
   final String fullname;
   final String position;
-  ReelsLokhabha({
+  ReelsLokhsabhScreen({
     required this.lokhSabhaName,
     required this.profileURL,
     required this.phoneNumber,
@@ -21,16 +20,18 @@ class ReelsLokhabha extends StatefulWidget {
   });
 
   @override
-  State<ReelsLokhabha> createState() => _ReelsLokhabhaState();
+  State<ReelsLokhsabhScreen> createState() => _ReelsLokhsabhScreenState();
 }
 
-class _ReelsLokhabhaState extends State<ReelsLokhabha> {
+class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
   final List<String> images = [
     'assets/home/home1.jpg',
     'assets/home/home2.jpg',
     'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
+  int _currentImageIndex = 0;
+  VideoPlayerController? _controller;
   void _onButtonTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -46,59 +47,23 @@ class _ReelsLokhabhaState extends State<ReelsLokhabha> {
   ];
 
   List<String> templates = [
-    'assets/templates/template1.png',
-    'assets/templates/template2.png',
-    'assets/templates/template3.png',
-    'assets/templates/template4.png',
-    'assets/templates/template5.png',
-    'assets/templates/template6.png',
+    'assets/ZETACORE.mp4',
+    'assets/ZETACORE.mp4',
+    'assets/ZETACORE.mp4',
+    'assets/ZETACORE.mp4',
+    // 'assets/templates/template5.png',
+    // 'assets/templates/template6.png',
   ]; // List to store template paths
   bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    // Fetch template paths when the screen initializes
+    _controller = VideoPlayerController.asset(
+      templates.first,
+    )..initialize().then((_) {
+        setState(() {});
+      });
   }
-
-  // Future<void> _fetchTemplates() async {
-  //   try {
-  //     setState(() {
-  //       isLoading = true; // Show loading indicator
-  //     });
-
-  //     final response = await http.get(
-  //       Uri.parse('http://65.2.123.1:8000/templates'),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       print("Data : " + data.toString());
-  //       // Check if 'templates_links' key exists and its value is not null
-  //       if (data.containsKey('templates_links') &&
-  //           data['templates_links'] != null) {
-  //         setState(() {
-  //           templates = List<String>.from(data['templates_links']);
-  //           isLoading = false; // Hide loading indicator
-  //         });
-  //       } else {
-  //         print('Key "templates_links" is null or missing in the response.');
-  //         setState(() {
-  //           isLoading = false; // Hide loading indicator
-  //         });
-  //       }
-  //     } else {
-  //       print('Failed to fetch templates. Status code: ${response.statusCode}');
-  //       setState(() {
-  //         isLoading = false; // Hide loading indicator
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print('Error fetching templates: $e');
-  //     setState(() {
-  //       isLoading = false; // Hide loading indicator
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -150,10 +115,10 @@ class _ReelsLokhabhaState extends State<ReelsLokhabha> {
                         ElevatedButton(
                           onPressed: () => _onButtonTapped(i),
                           style: ElevatedButton.styleFrom(
-                            primary: _currentIndex == i
+                            foregroundColor: Colors.white,
+                            backgroundColor: _currentIndex == i
                                 ? Colors.grey[800] // Selected button color
-                                : Colors.transparent, // Unselected button color
-                            onPrimary: Colors.white, // Text color
+                                : Colors.transparent, // Text color
                           ),
                           child: Text(buttonTitles[i]),
                         ),
@@ -173,7 +138,7 @@ class _ReelsLokhabhaState extends State<ReelsLokhabha> {
                   enlargeCenterPage: false,
                   onPageChanged: (index, reason) {
                     setState(() {
-                      _currentIndex = index;
+                      _currentImageIndex = index;
                     });
                   },
                 ),
@@ -215,15 +180,13 @@ class _ReelsLokhabhaState extends State<ReelsLokhabha> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           if (startIndex < templates.length)
-                            _buildImageContainer(
+                            _buildVideoContainer(
                                 context, templates[startIndex]),
                           if (endIndex < templates.length)
-                            _buildImageContainer(context, templates[endIndex]),
+                            _buildVideoContainer(context, templates[endIndex]),
                         ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(height: 20),
                     ],
                   );
                 },
@@ -293,111 +256,20 @@ class _ReelsLokhabhaState extends State<ReelsLokhabha> {
     } catch (e) {
       print(e);
     }
-
-    // try {
-    //   Map<String, dynamic> result = await colorChangeTemplate();
-
-    //   List RGBList = result['RGBValues'];
-    //   List TextList = result['TextColors'];
-
-    //   Navigator.pop(context);
-
-    //   // Determine which image was clicked and navigate accordingly
-    //   // if (imagePath == borderImages[0]) {
-    //   //   Navigator.pushReplacement(
-    //   //     context,
-    //   //     MaterialPageRoute(builder: (context) {
-    //   //       return ImageEditor(
-    //   //         RGBValues: RGBList,
-    //   //         TextValues: TextList,
-    //   //         profileURL: [profileURL],
-    //   //         imagePath: imagePathURL,
-    //   //         fullname: fullname,
-    //   //         position: position,
-    //   //       );
-    //   //     }),
-    //   //   );
-    //     // } else if (imagePath == borderImages[1]) {
-    //     //   Navigator.pushReplacement(
-    //     //     context,
-    //     //     MaterialPageRoute(builder: (context) {
-    //     //       return ImageEditor2(
-    //     //         RGBValues: RGBList,
-    //     //         TextValues: TextList,
-    //     //         profileURL: [profileURL],
-    //     //         imagePath: imagePathURL,
-    //     //         fullname: fullname,
-    //     //         position: position,
-    //     //       );
-    //     //     }),
-    //     //   );
-    //     // } else if (imagePath == borderImages[2]) {
-    //     //   Navigator.pushReplacement(
-    //     //     context,
-    //     //     MaterialPageRoute(builder: (context) {
-    //     //       return ImageEditor3(
-    //     //         RGBValues: RGBList,
-    //     //         TextValues: TextList,
-    //     //         profileURL: [profileURL],
-    //     //         imagePath: imagePathURL,
-    //     //         fullname: fullname,
-    //     //         position: position,
-    //     //       );
-    //     //     }),
-    //     //   );
-    //     // } else if (imagePath == borderImages[3]) {
-    //     //   Navigator.pushReplacement(
-    //     //     context,
-    //     //     MaterialPageRoute(builder: (context) {
-    //     //       return ImageEditor4(
-    //     //         RGBValues: RGBList,
-    //     //         TextValues: TextList,
-    //     //         profileURL: [profileURL],
-    //     //         imagePath: imagePathURL,
-    //     //         fullname: fullname,
-    //     //         position: position,
-    //     //       );
-    //     //     }),
-    //     //   );
-    //     // } else if (imagePath == borderImages[4]) {
-    //     //   Navigator.pushReplacement(
-    //     //     context,
-    //     //     MaterialPageRoute(builder: (context) {
-    //     //       return ImageEditor6(
-    //     //         RGBValues: RGBList,
-    //     //         TextValues: TextList,
-    //     //         profileURL: [profileURL],
-    //     //         imagePath: imagePathURL,
-    //     //         fullname: fullname,
-    //     //         position: position,
-    //     //       );
-    //     //     }),
-    //     //   );
-    //   }
-    // } catch (error) {
-    //   Navigator.pop(context);
-
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text('Error: $error'),
-    //     ),
-    //   );
-    // }
   }
 
-  Widget _buildImageContainer(BuildContext context, String imagePath) {
+  Widget _buildVideoContainer(BuildContext context, String videoPath) {
     return GestureDetector(
-      onTap: () => _onContainerTap(context, imagePath),
+      onTap: () => _onContainerTap(context, videoPath),
       child: Container(
         height: 150,
         width: 150,
         margin: EdgeInsets.symmetric(horizontal: 8), // Adjust spacing here
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          image: DecorationImage(
-            image: Image.asset(imagePath).image,
-            fit: BoxFit.cover,
-          ),
+        child: AspectRatio(
+          aspectRatio: 1.0,
+          child: _controller != null && _controller!.value.isInitialized
+              ? VideoPlayer(_controller!)
+              : Container(), // Return an empty container if _controller is null or not initialized
         ),
       ),
     );

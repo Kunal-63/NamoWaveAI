@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:theog/pages/LokhsabhaScreen.dart';
+import 'package:theog/pages/ReelsLokhsabha.dart';
 // import 'package:theog/pages/ReelsLokhsabha.dart';
-import 'package:theog/pages/ReelsScreen/ReelsLokhsabha.dart';
+// import 'package:theog/pages/ReelsScreen/ReelsLokhsabha.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
 
 class ReelsScreenWidget extends StatefulWidget {
@@ -216,7 +218,8 @@ class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ReelsLokhabha(
+                                        builder: (context) =>
+                                            ReelsLokhsabhScreen(
                                           fullname: widget.fullname,
                                           phoneNumber: widget.phoneNumber,
                                           profileURL: widget.profileURL,
@@ -250,7 +253,7 @@ class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => ReelsLokhabha(
+                                        builder: (context) => LokhSabhaScreen(
                                           fullname: widget.fullname,
                                           phoneNumber: widget.phoneNumber,
                                           profileURL: widget.profileURL,
@@ -300,7 +303,7 @@ class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ReelsLokhabha(
+                                builder: (context) => LokhSabhaScreen(
                                   fullname: widget.fullname,
                                   phoneNumber: widget.phoneNumber,
                                   profileURL: widget.profileURL,
