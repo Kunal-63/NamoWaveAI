@@ -4,13 +4,15 @@ import 'package:http/http.dart' as http;
 import 'package:theog/pages/ImageEditor.dart';
 import 'dart:convert';
 
-class LokhSabhaScreen extends StatefulWidget {
+import 'package:theog/pages/border.dart';
+
+class ReelsLokhabha extends StatefulWidget {
   final String lokhSabhaName;
   final String profileURL;
   final String phoneNumber;
   final String fullname;
   final String position;
-  LokhSabhaScreen({
+  ReelsLokhabha({
     required this.lokhSabhaName,
     required this.profileURL,
     required this.phoneNumber,
@@ -19,17 +21,16 @@ class LokhSabhaScreen extends StatefulWidget {
   });
 
   @override
-  State<LokhSabhaScreen> createState() => _LokhSabhaScreenState();
+  State<ReelsLokhabha> createState() => _ReelsLokhabhaState();
 }
 
-class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
+class _ReelsLokhabhaState extends State<ReelsLokhabha> {
   final List<String> images = [
     'assets/home/home1.jpg',
     'assets/home/home2.jpg',
     'assets/home/home3.jpg',
   ];
   int _currentIndex = 0;
-  int _currentImageIndex = 0;
   void _onButtonTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -58,6 +59,46 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
     super.initState();
     // Fetch template paths when the screen initializes
   }
+
+  // Future<void> _fetchTemplates() async {
+  //   try {
+  //     setState(() {
+  //       isLoading = true; // Show loading indicator
+  //     });
+
+  //     final response = await http.get(
+  //       Uri.parse('http://65.2.123.1:8000/templates'),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       print("Data : " + data.toString());
+  //       // Check if 'templates_links' key exists and its value is not null
+  //       if (data.containsKey('templates_links') &&
+  //           data['templates_links'] != null) {
+  //         setState(() {
+  //           templates = List<String>.from(data['templates_links']);
+  //           isLoading = false; // Hide loading indicator
+  //         });
+  //       } else {
+  //         print('Key "templates_links" is null or missing in the response.');
+  //         setState(() {
+  //           isLoading = false; // Hide loading indicator
+  //         });
+  //       }
+  //     } else {
+  //       print('Failed to fetch templates. Status code: ${response.statusCode}');
+  //       setState(() {
+  //         isLoading = false; // Hide loading indicator
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Error fetching templates: $e');
+  //     setState(() {
+  //       isLoading = false; // Hide loading indicator
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +150,10 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                         ElevatedButton(
                           onPressed: () => _onButtonTapped(i),
                           style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: _currentIndex == i
+                            primary: _currentIndex == i
                                 ? Colors.grey[800] // Selected button color
-                                : Colors.transparent, // Text color
+                                : Colors.transparent, // Unselected button color
+                            onPrimary: Colors.white, // Text color
                           ),
                           child: Text(buttonTitles[i]),
                         ),
@@ -132,7 +173,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
                   enlargeCenterPage: false,
                   onPageChanged: (index, reason) {
                     setState(() {
-                      _currentImageIndex = index;
+                      _currentIndex = index;
                     });
                   },
                 ),

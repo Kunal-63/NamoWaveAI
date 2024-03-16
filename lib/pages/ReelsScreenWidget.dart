@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+// import 'package:theog/pages/ReelsLokhsabha.dart';
+import 'package:theog/pages/ReelsScreen/ReelsLokhsabha.dart';
 // import 'package:carousel_slider/carousel_slider.dart';
-import 'package:theog/pages/LokhsabhaScreen.dart';
 
-class HomeScreenWidget extends StatefulWidget {
+class ReelsScreenWidget extends StatefulWidget {
   final String profileURL;
   final String phoneNumber;
   final String fullname;
   final String position;
-  const HomeScreenWidget({
+  const ReelsScreenWidget({
     super.key,
     required String backgroundImage,
     required this.profileURL,
@@ -68,10 +69,10 @@ class HomeScreenWidget extends StatefulWidget {
   ];
 
   @override
-  State<HomeScreenWidget> createState() => _HomeScreenWidgetState();
+  State<ReelsScreenWidget> createState() => _ReelsScreenWidgetState();
 }
 
-class _HomeScreenWidgetState extends State<HomeScreenWidget> {
+class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
   final List LokhSabhaImages = [
     'assets/places/AHMEDABAD.png',
     'assets/places/AMRELI.png',
@@ -134,17 +135,18 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color.fromRGBO(12, 12, 12, 0),
-          elevation: 0.0,
-          centerTitle: true,
-          title: Text(
-            'POSTS',
-            style: TextStyle(
-              color: Colors.orange,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          )),
+        backgroundColor: Color.fromRGBO(12, 12, 12, 0),
+        elevation: 0.0,
+        centerTitle: true,
+        title: Text(
+          'VIDEOS',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.orange,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       backgroundColor: Color.fromRGBO(12, 12, 12, 0.95),
       body: Container(
         child: SingleChildScrollView(
@@ -214,7 +216,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LokhSabhaScreen(
+                                        builder: (context) => ReelsLokhabha(
                                           fullname: widget.fullname,
                                           phoneNumber: widget.phoneNumber,
                                           profileURL: widget.profileURL,
@@ -248,7 +250,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => LokhSabhaScreen(
+                                        builder: (context) => ReelsLokhabha(
                                           fullname: widget.fullname,
                                           phoneNumber: widget.phoneNumber,
                                           profileURL: widget.profileURL,
@@ -298,7 +300,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LokhSabhaScreen(
+                                builder: (context) => ReelsLokhabha(
                                   fullname: widget.fullname,
                                   phoneNumber: widget.phoneNumber,
                                   profileURL: widget.profileURL,

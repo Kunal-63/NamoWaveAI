@@ -4,12 +4,12 @@ import 'package:theog/pages/home_screen.dart';
 import 'crop.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
+// import 'dart:io';
+// import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:flutter/material.dart';
+// import 'package:image_cropper/image_cropper.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -69,7 +69,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
-  CroppedFile? _croppedFile;
+  // CroppedFile? _croppedFile;
 
   @override
   Widget build(BuildContext context) {

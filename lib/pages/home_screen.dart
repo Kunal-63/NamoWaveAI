@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:theog/pages/HomeScreenWidget.dart';
-import 'package:theog/pages/SearchScreenWidget.dart';
+// import 'package:theog/pages/SearchScreenWidget.dart';
 import 'package:theog/pages/ProfileScreenWidget.dart';
+import 'package:theog/pages/ReelsScreenWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   final String hphoneNumber;
@@ -50,11 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
         position: widget.hposition,
         backgroundImage: images[_selectedIndex],
       ),
-      SearchScreen(
+      ReelsScreenWidget(
         fullname: widget.hfullname,
         phoneNumber: widget.hphoneNumber,
         profileURL: widget.profileURL,
         position: widget.hposition,
+        backgroundImage: images[_selectedIndex],
       ),
       ProfileScreen(
         fullname: widget.hfullname,
@@ -117,8 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Home',
                   ),
                   GButton(
-                    icon: Icons.search,
-                    text: 'Search',
+                    icon: Icons.video_library_rounded,
+                    text: 'Videos',
                   ),
                   GButton(
                     icon: Icons.person,
