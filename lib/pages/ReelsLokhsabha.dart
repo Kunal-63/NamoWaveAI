@@ -269,7 +269,9 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
           aspectRatio: 1.0,
           child: _controller != null && _controller!.value.isInitialized
               ? VideoPlayer(_controller!)
-              : Container(), // Return an empty container if _controller is null or not initialized
+              : Container(
+                  child: Text('Testing'),
+                ), // Return an empty container if _controller is null or not initialized
         ),
       ),
     );
