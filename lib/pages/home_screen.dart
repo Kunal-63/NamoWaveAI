@@ -118,10 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icons.home,
                     text: 'Home',
                   ),
-                  GButton(
-                    icon: Icons.video_library_rounded,
-                    text: 'Videos',
-                  ),
+                  
                   GButton(
                     icon: Icons.person,
                     text: 'Profile',
