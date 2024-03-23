@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:http/http.dart' as http;
-import 'package:theog/pages/ImageEditor.dart';
+// import 'package:theog/pages/ImageEditor.dart';
+import 'package:theog/pages/ReelsEditor.dart';
 import 'dart:convert';
-import 'package:video_player/video_player.dart';
 
 class ReelsLokhsabhScreen extends StatefulWidget {
   final String lokhSabhaName;
@@ -240,7 +240,7 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) {
-          return ImageEditor(
+          return ReelsEditor(
             RGBValues: RGBList,
             TextValues: TextList,
             profileURL: [widget.profileURL],
