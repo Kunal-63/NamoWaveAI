@@ -31,7 +31,6 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
   ];
   int _currentIndex = 0;
   int _currentImageIndex = 0;
-  VideoPlayerController? _controller;
   void _onButtonTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -47,22 +46,18 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
   ];
 
   List<String> templates = [
-    'assets/ZETACORE.mp4',
-    'assets/ZETACORE.mp4',
-    'assets/ZETACORE.mp4',
-    'assets/ZETACORE.mp4',
-    // 'assets/templates/template5.png',
-    // 'assets/templates/template6.png',
+    'assets/otp.gif',
+    'assets/otp.gif',
+    'assets/otp.gif',
+    'assets/otp.gif',
+    'assets/otp.gif',
+    'assets/otp.gif',
   ]; // List to store template paths
   bool isLoading = true;
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(
-      templates.first,
-    )..initialize().then((_) {
-        setState(() {});
-      });
+    // Fetch template paths when the screen initializes
   }
 
   @override
@@ -180,13 +175,15 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           if (startIndex < templates.length)
-                            _buildVideoContainer(
+                            _buildImageContainer(
                                 context, templates[startIndex]),
                           if (endIndex < templates.length)
-                            _buildVideoContainer(context, templates[endIndex]),
+                            _buildImageContainer(context, templates[endIndex]),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   );
                 },
@@ -256,22 +253,111 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
     } catch (e) {
       print(e);
     }
+
+    // try {
+    //   Map<String, dynamic> result = await colorChangeTemplate();
+
+    //   List RGBList = result['RGBValues'];
+    //   List TextList = result['TextColors'];
+
+    //   Navigator.pop(context);
+
+    //   // Determine which image was clicked and navigate accordingly
+    //   // if (imagePath == borderImages[0]) {
+    //   //   Navigator.pushReplacement(
+    //   //     context,
+    //   //     MaterialPageRoute(builder: (context) {
+    //   //       return ImageEditor(
+    //   //         RGBValues: RGBList,
+    //   //         TextValues: TextList,
+    //   //         profileURL: [profileURL],
+    //   //         imagePath: imagePathURL,
+    //   //         fullname: fullname,
+    //   //         position: position,
+    //   //       );
+    //   //     }),
+    //   //   );
+    //     // } else if (imagePath == borderImages[1]) {
+    //     //   Navigator.pushReplacement(
+    //     //     context,
+    //     //     MaterialPageRoute(builder: (context) {
+    //     //       return ImageEditor2(
+    //     //         RGBValues: RGBList,
+    //     //         TextValues: TextList,
+    //     //         profileURL: [profileURL],
+    //     //         imagePath: imagePathURL,
+    //     //         fullname: fullname,
+    //     //         position: position,
+    //     //       );
+    //     //     }),
+    //     //   );
+    //     // } else if (imagePath == borderImages[2]) {
+    //     //   Navigator.pushReplacement(
+    //     //     context,
+    //     //     MaterialPageRoute(builder: (context) {
+    //     //       return ImageEditor3(
+    //     //         RGBValues: RGBList,
+    //     //         TextValues: TextList,
+    //     //         profileURL: [profileURL],
+    //     //         imagePath: imagePathURL,
+    //     //         fullname: fullname,
+    //     //         position: position,
+    //     //       );
+    //     //     }),
+    //     //   );
+    //     // } else if (imagePath == borderImages[3]) {
+    //     //   Navigator.pushReplacement(
+    //     //     context,
+    //     //     MaterialPageRoute(builder: (context) {
+    //     //       return ImageEditor4(
+    //     //         RGBValues: RGBList,
+    //     //         TextValues: TextList,
+    //     //         profileURL: [profileURL],
+    //     //         imagePath: imagePathURL,
+    //     //         fullname: fullname,
+    //     //         position: position,
+    //     //       );
+    //     //     }),
+    //     //   );
+    //     // } else if (imagePath == borderImages[4]) {
+    //     //   Navigator.pushReplacement(
+    //     //     context,
+    //     //     MaterialPageRoute(builder: (context) {
+    //     //       return ImageEditor6(
+    //     //         RGBValues: RGBList,
+    //     //         TextValues: TextList,
+    //     //         profileURL: [profileURL],
+    //     //         imagePath: imagePathURL,
+    //     //         fullname: fullname,
+    //     //         position: position,
+    //     //       );
+    //     //     }),
+    //     //   );
+    //   }
+    // } catch (error) {
+    //   Navigator.pop(context);
+
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text('Error: $error'),
+    //     ),
+    //   );
+    // }
   }
 
-  Widget _buildVideoContainer(BuildContext context, String videoPath) {
+  Widget _buildImageContainer(BuildContext context, String imagePath) {
     return GestureDetector(
-      onTap: () => _onContainerTap(context, videoPath),
+      onTap: () => _onContainerTap(context, imagePath),
       child: Container(
         height: 150,
         width: 150,
         margin: EdgeInsets.symmetric(horizontal: 8), // Adjust spacing here
-        child: AspectRatio(
-          aspectRatio: 1.0,
-          child: _controller != null && _controller!.value.isInitialized
-              ? VideoPlayer(_controller!)
-              : Container(
-                  child: Text('Testing'),
-                ), // Return an empty container if _controller is null or not initialized
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: Image.asset(imagePath).image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
