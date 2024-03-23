@@ -51,13 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
         position: widget.hposition,
         backgroundImage: images[_selectedIndex],
       ),
-      ReelsScreenWidget(
-        fullname: widget.hfullname,
-        phoneNumber: widget.hphoneNumber,
-        profileURL: widget.profileURL,
-        position: widget.hposition,
-        backgroundImage: images[_selectedIndex],
-      ),
       ProfileScreen(
         fullname: widget.hfullname,
         position: widget.hposition,
@@ -118,10 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icons.home,
                     text: 'Home',
                   ),
-                  GButton(
-                    icon: Icons.video_library_rounded,
-                    text: 'Videos',
-                  ),
+                  
                   GButton(
                     icon: Icons.person,
                     text: 'Profile',
