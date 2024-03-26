@@ -46,12 +46,12 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
   ];
 
   List<String> templates = [
-    'assets/otp.gif',
-    'assets/otp.gif',
-    'assets/otp.gif',
-    'assets/otp.gif',
-    'assets/otp.gif',
-    'assets/otp.gif',
+    'assets/testing.gif',
+    'assets/testing.gif',
+    'assets/testing.gif',
+    'assets/testing.gif',
+    'assets/testing.gif',
+    'assets/testing.gif',
   ]; // List to store template paths
   bool isLoading = true;
   @override
@@ -349,8 +349,8 @@ class _ReelsLokhsabhScreenState extends State<ReelsLokhsabhScreen> {
     return GestureDetector(
       onTap: () => _onContainerTap(context, imagePath),
       child: Container(
-        height: 150,
-        width: 150,
+        height: 148.8,
+        width: 83.7,
         margin: EdgeInsets.symmetric(horizontal: 8), // Adjust spacing here
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

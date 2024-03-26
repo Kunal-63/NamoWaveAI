@@ -230,7 +230,7 @@ class _ReelsEditorState extends State<ReelsEditor> {
               children: [
                 // Large box with an image
                 Container(
-                  width: 300,
+                  width: 180,
                   height: 350,
                   child: Screenshot(
                     controller: screenshotController,
@@ -277,8 +277,8 @@ class _ReelsEditorState extends State<ReelsEditor> {
                               child: Image.asset(
                                 widget.imagePath,
                                 fit: BoxFit.cover,
-                                width: 275,
-                                height: 275,
+                                width: 154.62,
+                                height: 274.88,
                               ),
                             ),
                           ),
@@ -290,8 +290,8 @@ class _ReelsEditorState extends State<ReelsEditor> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Container(
-                                width: 85,
-                                height: 55,
+                                width: 75,
+                                height: 47,
                                 decoration: BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
@@ -333,8 +333,8 @@ class _ReelsEditorState extends State<ReelsEditor> {
                                 ..scale(isButtonOnRight ? 1.0 : -1.0, 1.0),
                               child: Image.network(
                                 widget.profileURL[currentProfileUrlIndex],
-                                height: 100,
-                                width: 100,
+                                height: 80,
+                                width: 80,
                                 fit: BoxFit
                                     .cover, // Ensure the image fits within the container
                               ),
@@ -344,11 +344,11 @@ class _ReelsEditorState extends State<ReelsEditor> {
                         Positioned(
                           bottom: 10,
                           left: isButtonOnRight
-                              ? (380 - widget.fullname.length * fontSize) / 2
+                              ? (180 - widget.fullname.length * fontSize) / 2
                               : null,
                           right: isButtonOnRight
                               ? null
-                              : (360 - widget.fullname.length * fontSize) / 2,
+                              : (160 - widget.fullname.length * fontSize) / 2,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
