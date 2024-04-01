@@ -96,7 +96,7 @@ async def send_otp(request: Request, login_request: LoginRequest):
             raise Exception(result['message'])
 
     except Exception as e:
-        raise Exception(str(e))
+        raise HTTPException(status_code=400, detail="Invalid phone number")
     
 
    
@@ -149,7 +149,7 @@ async def process_user_data(user_data: UserData):
     result = cur.fetchall()
     if len(result) > 0:
         print("Successfully updated")
-        cur.execute("UPDATE users SET fullname=%s, party=%s, lokhsabha=%s, position=%s, profile_url=%s WHERE phonenumber=%s", (user_data.fullname, user_data.party, user_data.lokhsabha, user_data.position, profile_url, user_data.phone_number))
+        cur.execute("UPDATE users SET fullname=%s, party=%s, lokhsabha=%s, position=%s, profile_url=%s,vidhansabha=%s WHERE phonenumber=%s", (user_data.fullname, user_data.party, user_data.lokhsabha, user_data.position, profile_url,user_data.vidhansabha, user_data.phone_number))
     else:
         print("Successfully inserted")
         cur.execute("INSERT INTO users (phonenumber, fullname, party, lokhsabha, position, profile_url, vidhansabha) VALUES (%s, %s, %s, %s, %s, %s, %s)", (user_data.phone_number, user_data.fullname, user_data.party, user_data.lokhsabha, user_data.position, profile_url, user_data.vidhansabha))
