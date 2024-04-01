@@ -3,7 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:theog/pages/HomeScreenWidget.dart';
 // import 'package:theog/pages/SearchScreenWidget.dart';
 import 'package:theog/pages/ProfileScreenWidget.dart';
-import 'package:theog/pages/ReelsScreenWidget.dart';
+// import 'package:theog/pages/ReelsScreenWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   final String hphoneNumber;
