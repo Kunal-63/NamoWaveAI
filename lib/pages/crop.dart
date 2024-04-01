@@ -228,7 +228,7 @@ class _CropPageState extends State<CropPage> {
       _showLoading();
 
       final response = await http.post(
-        Uri.parse('http://localhost:8000/process_user_data'),
+        Uri.parse('http://192.168.1.12:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -257,19 +257,41 @@ class _CropPageState extends State<CropPage> {
         prefs.setString('userVidhanSabha', responseData['vidhansabha']);
         prefs.setString('userProfileURL', responseData['profile_url']);
         Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                      hphoneNumber: widget.phoneNumber,
-                      hfullname: responseData['fullname'],
-                      hposition: responseData['position'],
-                      hparty: responseData['party'],
-                      hlokhsabha: responseData['lokhsabha'],
-                      hvidhansabha: responseData['vidhansabha'],
-                      profileURL: responseData['profile_url'],
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              hphoneNumber: widget.phoneNumber,
+              hfullname: responseData['fullname'],
+              hposition: responseData['position'],
+              hparty: responseData['party'],
+              hlokhsabha: responseData['lokhsabha'],
+              hvidhansabha: responseData['vidhansabha'],
+              profileURL: responseData['profile_url'],
+            ),
+          ),
+        );
       } else {
         print('Error sending data. Status code: ${response.statusCode}');
+        // Show pop-up if request takes more than 2 minutes
+        await Future.delayed(Duration(minutes: 2));
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text(
+                  'Unable to process your request. Please try again later.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       }
     } catch (e) {
       print('Exception while sending data: $e');

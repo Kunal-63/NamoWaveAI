@@ -92,17 +92,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                _buildTextField('Full Name', _fullnameController),
+                _buildTextField('Full Name', _fullnameController, false, 200),
                 SizedBox(height: 10),
-                _buildTextField('Party', _partyController),
+                _buildTextField('Party', _partyController, false, 200),
                 SizedBox(height: 10),
-                _buildTextField('Phone Number', _phoneNumberController),
+                _buildTextField(
+                    'Phone Number', _phoneNumberController, true, 200),
                 SizedBox(height: 10),
-                _buildTextField('Lokhsabha', _lokhsabhaController),
+                _buildTextField('Lokhsabha', _lokhsabhaController, false, 200),
                 SizedBox(height: 10),
-                _buildTextField('Position', _positionController),
+                _buildTextField('Position', _positionController, false, 200),
                 SizedBox(height: 10),
-                _buildTextField('VidhanSabha', _vidhansabhaController),
+                _buildTextField(
+                    'VidhanSabha', _vidhansabhaController, false, 200),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -147,10 +149,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
+  Widget _buildTextField(String label, TextEditingController controller,
+      bool readOnly, int maxLength) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
-      height: 60,
+      height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         border: Border.all(
@@ -161,6 +164,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: TextField(
           controller: controller,
+          readOnly: readOnly,
+          maxLength: maxLength,
           style: TextStyle(color: Colors.white),
           maxLines: 1,
           decoration: InputDecoration(
@@ -200,7 +205,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> _sendDataToFastAPI() async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:8000/process_user_data'),
+        Uri.parse('http://192.168.1.12:8000/process_user_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },
@@ -238,11 +243,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   profileURL: responseData['profile_url'])),
         );
       } else {
-        // Handle error response
         print('Error sending data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      // Handle exceptions
       print('Exception while sending data: $e');
     }
   }
