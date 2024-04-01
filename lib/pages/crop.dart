@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theog/pages/home_screen.dart';
+import 'dart:async';
 
 class CropPage extends StatefulWidget {
   final String title;
@@ -227,21 +228,23 @@ class _CropPageState extends State<CropPage> {
 
       _showLoading();
 
-      final response = await http.post(
-        Uri.parse('http://192.168.1.12:8000/process_user_data'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'phone_number': widget.phoneNumber,
-          'fullname': widget.fullname,
-          'party': widget.party,
-          'lokhsabha': widget.lokhsabha,
-          'position': widget.position,
-          'vidhansabha': widget.vidhansabha,
-          'image': base64Image,
-        }),
-      );
+      final response = await http
+          .post(
+            Uri.parse('http://192.168.1.12:8000/process_user_data'),
+            headers: <String, String>{
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode({
+              'phone_number': widget.phoneNumber,
+              'fullname': widget.fullname,
+              'party': widget.party,
+              'lokhsabha': widget.lokhsabha,
+              'position': widget.position,
+              'vidhansabha': widget.vidhansabha,
+              'image': base64Image,
+            }),
+          )
+          .timeout(Duration(minutes: 2)); // Set timeout to 2 minutes
 
       if (response.statusCode == 200) {
         print('Data sent successfully');
@@ -273,7 +276,6 @@ class _CropPageState extends State<CropPage> {
       } else {
         print('Error sending data. Status code: ${response.statusCode}');
         // Show pop-up if request takes more than 2 minutes
-        await Future.delayed(Duration(minutes: 2));
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -293,6 +295,26 @@ class _CropPageState extends State<CropPage> {
           },
         );
       }
+    } on TimeoutException {
+      // Handle timeout exception
+      print('Request timed out');
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Request timed out. Please try again later.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     } catch (e) {
       print('Exception while sending data: $e');
     } finally {
