@@ -428,42 +428,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
           title: Text(widget.title),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                surfaceTintColor: Colors.transparent,
-                foregroundColor: Colors.transparent,
-                disabledBackgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(45.0),
-                ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              child: Container(
-                child: Row(
-                  children: [
-                    Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    SizedBox(width: 5.0),
-                    Icon(
-                      LineAwesomeIcons.fast_forward,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+          // actions: [
+          //   ElevatedButton(
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: Colors.transparent,
+          //       elevation: 0.0,
+          //       surfaceTintColor: Colors.transparent,
+          //       foregroundColor: Colors.transparent,
+          //       disabledBackgroundColor: Colors.transparent,
+          //       shadowColor: Colors.transparent,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(45.0),
+          //       ),
+          //     ),
+          //     onPressed: () {
+          //       Navigator.pushNamed(context, '/home');
+          //     },
+          //     child: Container(
+          //       child: Row(
+          //         children: [
+          //           Text(
+          //             'Skip',
+          //             style: TextStyle(
+          //               color: Colors.white,
+          //               fontSize: 16.0,
+          //             ),
+          //           ),
+          //           SizedBox(width: 5.0),
+          //           Icon(
+          //             LineAwesomeIcons.fast_forward,
+          //             color: Colors.white,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ],
         ),
         body: SingleChildScrollView(
           child: Center(
@@ -481,6 +481,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: controller1,
                           style: TextStyle(color: Colors.white),
                           maxLines: 1,
+                          maxLength: 200,
                           decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.person,
@@ -513,6 +514,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             text: _selectedParty ?? '',
                           ),
                           maxLines: 1,
+                          maxLength: 200,
                           // onTap: () {
                           //   // Show political parties dialog
                           //   _showPoliticalPartiesDialog(context);
@@ -548,6 +550,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 70,
                         child: TextFormField(
                           controller: controller2,
+                          maxLength: 200,
                           style: TextStyle(color: Colors.white),
                           maxLines: 1,
                           decoration: InputDecoration(
@@ -578,6 +581,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 70,
                         child: TextFormField(
                           controller: controller3,
+                          maxLength: 200,
                           style: TextStyle(color: Colors.white),
                           maxLines: 1,
                           onTap: () {
@@ -621,6 +625,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             _showVidhanSabhaDialog(context);
                           },
                           readOnly: true,
+                          maxLength: 200,
                           // initialValue: controller4.text,
                           decoration: InputDecoration(
                             prefixIcon: Icon(

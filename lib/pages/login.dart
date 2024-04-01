@@ -49,6 +49,16 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  void _handleResponse(String responseMessage) {
+    if (responseMessage.contains('Invalid phone number')) {
+      _showInvalidNumberPopup(
+          'Phone number is invalid.', 'INVALID_PHONE_NUMBER');
+    } else {
+      _showInvalidNumberPopup(
+          'Failed to send OTP. Please try again later.', 'SERVER_ERROR');
+    }
+  }
+
   sendOtp(String phoneNumber) async {
     try {
       _showLoading(); // Show loading indicator
@@ -65,8 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final responseData = jsonDecode(response.body);
 
         if (responseData['error'] != null) {
-          _showInvalidNumberPopup(responseData['message'] ?? 'Invaild Number',
-              responseData['error'] ?? 'Error');
+          _handleResponse(responseData['error']);
         } else {
           Navigator.pushNamed(
             context,
@@ -80,13 +89,13 @@ class _LoginScreenState extends State<LoginScreen> {
       } else {
         print('Failed to send OTP. Status code: ${response.statusCode}');
         print('Response body: ${response.body}');
+        _showInvalidNumberPopup(
+            'Failed to send OTP. Please try again later.', 'SERVER_ERROR');
       }
     } catch (e) {
       print('Error sending OTP: $e');
       _showInvalidNumberPopup(
-        'Failed to send OTP. Please try again later.',
-        'SERVER_ERROR',
-      );
+          'Failed to send OTP. Please try again later.', 'SERVER_ERROR');
     } finally {
       _hideLoading(); // Hide loading indicator regardless of success or failure
     }
@@ -185,6 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.white),
                           keyboardType: TextInputType.phone,
                           controller: _phoneNumberController,
+                          maxLength: 10,
                           validator: (value) {
                             if (value == null ||
                                 value.isEmpty ||
