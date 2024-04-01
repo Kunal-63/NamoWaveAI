@@ -195,7 +195,7 @@ class _LokhSabhaScreenState extends State<LokhSabhaScreen> {
   }
 
   Future<Map<String, dynamic>> colorChangeTemplate() async {
-    final apiUrl = 'http://65.2.123.1:8000/color_change_template';
+    final apiUrl = 'http://localhost:8000/color_change_template';
 
     try {
       final response = await http.post(
