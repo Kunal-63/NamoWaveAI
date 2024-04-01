@@ -29,6 +29,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app = FastAPI(openapi_url=None)
+
+app = FastAPI(redoc_url=None)
 
 otp = ""
 app.mount("/templates", StaticFiles(directory="templates"), name="templates")
@@ -155,38 +158,6 @@ async def process_user_data(user_data: UserData):
     mydb.commit()
     return {"fullname":user_data.fullname,"position":user_data.position,"phonenumber":user_data.phone_number,"party":user_data.party,"lokhsabha":user_data.lokhsabha,"profile_url":profile_url,"vidhansabha":user_data.vidhansabha, "message": "Data received successfully"}
 
-def template_exists(template_name: str, cur):
-    cur.execute("SELECT template_name FROM templates WHERE template_name = %s", (template_name,))
-    return cur.fetchone() is not None
-
-@app.get("/templates")
-async def get_template_links():
-    template_links = []
-    
-    cur = mydb.cursor()
-    folder_path = "templates"
-    files = os.listdir(folder_path)
-    existing_files = []
-    for file in files:
-        # print("File Name :",file)
-        cur.execute("SELECT template_name from templates WHERE template_name = %s",[file])
-        result = cur.fetchall()
-        # print("Template Name :",result)
-        if len(result) == 0:
-            # print("No template found")
-            file_path = os.path.join(folder_path, file)
-            if os.path.isfile(file_path):  # Ensure it's a file (not a directory)
-                template_link = upload_image_to_imgbb(file_path)
-                cur.execute("INSERT INTO TEMPLATES VALUES(%s,%s)", [file,template_link])
-                mydb.commit()
-        else:
-            pass
-    cur.execute("select template_link from templates")
-    results = cur.fetchall()
-    for template_link in results:
-        template_links.append(template_link[0])
-
-    return {"templates_links": template_links}
 
 @app.post("/color_change_template")
 async def color_change_template(template_data: ColorChangeModel):
