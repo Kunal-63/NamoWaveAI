@@ -341,11 +341,11 @@ class _ImageEditorState extends State<ImageEditor> {
                         Positioned(
                           bottom: 10,
                           left: isButtonOnRight
-                              ? (380 - widget.fullname.length * fontSize) / 2
+                              ? (330 - widget.fullname.length * fontSize) / 2
                               : null,
                           right: isButtonOnRight
                               ? null
-                              : (360 - widget.fullname.length * fontSize) / 2,
+                              : (300 - widget.fullname.length * fontSize) / 2,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -430,12 +430,14 @@ class _ImageEditorState extends State<ImageEditor> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     FloatingActionButton(
+                      heroTag: 'fab1',
                       onPressed: _saveToGallery,
                       backgroundColor: Colors.grey[800],
                       tooltip: 'Save Image',
                       child: Icon(Icons.download),
                     ),
                     FloatingActionButton(
+                      heroTag: 'fab2',
                       onPressed: _shareImage,
                       backgroundColor: Colors.grey[800],
                       tooltip: 'Share',
@@ -476,6 +478,7 @@ class _ImageEditorState extends State<ImageEditor> {
                                   height: 30,
                                   width: 30,
                                   child: FloatingActionButton(
+                                    heroTag: 'fab3',
                                     onPressed: _decreaseFontSize,
                                     child: Icon(
                                       Icons.remove,
@@ -488,6 +491,7 @@ class _ImageEditorState extends State<ImageEditor> {
                                   height: 30,
                                   width: 30,
                                   child: FloatingActionButton(
+                                    heroTag: 'fab4',
                                     onPressed: _increaseFontSize,
                                     child: Icon(Icons.add,
                                         size: 20, color: Colors.white),
