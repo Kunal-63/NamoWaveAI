@@ -97,18 +97,20 @@ class _ImageEditorState extends State<ImageEditor> {
     });
   }
 
-  void _saveToGallery() async {
+  Future<void> _saveToGallery() async {
     _showLoading();
+    try {
     Uint8List? image = await screenshotController.capture();
     if (image != null) {
-      final result = await ImageGallerySaver.saveImage(image);
-      print(result);
-
+        await ImageGallerySaver.saveImage(image);
       _hideLoading();
       _showSnackBar('Image saved successfully!');
     } else {
+        throw Exception('Failed to capture screenshot.');
+      }
+    } catch (e) {
       _hideLoading();
-      _showSnackBar('Failed to save image.');
+      _showSnackBar('Failed to save image: $e');
     }
   }
 
