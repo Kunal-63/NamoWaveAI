@@ -186,7 +186,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _changeProfile() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => CropPage(

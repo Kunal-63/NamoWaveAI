@@ -659,7 +659,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               // Uncomment the sendData() method call when you want to send data
                               // sendData();
 
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => CropPage(

@@ -215,7 +215,7 @@ class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
@@ -250,7 +250,7 @@ class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => LokhSabhaScreen(
@@ -300,7 +300,7 @@ class _ReelsScreenWidgetState extends State<ReelsScreenWidget> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => LokhSabhaScreen(
