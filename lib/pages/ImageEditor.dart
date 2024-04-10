@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-// import 'package:image_cropper/image_cropper.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:esys_flutter_share_plus/esys_flutter_share_plus.dart';
@@ -100,12 +100,12 @@ class _ImageEditorState extends State<ImageEditor> {
   Future<void> _saveToGallery() async {
     _showLoading();
     try {
-    Uint8List? image = await screenshotController.capture();
-    if (image != null) {
+      Uint8List? image = await screenshotController.capture();
+      if (image != null) {
         await ImageGallerySaver.saveImage(image);
-      _hideLoading();
-      _showSnackBar('Image saved successfully!');
-    } else {
+        _hideLoading();
+        _showSnackBar('Image saved successfully!');
+      } else {
         throw Exception('Failed to capture screenshot.');
       }
     } catch (e) {
@@ -114,21 +114,25 @@ class _ImageEditorState extends State<ImageEditor> {
     }
   }
 
-  void _shareImage() async {
+  Future<void> _shareImage() async {
     _showLoading();
-    Uint8List? imageBytes = await screenshotController.capture();
-    if (imageBytes != null) {
-      await Share.file(
-        'image.png',
-        'image.png',
-        imageBytes,
-        'image/png',
-        text: 'Check out this cool image!',
-      );
+    try {
+      Uint8List? imageBytes = await screenshotController.capture();
+      if (imageBytes != null) {
+        await Share.file(
+          'image.png',
+          'image.png',
+          imageBytes,
+          'image/png',
+          text: 'Check out this cool image!',
+        );
+        _hideLoading();
+      } else {
+        throw Exception('Failed to capture screenshot.');
+      }
+    } catch (e) {
       _hideLoading();
-    } else {
-      _hideLoading();
-      _showSnackBar('Failed to share image.');
+      _showSnackBar('Failed to share image: $e');
     }
   }
 
@@ -331,11 +335,11 @@ class _ImageEditorState extends State<ImageEditor> {
                               transform: Matrix4.identity()
                                 ..scale(isButtonOnRight ? 1.0 : -1.0, 1.0),
                               child: Image.network(
-                                widget.profileURL[currentProfileUrlIndex],
+                                widget.profileURL[
+                                    0], // Use CachedNetworkImage here
+
                                 height: 100,
                                 width: 100,
-                                fit: BoxFit
-                                    .cover, // Ensure the image fits within the container
                               ),
                             ),
                           ),
