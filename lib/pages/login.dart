@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:theog/pages/home_screen.dart';
 
@@ -227,6 +227,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 11.0, top: 5),
+                        child: GestureDetector(
+                          onTap: () {
+                            // ignore: deprecated_member_use
+                            launch(
+                                'https://orlovinnovations.com/privacyPolicy.html');
+                          },
+                          child: Text(
+                            'By signing up, you agree to our Privacy Policy',
+                            style: TextStyle(
+                              fontSize: 11.0,
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ),
